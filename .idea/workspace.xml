@@ -4,17 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="1.3 - adiconando módulos de configuração e log de porta do servidor">
-      <change afterPath="$PROJECT_DIR$/.env.docker" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.dev.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker/init-scripts/auth-init.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker/init-scripts/users-init.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker/pgadmin/servers.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker/redis/redis.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/users-api/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users-api/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/users-api/src/config/configuration.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users-api/src/config/configuration.ts" afterDir="false" />
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="1.4 - criando o compose e adiconando informações sobre os bancos ao projeto">
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/.env.example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/eslint.config.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/nest-cli.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/config/configuration.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/main.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/tsconfig.build.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +28,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 5
 }]]></component>
@@ -40,12 +48,13 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "aula-2",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices",
+    "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/api-gateway",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "pnpm",
+    "npm.api-gateway > lint.executor": "Run",
     "npm.dev.executor": "Run",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "to.speed.mode.migration.done": "true",
@@ -53,13 +62,28 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/api-gateway" />
+    </key>
+  </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="pnpm install" />
       <command value="npm run dev" />
+      <command value="pnpm install" />
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.dev">
+    <configuration name="api-gateway &gt; lint" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/apps/api-gateway/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="lint" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -73,6 +97,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.dev" />
+        <item itemvalue="npm.api-gateway &gt; lint" />
       </list>
     </recent_temporary>
   </component>
@@ -90,7 +115,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760225050242</updated>
-      <workItem from="1760225051353" duration="847000" />
+      <workItem from="1760225051353" duration="1625000" />
     </task>
     <task id="LOCAL-00001" summary="1.3 - adiconando módulos de configuração e log de porta do servidor">
       <option name="closed" value="true" />
@@ -100,7 +125,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760225603680</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="1.4 - criando o compose e adiconando informações sobre os bancos ao projeto">
+      <option name="closed" value="true" />
+      <created>1760226002188</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1760226002188</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,6 +152,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1.3 - adiconando módulos de configuração e log de porta do servidor" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.3 - adiconando módulos de configuração e log de porta do servidor" />
+    <MESSAGE value="1.4 - criando o compose e adiconando informações sobre os bancos ao projeto" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.4 - criando o compose e adiconando informações sobre os bancos ao projeto" />
   </component>
 </project>
