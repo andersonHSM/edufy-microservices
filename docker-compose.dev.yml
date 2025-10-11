@@ -1,0 +1,52 @@
+version: '3.8'
+
+# Docker Compose para desenvolvimento - apenas bancos de dados
+services:
+  # PostgreSQL para Auth API
+  auth-db:
+    extends:
+      file: docker-compose.yml
+      service: auth-db
+    environment:
+      POSTGRES_DB: auth_db_dev
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_password
+
+  # PostgreSQL para Users API
+  users-db:
+    extends:
+      file: docker-compose.yml
+      service: users-db
+    environment:
+      POSTGRES_DB: users_db_dev
+      POSTGRES_USER: users_user
+      POSTGRES_PASSWORD: users_password
+
+  # Redis para desenvolvimento
+  redis:
+    extends:
+      file: docker-compose.yml
+      service: redis
+
+  # pgAdmin para desenvolvimento
+  pgadmin:
+    extends:
+      file: docker-compose.yml
+      service: pgadmin
+    depends_on:
+      - auth-db
+      - users-db
+
+volumes:
+  auth_db_data:
+    driver: local
+  users_db_data:
+    driver: local
+  redis_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  edufy-network:
+    driver: bridge

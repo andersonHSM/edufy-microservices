@@ -1,0 +1,102 @@
+version: '3.8'
+
+services:
+  # PostgreSQL para Auth API
+  auth-db:
+    image: postgres:17-alpine
+    container_name: edufy-auth-db
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+      - ./docker/init-scripts/auth-init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    networks:
+      - edufy-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U auth_user -d auth_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # PostgreSQL para Users API
+  users-db:
+    image: postgres:17-alpine
+    container_name: edufy-users-db
+    environment:
+      POSTGRES_DB: users_db
+      POSTGRES_USER: users_user
+      POSTGRES_PASSWORD: users_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - users_db_data:/var/lib/postgresql/data
+      - ./docker/init-scripts/users-init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    networks:
+      - edufy-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U users_user -d users_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis para cache e sessões
+  redis:
+    image: redis:7-alpine
+    container_name: edufy-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - edufy-network
+    restart: unless-stopped
+    command: redis-server /usr/local/etc/redis/redis.conf
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # pgAdmin para administração dos bancos
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: edufy-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@edufy.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./docker/pgadmin/servers.json:/pgadmin4/servers.json
+    networks:
+      - edufy-network
+    restart: unless-stopped
+    depends_on:
+      - auth-db
+      - users-db
+
+volumes:
+  auth_db_data:
+    driver: local
+  users_db_data:
+    driver: local
+  redis_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  edufy-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
