@@ -5,15 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="1.5 - configuração do projeto api-gateway">
-      <change afterPath="$PROJECT_DIR$/apps/auth-api/kysely.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/users-api/kysely.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.docker" beforeDir="false" afterPath="$PROJECT_DIR$/.env.docker" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/database/migrations/1760887820630_create-user-table.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/database/migrations/1760887820630_create-user-table.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/auth-api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/users-api/database/migrations/1760887794975_create-user-table.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users-api/database/migrations/1760887794975_create-user-table.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/users-api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users-api/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/init-scripts/auth-init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/docker/init-scripts/auth-init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/init-scripts/users-init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/docker/init-scripts/users-init.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +58,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
@@ -67,7 +69,7 @@
     "full.screen.before.presentation.mode": "false",
     "git-widget-placeholder": "aula-2",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/users-api",
+    "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -81,6 +83,9 @@
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "PostgreSQL"
+    ],
     "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
   }
 }]]></component>
@@ -95,6 +100,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/apps/users-api" />
       <recent name="$PROJECT_DIR$/apps/auth-api" />
       <recent name="$PROJECT_DIR$/apps/api-gateway" />
@@ -106,7 +112,19 @@
       <command value="pnpm install" />
     </option>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml" />
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <configuration name="api-gateway &gt; lint" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/apps/api-gateway/package.json" />
       <command value="run" />
@@ -129,11 +147,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
         <item itemvalue="npm.dev" />
         <item itemvalue="npm.api-gateway &gt; lint" />
         <item itemvalue="npm.dev" />
         <item itemvalue="npm.api-gateway &gt; lint" />
-        <item itemvalue="npm.dev" />
       </list>
     </recent_temporary>
   </component>
