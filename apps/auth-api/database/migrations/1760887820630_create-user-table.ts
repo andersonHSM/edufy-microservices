@@ -3,7 +3,9 @@ import { sql, type Kysely } from 'kysely';
 // `any` is required here since migrations should be frozen in time. alternatively, keep a "snapshot" db interface.
 export async function up(db: Kysely<any>): Promise<void> {
 	await db.schema
-		.createTable('user')
+		.withSchema('auth')
+		.createTable('users')
+		.ifNotExists()
 		.addColumn('sub', 'uuid', (col) =>
 			col.primaryKey().defaultTo(sql`gen_random_uuid()`),
 		)
@@ -21,5 +23,5 @@ export async function up(db: Kysely<any>): Promise<void> {
 
 // `any` is required here since migrations should be frozen in time. alternatively, keep a "snapshot" db interface.
 export async function down(db: Kysely<any>): Promise<void> {
-	await db.schema.dropTable('user').execute();
+	await db.schema.withSchema('users').dropTable('auth.users').ifExists().execute();
 }
