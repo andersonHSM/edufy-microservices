@@ -22,12 +22,13 @@
 		"codegen": "kysely-codegen --camel-case --out-file ./src/libs/database/generated/db.ts",
 		"migrate": "pnpm run kysely migrate:latest",
 		"postmigrate": "pnpm run codegen"
-
 	},
 	"dependencies": {
 		"@nestjs/common": "^11.0.1",
 		"@nestjs/config": "^4.0.2",
 		"@nestjs/core": "^11.0.1",
+		"@nestjs/mapped-types": "*",
+		"@nestjs/microservices": "^11.1.7",
 		"@nestjs/platform-express": "^11.0.1",
 		"kysely": "^0.28.8",
 		"pg": "^8.16.3",
