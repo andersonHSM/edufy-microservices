@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="3.1 - criação do módulo de usuários no api-gateway e definição de DTOs, controller e service básicos">
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="3.2 - criação do módulo de usuários no auth-api com controller, service básicos e integração com microservices TCP">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/users.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/users.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/auth-api/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/main.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/users/users.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/users/users.controller.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +114,7 @@
       <command value="pnpm install" />
     </option>
   </component>
-  <component name="RunManager" selected="npm.migrate">
+  <component name="RunManager" selected="npm.dev">
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
       <deployment type="docker-compose.yml">
         <settings />
@@ -170,10 +171,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
         <item itemvalue="npm.migrate" />
         <item itemvalue="npm.users-api &gt; codegen" />
         <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
-        <item itemvalue="npm.dev" />
         <item itemvalue="npm.api-gateway &gt; lint" />
       </list>
     </recent_temporary>
@@ -194,7 +195,7 @@
       <updated>1760225050242</updated>
       <workItem from="1760225051353" duration="5625000" />
       <workItem from="1760741403085" duration="1590000" />
-      <workItem from="1760990429501" duration="4555000" />
+      <workItem from="1760990429501" duration="6121000" />
     </task>
     <task id="LOCAL-00001" summary="1.3 - adiconando módulos de configuração e log de porta do servidor">
       <option name="closed" value="true" />
@@ -252,7 +253,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761242015199</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="3.2 - criação do módulo de usuários no auth-api com controller, service básicos e integração com microservices TCP">
+      <option name="closed" value="true" />
+      <created>1761243225458</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1761243225458</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,6 +299,8 @@
     <MESSAGE value="2.1 - ajustes em tabelas, scripts de migração e configurações gerais do projeto" />
     <MESSAGE value="2.1.1 - removendo arquivos autogerados do schema" />
     <MESSAGE value="3.1 - criação do módulo de usuários no api-gateway e definição de DTOs, controller e service básicos" />
-    <option name="LAST_COMMIT_MESSAGE" value="3.1 - criação do módulo de usuários no api-gateway e definição de DTOs, controller e service básicos" />
+    <MESSAGE value="3.2 - configuração do auth-api para microservices e integração do UsersModule" />
+    <MESSAGE value="3.2 - criação do módulo de usuários no auth-api com controller, service básicos e integração com microservices TCP" />
+    <option name="LAST_COMMIT_MESSAGE" value="3.2 - criação do módulo de usuários no auth-api com controller, service básicos e integração com microservices TCP" />
   </component>
 </project>
