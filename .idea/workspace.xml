@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="2.1.1 - removendo arquivos autogerados do schema">
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation/dto/signup-user.dto.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/config/configuration.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/config/configuration.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/users.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +70,7 @@
     "full.screen.before.presentation.mode": "false",
     "git-widget-placeholder": "aula-3",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/api-gateway/src/users/presentation/dto",
+    "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/auth-api/src/app/users/users/dto",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -98,13 +105,16 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/dto" />
       <recent name="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/dto" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/apps/users-api" />
       <recent name="$PROJECT_DIR$/apps/auth-api" />
-      <recent name="$PROJECT_DIR$/apps/api-gateway" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation/dto" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/dto" />
       <recent name="$PROJECT_DIR$/apps/api-gateway/src/users/presentation" />
     </key>
   </component>
@@ -253,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760895321752</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="chore:  inclusão de estilos da IDE">
+      <option name="closed" value="true" />
+      <created>1764438695724</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1764438695724</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,6 +308,7 @@
     <MESSAGE value="2.0 - remoção de scripts de tabela SQL e ajustes em configurações do projeto" />
     <MESSAGE value="2.1 - ajustes em tabelas, scripts de migração e configurações gerais do projeto" />
     <MESSAGE value="2.1.1 - removendo arquivos autogerados do schema" />
-    <option name="LAST_COMMIT_MESSAGE" value="2.1.1 - removendo arquivos autogerados do schema" />
+    <MESSAGE value="chore:  inclusão de estilos da IDE" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore:  inclusão de estilos da IDE" />
   </component>
 </project>
