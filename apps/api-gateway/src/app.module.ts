@@ -7,30 +7,31 @@ import configuration from "./config/configuration";
 import {UsersModule} from './users/users.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [configuration],
-      envFilePath: [".env", ".env.local"],
-      cache: true,
-      expandVariables: true,
-    }),
-	  ClientsModule.registerAsync({
-		  isGlobal: true, clients: [{
-			  name: 'AUTH_API_SERVICE',
-			  inject: [ConfigService],
-			  useFactory: (configService: ConfigService) => ({
-				  transport: Transport.TCP,
-				  options: {
-					  host: configService.get('userService.host'),
-					  port: configService.get('userService.port')
-				  }
-			  })
-		  }]
-	  }),
-    UsersModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+	imports: [
+		ConfigModule.forRoot({
+			isGlobal: true,
+			load: [configuration],
+			envFilePath: [".env", ".env.local"],
+			cache: true,
+			expandVariables: true,
+		}),
+		ClientsModule.registerAsync({
+			isGlobal: true, clients: [{
+				name: 'AUTH_API_SERVICE',
+				inject: [ConfigService],
+				useFactory: (configService: ConfigService) => ({
+					transport: Transport.TCP,
+					options: {
+						host: configService.get('authService.host'),
+						port: configService.get('authService.port')
+					}
+				})
+			}]
+		}),
+		UsersModule,
+	],
+	controllers: [AppController],
+	providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+}

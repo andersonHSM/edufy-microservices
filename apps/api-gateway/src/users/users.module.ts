@@ -3,7 +3,6 @@ import {UsersController} from './presentation/users.controller';
 import {UsersService} from './users.service';
 
 @Module({
-
 	controllers: [UsersController],
 	providers: [UsersService],
 })
