@@ -1,4 +1,4 @@
-import { sql, type Kysely } from 'kysely';
+import {type Kysely, sql} from 'kysely';
 
 // `any` is required here since migrations should be frozen in time. alternatively, keep a "snapshot" db interface.
 export async function up(db: Kysely<any>): Promise<void> {
@@ -14,10 +14,12 @@ export async function up(db: Kysely<any>): Promise<void> {
 		.addColumn('interests', 'jsonb', (col) => col.defaultTo(sql`'[]'::jsonb`))
 		.addColumn('profilePictureUrl', 'text')
 		.addColumn('created_at', 'timestamptz', (col) =>
-			col.notNull().defaultTo(sql`now()`),
+			col.notNull().defaultTo(sql`now
+                ()`),
 		)
 		.addColumn('updated_at', 'timestamptz', (col) =>
-			col.notNull().defaultTo(sql`now()`),
+			col.notNull().defaultTo(sql`now
+                ()`),
 		)
 		.execute();
 }
