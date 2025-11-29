@@ -8,8 +8,7 @@ export class UsersController {
 	}
 
 	@MessagePattern("users.create")
-	public async createUser(body: any) {
-		console.log(body);
+	public async createUser() {
 		return this.usersService.createUser();
 	}
 }
