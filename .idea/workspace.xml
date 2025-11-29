@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AIAssistantCustomInstructionsStorage">
+    <option name="instructions">
+      <map>
+        <entry key="AIAssistant.VCS.GenerateCommitMessage">
+          <value>
+            <AIAssistantStoredInstruction>
+              <option name="actionId" value="AIAssistant.VCS.GenerateCommitMessage" />
+              <option name="content" value="Avoid overly verbose descriptions or unnecessary details.&#10;use brazilian portugese&#10;" />
+            </AIAssistantStoredInstruction>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation/dto/signup-user.dto.ts" afterDir="false" />
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="3.2.1 - criação do módulo de usuários no auth-api com testes, controller e service básicos">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api-gateway/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/config/configuration.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/config/configuration.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/users.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/main.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/auth-api/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/main.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
@@ -271,7 +281,23 @@
       <option name="project" value="LOCAL" />
       <updated>1764438695724</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="3.2 - implementação de comunicação entre api-gateway e auth-api via microservices TCP, ajustes em serviços e DTOs">
+      <option name="closed" value="true" />
+      <created>1764439934588</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1764439934588</updated>
+    </task>
+    <task id="LOCAL-00009" summary="3.2.1 - criação do módulo de usuários no auth-api com testes, controller e service básicos">
+      <option name="closed" value="true" />
+      <created>1764439954566</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1764439954566</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -309,6 +335,11 @@
     <MESSAGE value="2.1 - ajustes em tabelas, scripts de migração e configurações gerais do projeto" />
     <MESSAGE value="2.1.1 - removendo arquivos autogerados do schema" />
     <MESSAGE value="chore:  inclusão de estilos da IDE" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore:  inclusão de estilos da IDE" />
+    <MESSAGE value="3.2 - " />
+    <MESSAGE value="chore: integrate microservices between api-gateway and auth-api, add user module adjustments, update configs, and include new dependencies" />
+    <MESSAGE value="3.2 - ajustes no auth-api para inicialização como microservice TCP e integração com o api-gateway via ClientsModule e configuração do host auth-service" />
+    <MESSAGE value="3.2 - implementação de comunicação entre api-gateway e auth-api via microservices TCP, ajustes em serviços e DTOs" />
+    <MESSAGE value="3.2.1 - criação do módulo de usuários no auth-api com testes, controller e service básicos" />
+    <option name="LAST_COMMIT_MESSAGE" value="3.2.1 - criação do módulo de usuários no auth-api com testes, controller e service básicos" />
   </component>
 </project>

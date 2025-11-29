@@ -12,6 +12,7 @@ async function bootstrap() {
 			port: parseInt(port, 10)
 		}
 	});
+
 	await app.listen();
 }
 
