@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="2.1.1 - removendo arquivos autogerados do schema">
-      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/dto/signup-user.dto.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.spec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +16,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="aula-2" />
+        <entry key="$PROJECT_DIR$" value="e127f1b12bdc72890644a2a111e3e85e6da65314" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -55,15 +50,17 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Docker.docker-compose.yml.auth-db: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.pgadmin: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.users-db: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "full.screen.before.presentation.mode": "true",
+    "full.screen.before.presentation.mode": "false",
     "git-widget-placeholder": "aula-3",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/api-gateway/src/users/presentation/dto",
@@ -76,7 +73,9 @@
     "npm.dev.executor": "Run",
     "npm.migrate.executor": "Run",
     "npm.users-api > codegen.executor": "Run",
-    "settings.editor.selected.configurable": "editing.templates",
+    "npm.users-api > migrate.executor": "Run",
+    "npm.users-api > postmigrate.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.sourceCode.TypeScript",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
@@ -115,39 +114,37 @@
       <command value="pnpm install" />
     </option>
   </component>
-  <component name="RunManager" selected="npm.migrate">
+  <component name="RunManager" selected="Docker.docker-compose.yml.pgadmin: Compose Deployment">
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
       <deployment type="docker-compose.yml">
         <settings />
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+    <configuration name="docker-compose.yml.pgadmin: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
+          <option name="services">
+            <list>
+              <option value="pgadmin" />
+            </list>
+          </option>
           <option name="sourceFilePath" value="docker-compose.yml" />
         </settings>
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="api-gateway &gt; lint" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/apps/api-gateway/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="lint" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="dev" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
+    <configuration name="docker-compose.yml.users-db: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="users-db" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
       <method v="2" />
     </configuration>
     <configuration name="migrate" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
@@ -160,11 +157,21 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="users-api &gt; codegen" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="users-api &gt; migrate" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/apps/users-api/package.json" />
       <command value="run" />
       <scripts>
-        <script value="codegen" />
+        <script value="migrate" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="users-api &gt; postmigrate" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/apps/users-api/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="postmigrate" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -172,11 +179,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.yml.pgadmin: Compose Deployment" />
+        <item itemvalue="npm.users-api &gt; postmigrate" />
         <item itemvalue="npm.migrate" />
-        <item itemvalue="npm.users-api &gt; codegen" />
-        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
-        <item itemvalue="npm.dev" />
-        <item itemvalue="npm.api-gateway &gt; lint" />
+        <item itemvalue="Docker.docker-compose.yml.users-db: Compose Deployment" />
+        <item itemvalue="npm.users-api &gt; migrate" />
       </list>
     </recent_temporary>
   </component>
