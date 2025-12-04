@@ -1,6 +1,7 @@
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
 import {UsersModule} from "src/app/users/users/users.module";
+import jwtConfig from "src/libs/configuration/jwt.config";
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import configuration from './config/configuration';
@@ -9,7 +10,7 @@ import configuration from './config/configuration';
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
-			load: [configuration],
+			load: [configuration, jwtConfig],
 			envFilePath: ['.env', '.env.local'],
 			cache: true,
 			expandVariables: true,
