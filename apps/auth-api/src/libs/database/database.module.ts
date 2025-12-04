@@ -1,7 +1,7 @@
 import {Global, Inject, Module, OnModuleDestroy} from '@nestjs/common';
 import {DATABASE} from './constants';
 import {databaseProvider} from './database.provider';
-import {Database} from './database.type';
+import {type Database} from './database.type';
 
 @Global()
 @Module({

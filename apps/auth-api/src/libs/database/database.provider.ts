@@ -1,7 +1,7 @@
 import {FactoryProvider, Logger, Scope} from '@nestjs/common';
-import databaseConfig, {DatabaseConfig,} from '@src/libs/configuration/database.config';
 import {CamelCasePlugin, Kysely, ParseJSONResultsPlugin, PostgresDialect,} from 'kysely';
 import {Pool} from 'pg';
+import databaseConfig, {DatabaseConfig} from "src/libs/configuration/database.config";
 import {DATABASE} from './constants';
 import {DB} from './generated/db';
 
