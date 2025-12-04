@@ -1,16 +1,19 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import jwtConfig from './jwt.config';
+import {Module} from '@nestjs/common';
+import {ConfigModule} from '@nestjs/config';
 import adminConfig from './admin.config';
 import databaseConfig from './database.config';
-import webhookConfig from './webhook.config';
+import jwtConfig from './jwt.config';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      load: [jwtConfig, adminConfig, databaseConfig, webhookConfig],
-    }),
-  ],
+	imports: [
+		ConfigModule.forRoot({
+			envFilePath: [".env", ".env.local"],
+			cache: true,
+			expandVariables: true,
+			isGlobal: true,
+			load: [jwtConfig, adminConfig, databaseConfig],
+		}),
+	],
 })
-export class ConfigurationModule {}
+export class ConfigurationModule {
+}

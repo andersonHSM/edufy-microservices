@@ -18,22 +18,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: adição de módulo JWT customizado com suporte ao api-gateway e auth-api, incluindo testes e configurações">
-      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/admin.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/configuration.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/database.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/jwt.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/webhook.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/admin.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/configuration.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/database.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/jwt.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/webhook.config.ts" afterDir="false" />
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: atualização do workspace.xml com adição de comandos pnpm, ajustes no tempo de tarefas locais e gerenciamento de configurações">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app/users/users.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/configuration.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/configuration.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/libs/jwt/jwt.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/jwt/jwt.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/configuration.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/configuration.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/webhook.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/libs/jwt/jwt.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/jwt/jwt.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/test/app.e2e-spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/test/app.e2e-spec.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +79,9 @@
       <envs />
     </McpServerCommand>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -120,6 +119,7 @@
     "npm.users-api > codegen.executor": "Run",
     "npm.users-api > migrate.executor": "Run",
     "npm.users-api > postmigrate.executor": "Run",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "preferences.sourceCode.TypeScript",
     "to.speed.mode.migration.done": "true",
     "ts.external.directory.path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/node_modules/typescript/lib",
@@ -245,7 +245,7 @@
       <workItem from="1760225051353" duration="5625000" />
       <workItem from="1760741403085" duration="1590000" />
       <workItem from="1760990429501" duration="3410000" />
-      <workItem from="1764870492039" duration="2294000" />
+      <workItem from="1764870492039" duration="4337000" />
     </task>
     <task id="LOCAL-00001" summary="1.3 - adiconando módulos de configuração e log de porta do servidor">
       <option name="closed" value="true" />
@@ -367,7 +367,31 @@
       <option name="project" value="LOCAL" />
       <updated>1764872570714</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="chore: adição de configurações centralizadas no api-gateway, incluindo módulos de JWT, banco de dados, admin e webhook, e atualização no módulo de usuários para uso do ConfiguredJwtModule">
+      <option name="closed" value="true" />
+      <created>1764872873180</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1764872873180</updated>
+    </task>
+    <task id="LOCAL-00017" summary="chore: adição de configurações centralizadas no auth-api, incluindo módulos de JWT, banco de dados, admin e webhook, atualização no módulo de usuários para uso do ConfiguredJwtModule e inclusão das dependências necessárias">
+      <option name="closed" value="true" />
+      <created>1764872895328</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1764872895328</updated>
+    </task>
+    <task id="LOCAL-00018" summary="chore: atualização do workspace.xml com adição de comandos pnpm, ajustes no tempo de tarefas locais e gerenciamento de configurações">
+      <option name="closed" value="true" />
+      <created>1764872905169</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1764872905169</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -417,6 +441,21 @@
     <MESSAGE value="chore: reorganização de pastas no `api-gateway` e atualização de imports no módulo de usuários, inclusão de dependência `zod`" />
     <MESSAGE value="chore: reorganização de migrations no auth-api, inclusão das dependências `argon2` e `zod`, ajustes no arquivo `pnpm-lock.yaml` e atualizações referentes na configuração do Kysely" />
     <MESSAGE value="chore: adição de módulo JWT customizado com suporte ao api-gateway e auth-api, incluindo testes e configurações" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: adição de módulo JWT customizado com suporte ao api-gateway e auth-api, incluindo testes e configurações" />
+    <MESSAGE value="chore: adição de configurações centralizadas no api-gateway, incluindo módulos de JWT, banco de dados, admin e webhook, e atualização no módulo de usuários para uso do ConfiguredJwtModule" />
+    <MESSAGE value="chore: adição de configurações centralizadas no auth-api, incluindo módulos de JWT, banco de dados, admin e webhook, atualização no módulo de usuários para uso do ConfiguredJwtModule e inclusão das dependências necessárias" />
+    <MESSAGE value="chore: atualização do workspace.xml com adição de comandos pnpm, ajustes no tempo de tarefas locais e gerenciamento de configurações" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: atualização do workspace.xml com adição de comandos pnpm, ajustes no tempo de tarefas locais e gerenciamento de configurações" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/apps/auth-api/src/app.module.ts</url>
+          <line>10</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
