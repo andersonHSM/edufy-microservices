@@ -18,20 +18,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: atualização do workspace.xml com mudanças no gerenciamento de tarefas e configurações da IDE">
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: reorganização de migrations no auth-api, inclusão das dependências `argon2` e `zod`, ajustes no arquivo `pnpm-lock.yaml` e atualizações referentes na configuração do Kysely">
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/jwt/jwt.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/jwt/jwt.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/jwt/jwt.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/jwt/jwt.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/jwt/jwt.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/jwt/jwt.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/dto/signup-user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/dto/signup-user.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/users.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/users.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -60,6 +65,16 @@
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="McpProjectServerCommands">
+    <McpServerCommand>
+      <option name="enabled" value="true" />
+      <option name="name" value="nx-mcp" />
+      <option name="programPath" value="npx" />
+      <option name="arguments" value="-y nx-mcp@latest /Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices" />
+      <option name="workingDirectory" value="" />
+      <envs />
+    </McpServerCommand>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -68,47 +83,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Docker.docker-compose.yml.auth-db: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml.pgadmin: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml.users-db: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Node.js.api-gateway &gt; app.module.ts.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;dev.nx.console.last_ai_configure_notification_timestamp&quot;: &quot;1764441338130&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;prep/aula-3&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/auth-api/src/app/users/users/dto&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
-    &quot;npm.api-gateway &gt; lint.executor&quot;: &quot;Run&quot;,
-    &quot;npm.dev.executor&quot;: &quot;Run&quot;,
-    &quot;npm.migrate.executor&quot;: &quot;Run&quot;,
-    &quot;npm.users-api &gt; codegen.executor&quot;: &quot;Run&quot;,
-    &quot;npm.users-api &gt; migrate.executor&quot;: &quot;Run&quot;,
-    &quot;npm.users-api &gt; postmigrate.executor&quot;: &quot;Run&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.TypeScript&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.docker-compose.yml.auth-db: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.pgadmin: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.users-db: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.api-gateway > app.module.ts.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "dev.nx.console.last_ai_configure_notification_timestamp": "1764441338130",
+    "full.screen.before.presentation.mode": "false",
+    "git-widget-placeholder": "prep/aula-3",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/auth-api/src/libs",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "pnpm",
+    "npm.api-gateway > lint.executor": "Run",
+    "npm.dev.executor": "Run",
+    "npm.migrate.executor": "Run",
+    "npm.users-api > codegen.executor": "Run",
+    "npm.users-api > migrate.executor": "Run",
+    "npm.users-api > postmigrate.executor": "Run",
+    "settings.editor.selected.configurable": "preferences.sourceCode.TypeScript",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
-      &quot;PostgreSQL&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "PostgreSQL"
     ],
-    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: []
+    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
   }
-}</component>
+}]]></component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -120,17 +135,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/libs" />
+      <recent name="$PROJECT_DIR$/apps/api-gateway/src/libs" />
       <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/dto" />
       <recent name="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/dto" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/apps/users-api" />
-      <recent name="$PROJECT_DIR$/apps/auth-api" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/api-gateway/src/libs" />
+      <recent name="$PROJECT_DIR$/apps/api-gateway/src/app" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/libs/database" />
       <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation" />
       <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation/dto" />
-      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/dto" />
-      <recent name="$PROJECT_DIR$/apps/api-gateway/src/users/presentation" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -162,17 +178,14 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.yml.users-db: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="users-db" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
       <method v="2" />
     </configuration>
     <configuration name="migrate" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
@@ -197,18 +210,18 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
         <item itemvalue="Node.js.api-gateway &gt; app.module.ts" />
         <item itemvalue="Docker.docker-compose.yml.pgadmin: Compose Deployment" />
         <item itemvalue="npm.users-api &gt; postmigrate" />
         <item itemvalue="npm.migrate" />
-        <item itemvalue="Docker.docker-compose.yml.users-db: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-WS-252.26830.93" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-WS-252.28238.10" />
       </set>
     </attachedChunks>
   </component>
@@ -222,6 +235,7 @@
       <workItem from="1760225051353" duration="5625000" />
       <workItem from="1760741403085" duration="1590000" />
       <workItem from="1760990429501" duration="3410000" />
+      <workItem from="1764870492039" duration="2065000" />
     </task>
     <task id="LOCAL-00001" summary="1.3 - adiconando módulos de configuração e log de porta do servidor">
       <option name="closed" value="true" />
@@ -311,7 +325,31 @@
       <option name="project" value="LOCAL" />
       <updated>1764449303202</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="chore: ajustes gerais na formatação de código e arquivos de configuração com aplicação do prettier em todo o projeto">
+      <option name="closed" value="true" />
+      <created>1764870307197</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1764870307197</updated>
+    </task>
+    <task id="LOCAL-00013" summary="chore: reorganização de pastas no `api-gateway` e atualização de imports no módulo de usuários, inclusão de dependência `zod`">
+      <option name="closed" value="true" />
+      <created>1764872456221</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1764872456221</updated>
+    </task>
+    <task id="LOCAL-00014" summary="chore: reorganização de migrations no auth-api, inclusão das dependências `argon2` e `zod`, ajustes no arquivo `pnpm-lock.yaml` e atualizações referentes na configuração do Kysely">
+      <option name="closed" value="true" />
+      <created>1764872478212</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1764872478212</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,7 +366,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="aula-2" />
+                        <option value="aula-3" />
                       </list>
                     </value>
                   </entry>
@@ -356,6 +394,10 @@
     <MESSAGE value="3.2.1 - criação do módulo de usuários no auth-api com testes, controller e service básicos" />
     <MESSAGE value="3.2.2 - integração do Swagger ao api-gateway, inclusão de dependências e ajustes nos arquivos principais" />
     <MESSAGE value="chore: atualização do workspace.xml com mudanças no gerenciamento de tarefas e configurações da IDE" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: atualização do workspace.xml com mudanças no gerenciamento de tarefas e configurações da IDE" />
+    <MESSAGE value="chore: atualização do workspace.xml com ajustes nas configurações da IDE e gerenciamento de tarefas" />
+    <MESSAGE value="chore: ajustes gerais na formatação de código e arquivos de configuração com aplicação do prettier em todo o projeto" />
+    <MESSAGE value="chore: reorganização de pastas no `api-gateway` e atualização de imports no módulo de usuários, inclusão de dependência `zod`" />
+    <MESSAGE value="chore: reorganização de migrations no auth-api, inclusão das dependências `argon2` e `zod`, ajustes no arquivo `pnpm-lock.yaml` e atualizações referentes na configuração do Kysely" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: reorganização de migrations no auth-api, inclusão das dependências `argon2` e `zod`, ajustes no arquivo `pnpm-lock.yaml` e atualizações referentes na configuração do Kysely" />
   </component>
 </project>
