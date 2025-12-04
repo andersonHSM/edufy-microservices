@@ -18,18 +18,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: atualização do workspace.xml com adição de comandos pnpm, ajustes no tempo de tarefas locais e gerenciamento de configurações">
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: remoção do módulo webhook do auth-api, centralização de configurações no configuration.module e ajustes de imports no projeto">
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/domain/purchase-confirmed.event.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/domain/user.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/domain/user.repository.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/domain/user.role.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/infrastructure/in-memory.user.repository.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/infrastructure/kysely.user.repository.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/database/constants.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/database/database.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/database/database.provider.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/database/database.type.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/database/kysely.repository.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/configuration.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/configuration.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/libs/jwt/jwt.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/jwt/jwt.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/configuration.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/configuration.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/webhook.config.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/libs/jwt/jwt.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/jwt/jwt.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/test/app.e2e-spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/test/app.e2e-spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/entities/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/entities/user.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation/dto/signup-user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/presentation/dto/signup-user.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation/users.controller.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/presentation/users.controller.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation/users.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/presentation/users.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/users.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.service.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/application/users.service.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/application/users.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +116,7 @@
     "full.screen.before.presentation.mode": "false",
     "git-widget-placeholder": "prep/aula-3",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/api-gateway/src/libs",
+    "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/auth-api/src/libs/database",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -143,18 +152,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/libs/database" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users" />
       <recent name="$PROJECT_DIR$/apps/api-gateway/src/libs" />
       <recent name="$PROJECT_DIR$/apps/auth-api/src/libs" />
       <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/dto" />
-      <recent name="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/dto" />
-      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/application" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app" />
       <recent name="$PROJECT_DIR$/apps/api-gateway/src/libs" />
       <recent name="$PROJECT_DIR$/apps/api-gateway/src/app" />
-      <recent name="$PROJECT_DIR$/apps/auth-api/src/libs/database" />
-      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation" />
-      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation/dto" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -245,7 +254,7 @@
       <workItem from="1760225051353" duration="5625000" />
       <workItem from="1760741403085" duration="1590000" />
       <workItem from="1760990429501" duration="3410000" />
-      <workItem from="1764870492039" duration="4337000" />
+      <workItem from="1764870492039" duration="4921000" />
     </task>
     <task id="LOCAL-00001" summary="1.3 - adiconando módulos de configuração e log de porta do servidor">
       <option name="closed" value="true" />
@@ -391,7 +400,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764872905169</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="chore: remoção do módulo webhook do auth-api, centralização de configurações no configuration.module e ajustes de imports no projeto">
+      <option name="closed" value="true" />
+      <created>1764883365108</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1764883365108</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -444,7 +461,8 @@
     <MESSAGE value="chore: adição de configurações centralizadas no api-gateway, incluindo módulos de JWT, banco de dados, admin e webhook, e atualização no módulo de usuários para uso do ConfiguredJwtModule" />
     <MESSAGE value="chore: adição de configurações centralizadas no auth-api, incluindo módulos de JWT, banco de dados, admin e webhook, atualização no módulo de usuários para uso do ConfiguredJwtModule e inclusão das dependências necessárias" />
     <MESSAGE value="chore: atualização do workspace.xml com adição de comandos pnpm, ajustes no tempo de tarefas locais e gerenciamento de configurações" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: atualização do workspace.xml com adição de comandos pnpm, ajustes no tempo de tarefas locais e gerenciamento de configurações" />
+    <MESSAGE value="chore: remoção do módulo webhook do auth-api, centralização de configurações no configuration.module e ajustes de imports no projeto" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: remoção do módulo webhook do auth-api, centralização de configurações no configuration.module e ajustes de imports no projeto" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
