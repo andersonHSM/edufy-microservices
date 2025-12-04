@@ -1,6 +1,7 @@
-import {CanActivate, ExecutionContext, Inject, Injectable, Logger, UnauthorizedException,} from '@nestjs/common';
+import {CanActivate, ExecutionContext, Inject, Injectable, Logger,} from '@nestjs/common';
 import {Reflector} from '@nestjs/core';
 import {JwtService} from '@nestjs/jwt';
+import {RpcException} from "@nestjs/microservices";
 import {type Request} from 'express';
 import {IncomingMessage} from 'http';
 import {UserEntity} from '../domain/user.entity';
@@ -40,7 +41,7 @@ export class JwtGuard implements CanActivate {
 			return true;
 		} catch (e) {
 			this.logger.error('JWT validation failed', e);
-			throw new UnauthorizedException('Invalid JWT token');
+			throw new RpcException({message: 'Invalid JWT token', code: 401});
 		}
 	}
 
@@ -55,8 +56,8 @@ export class JwtGuard implements CanActivate {
 	private getToken(request: Request): string {
 		const authorization = request.headers['authorization'];
 		if (!authorization || Array.isArray(authorization)) {
-			throw new UnauthorizedException(
-				'Authorization header is missing or malformed',
+			throw new RpcException(
+				{message: 'Authorization header is missing or malformed', code: 401},
 			);
 		}
 		const [_bearer, token] = authorization.split(' ');
