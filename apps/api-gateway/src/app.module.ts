@@ -22,8 +22,8 @@ import {UsersModule} from './users/users.module';
 				useFactory: (configService: ConfigService) => ({
 					transport: Transport.TCP,
 					options: {
-						host: configService.get('userService.host'),
-						port: configService.get('userService.port')
+						host: configService.get('authService.host'),
+						port: configService.get('authService.port')
 					}
 				})
 			}]

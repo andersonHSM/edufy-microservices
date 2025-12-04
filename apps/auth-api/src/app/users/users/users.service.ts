@@ -4,7 +4,7 @@ import {SignupUserDto} from "src/app/users/users/presentation/dto/signup-user.dt
 @Injectable()
 export class UsersService {
 	create(signupUserDto: SignupUserDto) {
-		return 'This action adds a new user';
+		return signupUserDto;
 	}
 
 }
