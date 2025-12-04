@@ -14,10 +14,12 @@ export async function up(db: Kysely<any>): Promise<void> {
 		.addColumn('interests', 'jsonb', (col) => col.defaultTo(sql`'[]'::jsonb`))
 		.addColumn('profilePictureUrl', 'text')
 		.addColumn('created_at', 'timestamptz', (col) =>
-			col.notNull().defaultTo(sql`now()`),
+			col.notNull().defaultTo(sql`now
+                ()`),
 		)
 		.addColumn('updated_at', 'timestamptz', (col) =>
-			col.notNull().defaultTo(sql`now()`),
+			col.notNull().defaultTo(sql`now
+                ()`),
 		)
 		.execute();
 }

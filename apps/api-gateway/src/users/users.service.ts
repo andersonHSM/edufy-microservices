@@ -5,7 +5,7 @@ import {SignupUserDto} from "./presentation/dto/signup-user.dto";
 @Injectable()
 export class UsersService {
 
-	constructor(@Inject('AUTH_API_SERVICE') private readonly authClientProxy: ClientProxy ) {
+	constructor(@Inject('AUTH_API_SERVICE') private readonly authClientProxy: ClientProxy) {
 	}
 
 	public async createUser(body: SignupUserDto) {
