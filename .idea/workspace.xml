@@ -18,14 +18,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: reorganização de migrations no auth-api, inclusão das dependências `argon2` e `zod`, ajustes no arquivo `pnpm-lock.yaml` e atualizações referentes na configuração do Kysely">
-      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/jwt/jwt.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/jwt/jwt.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/jwt/jwt.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/jwt/jwt.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/jwt/jwt.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/jwt/jwt.ts" afterDir="false" />
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: adição de módulo JWT customizado com suporte ao api-gateway e auth-api, incluindo testes e configurações">
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/admin.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/configuration.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/database.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/jwt.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/webhook.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/admin.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/configuration.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/database.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/jwt.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/webhook.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app/users/users.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.module.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +108,7 @@
     "full.screen.before.presentation.mode": "false",
     "git-widget-placeholder": "prep/aula-3",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/auth-api/src/libs",
+    "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/api-gateway/src/libs",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -135,8 +143,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/apps/auth-api/src/libs" />
       <recent name="$PROJECT_DIR$/apps/api-gateway/src/libs" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/libs" />
       <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/dto" />
       <recent name="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/dto" />
       <recent name="$PROJECT_DIR$" />
@@ -153,6 +161,8 @@
     <option name="myCommands">
       <command value="npm run dev" />
       <command value="pnpm install" />
+      <command value="pnpm dev" />
+      <command value="pnpm run dev" />
     </option>
   </component>
   <component name="RunManager" selected="Node.js.api-gateway &gt; app.module.ts">
@@ -235,7 +245,7 @@
       <workItem from="1760225051353" duration="5625000" />
       <workItem from="1760741403085" duration="1590000" />
       <workItem from="1760990429501" duration="3410000" />
-      <workItem from="1764870492039" duration="2065000" />
+      <workItem from="1764870492039" duration="2294000" />
     </task>
     <task id="LOCAL-00001" summary="1.3 - adiconando módulos de configuração e log de porta do servidor">
       <option name="closed" value="true" />
@@ -349,7 +359,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764872478212</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="chore: adição de módulo JWT customizado com suporte ao api-gateway e auth-api, incluindo testes e configurações">
+      <option name="closed" value="true" />
+      <created>1764872570714</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1764872570714</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -398,6 +416,7 @@
     <MESSAGE value="chore: ajustes gerais na formatação de código e arquivos de configuração com aplicação do prettier em todo o projeto" />
     <MESSAGE value="chore: reorganização de pastas no `api-gateway` e atualização de imports no módulo de usuários, inclusão de dependência `zod`" />
     <MESSAGE value="chore: reorganização de migrations no auth-api, inclusão das dependências `argon2` e `zod`, ajustes no arquivo `pnpm-lock.yaml` e atualizações referentes na configuração do Kysely" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: reorganização de migrations no auth-api, inclusão das dependências `argon2` e `zod`, ajustes no arquivo `pnpm-lock.yaml` e atualizações referentes na configuração do Kysely" />
+    <MESSAGE value="chore: adição de módulo JWT customizado com suporte ao api-gateway e auth-api, incluindo testes e configurações" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: adição de módulo JWT customizado com suporte ao api-gateway e auth-api, incluindo testes e configurações" />
   </component>
 </project>
