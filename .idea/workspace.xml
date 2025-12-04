@@ -18,7 +18,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="3.2.2 - integração do Swagger ao api-gateway, inclusão de dependências e ajustes nos arquivos principais" />
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: aplicação do prettier com ajustes de formatação em arquivos nos microservices">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/dto/signup-user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/dto/signup-user.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.service.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,6 +60,16 @@
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="McpProjectServerCommands">
+    <McpServerCommand>
+      <option name="enabled" value="true" />
+      <option name="name" value="nx-mcp" />
+      <option name="programPath" value="npx" />
+      <option name="arguments" value="-y nx-mcp@latest /Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices" />
+      <option name="workingDirectory" value="" />
+      <envs />
+    </McpServerCommand>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -125,8 +144,9 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="npm run dev" />
       <command value="pnpm install" />
+      <command value="npm run dev" />
+      <command value="pnpm run dev" />
     </option>
   </component>
   <component name="RunManager" selected="Docker.docker-compose.yml.pgadmin: Compose Deployment">
@@ -162,18 +182,18 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="migrate" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
-        <script value="migrate" />
+        <script value="dev" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="users-api &gt; migrate" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/apps/users-api/package.json" />
+    <configuration name="migrate" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
         <script value="migrate" />
@@ -194,18 +214,18 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.dev" />
         <item itemvalue="Docker.docker-compose.yml.pgadmin: Compose Deployment" />
         <item itemvalue="npm.users-api &gt; postmigrate" />
         <item itemvalue="npm.migrate" />
         <item itemvalue="Docker.docker-compose.yml.users-db: Compose Deployment" />
-        <item itemvalue="npm.users-api &gt; migrate" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-WS-252.26830.93" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-WS-252.28238.10" />
       </set>
     </attachedChunks>
   </component>
@@ -219,6 +239,9 @@
       <workItem from="1760225051353" duration="5625000" />
       <workItem from="1760741403085" duration="1590000" />
       <workItem from="1760990429501" duration="3410000" />
+      <workItem from="1764781606298" duration="11000" />
+      <workItem from="1764781928811" duration="3778000" />
+      <workItem from="1764867425650" duration="2606000" />
     </task>
     <task id="LOCAL-00001" summary="1.3 - adiconando módulos de configuração e log de porta do servidor">
       <option name="closed" value="true" />
@@ -345,5 +368,17 @@
     <MESSAGE value="3.2.1 - criação do módulo de usuários no auth-api com testes, controller e service básicos" />
     <MESSAGE value="3.2.2 - integração do Swagger ao api-gateway, inclusão de dependências e ajustes nos arquivos principais" />
     <option name="LAST_COMMIT_MESSAGE" value="3.2.2 - integração do Swagger ao api-gateway, inclusão de dependências e ajustes nos arquivos principais" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/apps/api-gateway/src/app.module.ts</url>
+          <line>11</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
