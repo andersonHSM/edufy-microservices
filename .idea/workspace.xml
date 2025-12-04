@@ -18,17 +18,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: implementação de `JwtGuard` e `Public` decorator no módulo de usuários, remoção do evento `PurchaseConfirmedEvent` e ajustes de imports no auth-api">
-      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation/jwt.guard.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation/public.decorator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: refatoração no módulo de usuários do api-gateway, criação do decorator `Public` e implementação do `JwtGuard`, além de ajustes nos imports e estrutura de pastas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation/users.controller.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation/users.controller.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation/dto/signup-user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation/dto/signup-user.dto.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation/users.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation/users.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app/users/users.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app/users/users.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app/users/users.service.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app/users/application/users.service.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app/users/application/users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/application/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/application/users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/presentation/dto/signup-user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/presentation/dto/signup-user.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/presentation/users.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/presentation/users.controller.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,7 +242,7 @@
       <workItem from="1760741403085" duration="1590000" />
       <workItem from="1760990429501" duration="3410000" />
       <workItem from="1764870492039" duration="6047000" />
-      <workItem from="1764885061303" duration="421000" />
+      <workItem from="1764885061303" duration="1657000" />
     </task>
     <task id="LOCAL-00001" summary="1.3 - adiconando módulos de configuração e log de porta do servidor">
       <option name="closed" value="true" />
@@ -415,7 +412,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764884607993</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="chore: refatoração no módulo de usuários do api-gateway, criação do decorator `Public` e implementação do `JwtGuard`, além de ajustes nos imports e estrutura de pastas">
+      <option name="closed" value="true" />
+      <created>1764885511911</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1764885511911</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -445,7 +450,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.4 - criando o compose e adiconando informações sobre os bancos ao projeto" />
     <MESSAGE value="1.5 - configuração do projeto api-gateway" />
     <MESSAGE value="1.6 - configuração do projeto users-api e auth-api" />
     <MESSAGE value="2.0 - remoção de scripts de tabela SQL e ajustes em configurações do projeto" />
@@ -470,7 +474,8 @@
     <MESSAGE value="chore: remoção do módulo webhook do auth-api, centralização de configurações no configuration.module e ajustes de imports no projeto" />
     <MESSAGE value="chore: centralização de configurações no auth-api, refatoração do módulo de usuários, criação de entidades e repositórios, e ajuste de imports no projeto" />
     <MESSAGE value="chore: implementação de `JwtGuard` e `Public` decorator no módulo de usuários, remoção do evento `PurchaseConfirmedEvent` e ajustes de imports no auth-api" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: implementação de `JwtGuard` e `Public` decorator no módulo de usuários, remoção do evento `PurchaseConfirmedEvent` e ajustes de imports no auth-api" />
+    <MESSAGE value="chore: refatoração no módulo de usuários do api-gateway, criação do decorator `Public` e implementação do `JwtGuard`, além de ajustes nos imports e estrutura de pastas" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: refatoração no módulo de usuários do api-gateway, criação do decorator `Public` e implementação do `JwtGuard`, além de ajustes nos imports e estrutura de pastas" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

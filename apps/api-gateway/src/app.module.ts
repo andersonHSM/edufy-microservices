@@ -10,17 +10,20 @@ import {UsersModule} from './app/users/users.module';
 	imports: [
 		ConfigurationModule,
 		ClientsModule.registerAsync({
-			isGlobal: true, clients: [{
-				name: 'AUTH_API_SERVICE',
-				inject: [ConfigService],
-				useFactory: (configService: ConfigService) => ({
-					transport: Transport.TCP,
-					options: {
-						host: configService.get('authService.host'),
-						port: configService.get('authService.port')
-					}
-				})
-			}]
+			isGlobal: true,
+			clients: [
+				{
+					name: 'AUTH_API_SERVICE',
+					inject: [ConfigService],
+					useFactory: (configService: ConfigService) => ({
+						transport: Transport.TCP,
+						options: {
+							host: configService.get('authService.host'),
+							port: configService.get('authService.port')
+						}
+					})
+				}
+			]
 		}),
 		UsersModule,
 	],
