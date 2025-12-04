@@ -18,25 +18,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: aplicação do prettier com ajustes de formatação em arquivos nos microservices">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="chore: refatoração no módulo de usuários do api-gateway, criação do decorator `Public` e implementação do `JwtGuard`, além de ajustes nos imports e estrutura de pastas">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/dto/signup-user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/dto/signup-user.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/users.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/users/users.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/users/users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation/dto/signup-user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation/dto/signup-user.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation/users.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation/users.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/application/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/application/users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/presentation/dto/signup-user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/presentation/dto/signup-user.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/app/users/presentation/users.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/app/users/presentation/users.controller.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="e127f1b12bdc72890644a2a111e3e85e6da65314" />
+        <entry key="$PROJECT_DIR$" value="aula-3" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -70,6 +75,9 @@
       <envs />
     </McpServerCommand>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -85,6 +93,7 @@
     &quot;Docker.docker-compose.yml.users-db: Compose Deployment.executor&quot;: &quot;Run&quot;,
     &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Node.js.api-gateway &gt; app.module.ts.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
@@ -92,9 +101,9 @@
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;dev.nx.console.last_ai_configure_notification_timestamp&quot;: &quot;1764441338130&quot;,
     &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;aula-3&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;prep/aula-3&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/auth-api/src/app/users/users/dto&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/api-gateway/src/app/users/presentation&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -106,6 +115,7 @@
     &quot;npm.users-api &gt; codegen.executor&quot;: &quot;Run&quot;,
     &quot;npm.users-api &gt; migrate.executor&quot;: &quot;Run&quot;,
     &quot;npm.users-api &gt; postmigrate.executor&quot;: &quot;Run&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.TypeScript&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/node_modules/typescript/lib&quot;,
@@ -129,27 +139,32 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/dto" />
-      <recent name="$PROJECT_DIR$/apps/api-gateway/src/users/presentation/dto" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/apps/users-api" />
-      <recent name="$PROJECT_DIR$/apps/auth-api" />
+      <recent name="$PROJECT_DIR$/apps/api-gateway/src/app/users/presentation" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/presentation" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/libs/database" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users" />
+      <recent name="$PROJECT_DIR$/apps/api-gateway/src/libs" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation" />
-      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/presentation/dto" />
-      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/users/dto" />
-      <recent name="$PROJECT_DIR$/apps/api-gateway/src/users/presentation" />
+      <recent name="$PROJECT_DIR$/apps/api-gateway/src/app/users/application" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users/application" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app/users" />
+      <recent name="$PROJECT_DIR$/apps/auth-api/src/app" />
+      <recent name="$PROJECT_DIR$/apps/api-gateway/src/libs" />
     </key>
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="pnpm install" />
       <command value="npm run dev" />
+      <command value="pnpm install" />
+      <command value="pnpm dev" />
       <command value="pnpm run dev" />
     </option>
   </component>
-  <component name="RunManager" selected="Docker.docker-compose.yml.pgadmin: Compose Deployment">
+  <component name="RunManager" selected="Node.js.api-gateway &gt; app.module.ts">
+    <configuration name="api-gateway &gt; app.module.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/apps/api-gateway/src">
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
       <deployment type="docker-compose.yml">
         <settings />
@@ -162,19 +177,6 @@
           <option name="services">
             <list>
               <option value="pgadmin" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="docker-compose.yml.users-db: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="users-db" />
             </list>
           </option>
           <option name="sourceFilePath" value="docker-compose.yml" />
@@ -215,10 +217,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="npm.dev" />
+        <item itemvalue="Node.js.api-gateway &gt; app.module.ts" />
         <item itemvalue="Docker.docker-compose.yml.pgadmin: Compose Deployment" />
         <item itemvalue="npm.users-api &gt; postmigrate" />
         <item itemvalue="npm.migrate" />
-        <item itemvalue="Docker.docker-compose.yml.users-db: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -239,9 +241,8 @@
       <workItem from="1760225051353" duration="5625000" />
       <workItem from="1760741403085" duration="1590000" />
       <workItem from="1760990429501" duration="3410000" />
-      <workItem from="1764781606298" duration="11000" />
-      <workItem from="1764781928811" duration="3778000" />
-      <workItem from="1764867425650" duration="2606000" />
+      <workItem from="1764870492039" duration="6047000" />
+      <workItem from="1764885061303" duration="1657000" />
     </task>
     <task id="LOCAL-00001" summary="1.3 - adiconando módulos de configuração e log de porta do servidor">
       <option name="closed" value="true" />
@@ -323,7 +324,103 @@
       <option name="project" value="LOCAL" />
       <updated>1764440078535</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="chore: atualização do workspace.xml com mudanças no gerenciamento de tarefas e configurações da IDE">
+      <option name="closed" value="true" />
+      <created>1764449303202</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1764449303202</updated>
+    </task>
+    <task id="LOCAL-00012" summary="chore: ajustes gerais na formatação de código e arquivos de configuração com aplicação do prettier em todo o projeto">
+      <option name="closed" value="true" />
+      <created>1764870307197</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1764870307197</updated>
+    </task>
+    <task id="LOCAL-00013" summary="chore: reorganização de pastas no `api-gateway` e atualização de imports no módulo de usuários, inclusão de dependência `zod`">
+      <option name="closed" value="true" />
+      <created>1764872456221</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1764872456221</updated>
+    </task>
+    <task id="LOCAL-00014" summary="chore: reorganização de migrations no auth-api, inclusão das dependências `argon2` e `zod`, ajustes no arquivo `pnpm-lock.yaml` e atualizações referentes na configuração do Kysely">
+      <option name="closed" value="true" />
+      <created>1764872478212</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1764872478212</updated>
+    </task>
+    <task id="LOCAL-00015" summary="chore: adição de módulo JWT customizado com suporte ao api-gateway e auth-api, incluindo testes e configurações">
+      <option name="closed" value="true" />
+      <created>1764872570714</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1764872570714</updated>
+    </task>
+    <task id="LOCAL-00016" summary="chore: adição de configurações centralizadas no api-gateway, incluindo módulos de JWT, banco de dados, admin e webhook, e atualização no módulo de usuários para uso do ConfiguredJwtModule">
+      <option name="closed" value="true" />
+      <created>1764872873180</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1764872873180</updated>
+    </task>
+    <task id="LOCAL-00017" summary="chore: adição de configurações centralizadas no auth-api, incluindo módulos de JWT, banco de dados, admin e webhook, atualização no módulo de usuários para uso do ConfiguredJwtModule e inclusão das dependências necessárias">
+      <option name="closed" value="true" />
+      <created>1764872895328</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1764872895328</updated>
+    </task>
+    <task id="LOCAL-00018" summary="chore: atualização do workspace.xml com adição de comandos pnpm, ajustes no tempo de tarefas locais e gerenciamento de configurações">
+      <option name="closed" value="true" />
+      <created>1764872905169</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1764872905169</updated>
+    </task>
+    <task id="LOCAL-00019" summary="chore: remoção do módulo webhook do auth-api, centralização de configurações no configuration.module e ajustes de imports no projeto">
+      <option name="closed" value="true" />
+      <created>1764883365108</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1764883365108</updated>
+    </task>
+    <task id="LOCAL-00020" summary="chore: centralização de configurações no auth-api, refatoração do módulo de usuários, criação de entidades e repositórios, e ajuste de imports no projeto">
+      <option name="closed" value="true" />
+      <created>1764883956068</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1764883956068</updated>
+    </task>
+    <task id="LOCAL-00021" summary="chore: implementação de `JwtGuard` e `Public` decorator no módulo de usuários, remoção do evento `PurchaseConfirmedEvent` e ajustes de imports no auth-api">
+      <option name="closed" value="true" />
+      <created>1764884607993</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1764884607993</updated>
+    </task>
+    <task id="LOCAL-00022" summary="chore: refatoração no módulo de usuários do api-gateway, criação do decorator `Public` e implementação do `JwtGuard`, além de ajustes nos imports e estrutura de pastas">
+      <option name="closed" value="true" />
+      <created>1764885511911</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1764885511911</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,7 +437,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="aula-2" />
+                        <option value="aula-3" />
                       </list>
                     </value>
                   </entry>
@@ -353,8 +450,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.3 - adiconando módulos de configuração e log de porta do servidor" />
-    <MESSAGE value="1.4 - criando o compose e adiconando informações sobre os bancos ao projeto" />
     <MESSAGE value="1.5 - configuração do projeto api-gateway" />
     <MESSAGE value="1.6 - configuração do projeto users-api e auth-api" />
     <MESSAGE value="2.0 - remoção de scripts de tabela SQL e ajustes em configurações do projeto" />
@@ -367,15 +462,27 @@
     <MESSAGE value="3.2 - implementação de comunicação entre api-gateway e auth-api via microservices TCP, ajustes em serviços e DTOs" />
     <MESSAGE value="3.2.1 - criação do módulo de usuários no auth-api com testes, controller e service básicos" />
     <MESSAGE value="3.2.2 - integração do Swagger ao api-gateway, inclusão de dependências e ajustes nos arquivos principais" />
-    <option name="LAST_COMMIT_MESSAGE" value="3.2.2 - integração do Swagger ao api-gateway, inclusão de dependências e ajustes nos arquivos principais" />
+    <MESSAGE value="chore: atualização do workspace.xml com mudanças no gerenciamento de tarefas e configurações da IDE" />
+    <MESSAGE value="chore: atualização do workspace.xml com ajustes nas configurações da IDE e gerenciamento de tarefas" />
+    <MESSAGE value="chore: ajustes gerais na formatação de código e arquivos de configuração com aplicação do prettier em todo o projeto" />
+    <MESSAGE value="chore: reorganização de pastas no `api-gateway` e atualização de imports no módulo de usuários, inclusão de dependência `zod`" />
+    <MESSAGE value="chore: reorganização de migrations no auth-api, inclusão das dependências `argon2` e `zod`, ajustes no arquivo `pnpm-lock.yaml` e atualizações referentes na configuração do Kysely" />
+    <MESSAGE value="chore: adição de módulo JWT customizado com suporte ao api-gateway e auth-api, incluindo testes e configurações" />
+    <MESSAGE value="chore: adição de configurações centralizadas no api-gateway, incluindo módulos de JWT, banco de dados, admin e webhook, e atualização no módulo de usuários para uso do ConfiguredJwtModule" />
+    <MESSAGE value="chore: adição de configurações centralizadas no auth-api, incluindo módulos de JWT, banco de dados, admin e webhook, atualização no módulo de usuários para uso do ConfiguredJwtModule e inclusão das dependências necessárias" />
+    <MESSAGE value="chore: atualização do workspace.xml com adição de comandos pnpm, ajustes no tempo de tarefas locais e gerenciamento de configurações" />
+    <MESSAGE value="chore: remoção do módulo webhook do auth-api, centralização de configurações no configuration.module e ajustes de imports no projeto" />
+    <MESSAGE value="chore: centralização de configurações no auth-api, refatoração do módulo de usuários, criação de entidades e repositórios, e ajuste de imports no projeto" />
+    <MESSAGE value="chore: implementação de `JwtGuard` e `Public` decorator no módulo de usuários, remoção do evento `PurchaseConfirmedEvent` e ajustes de imports no auth-api" />
+    <MESSAGE value="chore: refatoração no módulo de usuários do api-gateway, criação do decorator `Public` e implementação do `JwtGuard`, além de ajustes nos imports e estrutura de pastas" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: refatoração no módulo de usuários do api-gateway, criação do decorator `Public` e implementação do `JwtGuard`, além de ajustes nos imports e estrutura de pastas" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/apps/api-gateway/src/app.module.ts</url>
-          <line>11</line>
-          <properties lambdaOrdinal="-1" />
+          <url>file://$PROJECT_DIR$/apps/auth-api/src/app.module.ts</url>
+          <line>12</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

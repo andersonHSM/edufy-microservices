@@ -1,19 +1,14 @@
 import {Module} from '@nestjs/common';
-import {ConfigModule} from '@nestjs/config';
-import {UsersModule} from "src/app/users/users/users.module";
+import {UsersModule} from "src/app/users/users.module";
+import {ConfigurationModule} from "src/libs/configuration/configuration.module";
+import {DatabaseModule} from "src/libs/database/database.module";
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
-import configuration from './config/configuration';
 
 @Module({
 	imports: [
-		ConfigModule.forRoot({
-			isGlobal: true,
-			load: [configuration],
-			envFilePath: ['.env', '.env.local'],
-			cache: true,
-			expandVariables: true,
-		}),
+		DatabaseModule,
+		ConfigurationModule,
 		UsersModule
 	],
 	controllers: [AppController],
