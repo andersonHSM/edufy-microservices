@@ -30,7 +30,7 @@ import {UsersModule} from './app/users/users.module';
 		UsersModule,
 	],
 	controllers: [AppController],
-	providers: [AppService, {provide: APP_FILTER, useClass: RpcToHttpExceptionFilter}],
+	providers: [AppService, {provide: APP_FILTER,  useClass: RpcToHttpExceptionFilter}],
 })
 export class AppModule {
 }
