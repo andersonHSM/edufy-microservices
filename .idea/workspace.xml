@@ -18,7 +18,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="refactor: torna o ClientsModule global e ajusta configuração de serviços no auth-api e api-gateway" />
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="refactor: adiciona volumes persistentes para RabbitMQ no docker-compose e ajusta configurações relacionadas na IDE">
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/app/users/application/users.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/app/users/presentation/users.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/app/users/users.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/users-api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users-api/src/app.module.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +35,9 @@
       <option value="directory" />
       <option value="repository" />
     </option>
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="167" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -93,6 +102,7 @@
   "keyToString": {
     "Docker.docker-compose.yml.auth-db: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.pgadmin: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.rabbitmq: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml.users-db: Compose Deployment.executor": "Run",
     "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
@@ -519,7 +529,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765228458698</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="refactor: adiciona volumes persistentes para RabbitMQ no docker-compose e ajusta configurações relacionadas na IDE">
+      <option name="closed" value="true" />
+      <created>1765228597262</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1765228597262</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -549,7 +567,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="chore: atualização do workspace.xml com mudanças no gerenciamento de tarefas e configurações da IDE" />
     <MESSAGE value="chore: atualização do workspace.xml com ajustes nas configurações da IDE e gerenciamento de tarefas" />
     <MESSAGE value="chore: ajustes gerais na formatação de código e arquivos de configuração com aplicação do prettier em todo o projeto" />
     <MESSAGE value="chore: reorganização de pastas no `api-gateway` e atualização de imports no módulo de usuários, inclusão de dependência `zod`" />
@@ -574,6 +591,7 @@
     <MESSAGE value="refactor: ajustes no uso de RabbitMQ e caminhos de migrações no users-api, auth-api e api-gateway" />
     <MESSAGE value="refactor: adiciona suporte a RabbitMQ com amqp-connection-manager no users-api, auth-api e api-gateway, incluindo ajustes de configuração e constantes" />
     <MESSAGE value="refactor: torna o ClientsModule global e ajusta configuração de serviços no auth-api e api-gateway" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: torna o ClientsModule global e ajusta configuração de serviços no auth-api e api-gateway" />
+    <MESSAGE value="refactor: adiciona volumes persistentes para RabbitMQ no docker-compose e ajusta configurações relacionadas na IDE" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: adiciona volumes persistentes para RabbitMQ no docker-compose e ajusta configurações relacionadas na IDE" />
   </component>
 </project>
