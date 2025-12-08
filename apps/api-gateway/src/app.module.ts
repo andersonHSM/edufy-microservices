@@ -1,7 +1,9 @@
 import {Module} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
+import {APP_FILTER} from "@nestjs/core";
 import {ClientsModule, Transport} from "@nestjs/microservices";
 import {ConfigurationModule} from "src/libs/configuration/configuration.module";
+import {RpcToHttpExceptionFilter} from "src/libs/exception-filters/rpc-to-http.exception-filter";
 import {AppController} from "./app.controller";
 import {AppService} from "./app.service";
 import {UsersModule} from './app/users/users.module';
@@ -28,7 +30,7 @@ import {UsersModule} from './app/users/users.module';
 		UsersModule,
 	],
 	controllers: [AppController],
-	providers: [AppService],
+	providers: [AppService, {provide: APP_FILTER,  useClass: RpcToHttpExceptionFilter}],
 })
 export class AppModule {
 }
