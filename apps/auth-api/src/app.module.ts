@@ -15,25 +15,28 @@ import {AppService} from './app.service';
 		DatabaseModule,
 		ConfigurationModule,
 		UsersModule,
-		ClientsModule.registerAsync([
-			{
-				name: USERS_SERVICE,
-				useFactory: (
-					rabbitConfig: ConfigType<typeof rabbitmqConfig>,
-					usersConfig: ConfigType<typeof usersServiceConfig>,
-				) => ({
-					transport: Transport.RMQ,
-					options: {
-						urls: [rabbitConfig.url],
-						queue: usersConfig.queue,
-						queueOptions: {
-							durable: false,
+		ClientsModule.registerAsync({
+			isGlobal: true,
+			clients: [
+				{
+					name: USERS_SERVICE,
+					useFactory: (
+						rabbitConfig: ConfigType<typeof rabbitmqConfig>,
+						usersConfig: ConfigType<typeof usersServiceConfig>,
+					) => ({
+						transport: Transport.RMQ,
+						options: {
+							urls: [rabbitConfig.url],
+							queue: usersConfig.queue,
+							queueOptions: {
+								durable: false,
+							},
 						},
-					},
-				}),
-				inject: [rabbitmqConfig.KEY, usersServiceConfig.KEY],
-			},
-		]),
+					}),
+					inject: [rabbitmqConfig.KEY, usersServiceConfig.KEY],
+				},
+			]
+		}),
 	],
 	controllers: [AppController],
 	providers: [AppService],

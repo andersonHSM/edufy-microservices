@@ -15,33 +15,36 @@ import {RpcToHttpExceptionFilter} from "src/libs/exception-filters/rpc-to-http.e
 @Module({
 	imports: [
 		ConfigurationModule,
-		ClientsModule.registerAsync([
-			{
-				name: AUTH_SERVICE,
-				useFactory: (config: ConfigType<typeof authServiceConfig>) => ({
-					transport: Transport.TCP,
-					options: {
-						host: config.host,
-						port: config.port,
-					},
-				}),
-				inject: [authServiceConfig.KEY],
-			},
-			{
-				name: USERS_SERVICE,
-				useFactory: (config: ConfigType<typeof rabbitmqConfig>) => ({
-					transport: Transport.RMQ,
-					options: {
-						urls: [config.url],
-						queue: config.usersQueue,
-						queueOptions: {
-							durable: false,
+		ClientsModule.registerAsync({
+			isGlobal: true,
+			clients: [
+				{
+					name: AUTH_SERVICE,
+					useFactory: (config: ConfigType<typeof authServiceConfig>) => ({
+						transport: Transport.TCP,
+						options: {
+							host: config.host,
+							port: config.port,
 						},
-					},
-				}),
-				inject: [rabbitmqConfig.KEY],
-			},
-		]),
+					}),
+					inject: [authServiceConfig.KEY],
+				},
+				{
+					name: USERS_SERVICE,
+					useFactory: (config: ConfigType<typeof rabbitmqConfig>) => ({
+						transport: Transport.RMQ,
+						options: {
+							urls: [config.url],
+							queue: config.usersQueue,
+							queueOptions: {
+								durable: false,
+							},
+						},
+					}),
+					inject: [rabbitmqConfig.KEY],
+				},
+			]
+		}),
 		UsersModule,
 	],
 	controllers: [AppController],
