@@ -1,36 +1,49 @@
 import {Module} from "@nestjs/common";
-import {ConfigService} from "@nestjs/config";
+import {ConfigType} from "@nestjs/config";
 import {APP_FILTER} from "@nestjs/core";
 import {ClientsModule, Transport} from "@nestjs/microservices";
+import {AppController} from "src/app.controller";
+import {AppService} from "src/app.service";
+import {UsersModule} from "src/app/users/users.module";
+import authServiceConfig from "src/libs/configuration/auth-service.config";
 import {ConfigurationModule} from "src/libs/configuration/configuration.module";
+import rabbitmqConfig from "src/libs/configuration/rabbitmq.config";
 import {RpcToHttpExceptionFilter} from "src/libs/exception-filters/rpc-to-http.exception-filter";
-import {AppController} from "./app.controller";
-import {AppService} from "./app.service";
-import {UsersModule} from './app/users/users.module';
 
 @Module({
-	imports: [
-		ConfigurationModule,
-		ClientsModule.registerAsync({
-			isGlobal: true,
-			clients: [
-				{
-					name: 'AUTH_API_SERVICE',
-					inject: [ConfigService],
-					useFactory: (configService: ConfigService) => ({
-						transport: Transport.TCP,
-						options: {
-							host: configService.get('authService.host'),
-							port: configService.get('authService.port')
-						}
-					})
-				}
-			]
-		}),
-		UsersModule,
-	],
-	controllers: [AppController],
-	providers: [AppService, {provide: APP_FILTER, useClass: RpcToHttpExceptionFilter}],
+  imports: [
+    ConfigurationModule,
+    ClientsModule.registerAsync([
+      {
+        name: 'AUTH_SERVICE',
+        useFactory: (config: ConfigType<typeof authServiceConfig>) => ({
+          transport: Transport.TCP,
+          options: {
+            host: config.host,
+            port: config.port,
+          },
+        }),
+        inject: [authServiceConfig.KEY],
+      },
+      {
+        name: 'USERS_SERVICE',
+        useFactory: (config: ConfigType<typeof rabbitmqConfig>) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: [config.url],
+            queue: config.usersQueue,
+            queueOptions: {
+              durable: false,
+            },
+          },
+        }),
+        inject: [rabbitmqConfig.KEY],
+      },
+    ]),
+    UsersModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService, {provide: APP_FILTER, useClass: RpcToHttpExceptionFilter}],
 })
 export class AppModule {
 }
