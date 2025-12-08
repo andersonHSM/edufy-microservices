@@ -4,6 +4,7 @@ import adminConfig from './admin.config';
 import databaseConfig from './database.config';
 import jwtConfig from './jwt.config';
 import rabbitmqConfig from './rabbitmq.config';
+import usersServiceConfig from "src/libs/configuration/users-service.config";
 
 @Module({
 	imports: [
@@ -12,7 +13,7 @@ import rabbitmqConfig from './rabbitmq.config';
 			cache: true,
 			expandVariables: true,
 			isGlobal: true,
-			load: [jwtConfig, adminConfig, databaseConfig, rabbitmqConfig],
+			load: [jwtConfig, adminConfig, databaseConfig, rabbitmqConfig, usersServiceConfig],
 		}),
 	],
 })
