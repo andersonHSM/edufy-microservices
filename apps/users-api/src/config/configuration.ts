@@ -32,10 +32,10 @@ export default () => ({
 		ttl: parseInt(process.env.REDIS_TTL ?? '3600', 10),
 		keyPrefix: process.env.REDIS_KEY_PREFIX || 'users:',
 	},
-  rabbitMQ: {
-    url: process.env.RABBITMQ_URL,
-    usersQueue: process.env.RABBITMQ_USERS_QUEUE,
-  },
+	rabbitMQ: {
+		url: process.env.RABBITMQ_URL,
+		usersQueue: process.env.RABBITMQ_USERS_QUEUE,
+	},
 	upload: {
 		maxSize: parseInt(process.env.UPLOAD_MAX_SIZE ?? '10485760', 10), // 10MB
 		allowedTypes: process.env.UPLOAD_ALLOWED_TYPES?.split(',') || ['image/jpeg', 'image/png'],
