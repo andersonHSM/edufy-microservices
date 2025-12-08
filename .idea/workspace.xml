@@ -18,9 +18,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="refactor: introduz módulo de configuração global no users-api utilizando zod para validações e ajustes no bootstrap e microservice">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/users-api/src/config/configuration.ts" beforeDir="false" />
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="refactor: adiciona configuração do usersService no auth-api com validações via zod e integração ao ClientsModule para suporte a RabbitMQ">
+      <change beforePath="$PROJECT_DIR$/apps/users-api/kysely.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users-api/kysely.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -490,7 +489,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765226353652</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="refactor: adiciona configuração do usersService no auth-api com validações via zod e integração ao ClientsModule para suporte a RabbitMQ">
+      <option name="closed" value="true" />
+      <created>1765227477135</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1765227477135</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -520,7 +527,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="3.2 - ajustes no auth-api para inicialização como microservice TCP e integração com o api-gateway via ClientsModule e configuração do host auth-service" />
     <MESSAGE value="3.2 - implementação de comunicação entre api-gateway e auth-api via microservices TCP, ajustes em serviços e DTOs" />
     <MESSAGE value="3.2.1 - criação do módulo de usuários no auth-api com testes, controller e service básicos" />
     <MESSAGE value="3.2.2 - integração do Swagger ao api-gateway, inclusão de dependências e ajustes nos arquivos principais" />
@@ -545,17 +551,7 @@
     <MESSAGE value="fix: adiciona valores padrão para configurações RabbitMQ no users-api para evitar erro ao obter variáveis não definidas" />
     <MESSAGE value="refactor: ajustes de formatação nos arquivos de configuração e serviços relacionados ao RabbitMQ em diversos módulos" />
     <MESSAGE value="refactor: introduz módulo de configuração global no users-api utilizando zod para validações e ajustes no bootstrap e microservice" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: introduz módulo de configuração global no users-api utilizando zod para validações e ajustes no bootstrap e microservice" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/apps/auth-api/src/app.module.ts</url>
-          <line>12</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="refactor: adiciona configuração do usersService no auth-api com validações via zod e integração ao ClientsModule para suporte a RabbitMQ" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: adiciona configuração do usersService no auth-api com validações via zod e integração ao ClientsModule para suporte a RabbitMQ" />
   </component>
 </project>
