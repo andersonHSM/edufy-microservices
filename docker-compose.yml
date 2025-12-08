@@ -71,8 +71,8 @@ services:
       - "5672:5672"
       - "15672:15672"
     volumes:
-      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq/
+      - rabbitmq_log:/var/log/rabbitmq
     networks:
       - edufy-network
     restart: unless-stopped
@@ -110,6 +110,10 @@ volumes:
   redis_data:
     driver: local
   pgadmin_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  rabbitmq_log:
     driver: local
 
 networks:

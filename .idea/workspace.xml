@@ -18,7 +18,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="refactor: adiciona suporte a RabbitMQ com amqp-connection-manager no users-api, auth-api e api-gateway, incluindo ajustes de configuração e constantes" />
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="refactor: torna o ClientsModule global e ajusta configuração de serviços no auth-api e api-gateway" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -164,7 +164,7 @@
       <command value="pnpm run dev" />
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.api-gateway &gt; app.module.ts">
+  <component name="RunManager" selected="Docker.docker-compose.yml.rabbitmq: Compose Deployment">
     <configuration name="api-gateway &gt; app.module.ts" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" typescript-loader="bundled" working-dir="$PROJECT_DIR$/apps/api-gateway/src">
       <method v="2" />
     </configuration>
@@ -174,12 +174,12 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.yml.pgadmin: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+    <configuration name="docker-compose.yml.rabbitmq: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
           <option name="services">
             <list>
-              <option value="pgadmin" />
+              <option value="rabbitmq" />
             </list>
           </option>
           <option name="sourceFilePath" value="docker-compose.yml" />
@@ -219,11 +219,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.yml.rabbitmq: Compose Deployment" />
         <item itemvalue="npm.dev" />
         <item itemvalue="npm.users-api &gt; postmigrate" />
         <item itemvalue="npm.migrate" />
         <item itemvalue="Node.js.api-gateway &gt; app.module.ts" />
-        <item itemvalue="Docker.docker-compose.yml.pgadmin: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -511,7 +511,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765228133977</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="refactor: torna o ClientsModule global e ajusta configuração de serviços no auth-api e api-gateway">
+      <option name="closed" value="true" />
+      <created>1765228458698</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1765228458698</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -541,7 +549,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="3.2.2 - integração do Swagger ao api-gateway, inclusão de dependências e ajustes nos arquivos principais" />
     <MESSAGE value="chore: atualização do workspace.xml com mudanças no gerenciamento de tarefas e configurações da IDE" />
     <MESSAGE value="chore: atualização do workspace.xml com ajustes nas configurações da IDE e gerenciamento de tarefas" />
     <MESSAGE value="chore: ajustes gerais na formatação de código e arquivos de configuração com aplicação do prettier em todo o projeto" />
@@ -566,6 +573,7 @@
     <MESSAGE value="refactor: adiciona configuração do usersService no auth-api com validações via zod e integração ao ClientsModule para suporte a RabbitMQ" />
     <MESSAGE value="refactor: ajustes no uso de RabbitMQ e caminhos de migrações no users-api, auth-api e api-gateway" />
     <MESSAGE value="refactor: adiciona suporte a RabbitMQ com amqp-connection-manager no users-api, auth-api e api-gateway, incluindo ajustes de configuração e constantes" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: adiciona suporte a RabbitMQ com amqp-connection-manager no users-api, auth-api e api-gateway, incluindo ajustes de configuração e constantes" />
+    <MESSAGE value="refactor: torna o ClientsModule global e ajusta configuração de serviços no auth-api e api-gateway" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: torna o ClientsModule global e ajusta configuração de serviços no auth-api e api-gateway" />
   </component>
 </project>
