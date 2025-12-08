@@ -4,6 +4,8 @@ import {APP_FILTER} from "@nestjs/core";
 import {ClientsModule, Transport} from "@nestjs/microservices";
 import {AppController} from "src/app.controller";
 import {AppService} from "src/app.service";
+import {AUTH_SERVICE} from "src/app/auth/auth.constants";
+import {USERS_SERVICE} from "src/app/users/users.constants";
 import {UsersModule} from "src/app/users/users.module";
 import authServiceConfig from "src/libs/configuration/auth-service.config";
 import {ConfigurationModule} from "src/libs/configuration/configuration.module";
@@ -15,7 +17,7 @@ import {RpcToHttpExceptionFilter} from "src/libs/exception-filters/rpc-to-http.e
 		ConfigurationModule,
 		ClientsModule.registerAsync([
 			{
-				name: 'AUTH_SERVICE',
+				name: AUTH_SERVICE,
 				useFactory: (config: ConfigType<typeof authServiceConfig>) => ({
 					transport: Transport.TCP,
 					options: {
@@ -26,7 +28,7 @@ import {RpcToHttpExceptionFilter} from "src/libs/exception-filters/rpc-to-http.e
 				inject: [authServiceConfig.KEY],
 			},
 			{
-				name: 'USERS_SERVICE',
+				name: USERS_SERVICE,
 				useFactory: (config: ConfigType<typeof rabbitmqConfig>) => ({
 					transport: Transport.RMQ,
 					options: {
