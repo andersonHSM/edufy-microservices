@@ -18,7 +18,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="4.3: integração com RabbitMQ nos serviços users-api, auth-api e api-gateway, adicionando configuração, suporte a filas e ajustes no docker-compose">
+    <list default="true" id="6ff26dc4-1749-4907-a270-ee5137b4e980" name="Changes" comment="refactor: ajustes de formatação nos arquivos de configuração e serviços relacionados ao RabbitMQ em diversos módulos">
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/app.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/configuration.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/database.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/healthcheck.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/jwt.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/logging.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/notifications.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/rabbitmq.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/redis.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/security.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/services.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/throttle.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/users-api/src/libs/configuration/upload.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/auth-service.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/auth-service.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/rabbitmq.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api-gateway/src/libs/configuration/rabbitmq.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/rabbitmq.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth-api/src/libs/configuration/rabbitmq.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/users-api/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users-api/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/users-api/src/config/configuration.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users-api/src/config/configuration.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/users-api/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/apps/users-api/src/main.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +61,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="aula-3" />
+        <entry key="$PROJECT_DIR$" value="prep/aula-4" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -84,6 +103,9 @@
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="33wPEbuiP9WUqpdyP2z6uKIkd6O" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -103,7 +125,7 @@
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "dev.nx.console.last_ai_configure_notification_timestamp": "1765225105817",
     "full.screen.before.presentation.mode": "false",
-    "git-widget-placeholder": "prep/aula-3",
+    "git-widget-placeholder": "prep/aula-4",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/apps/api-gateway/src/app/users/presentation",
     "node.js.detected.package.eslint": "true",
@@ -462,7 +484,23 @@
       <option name="project" value="LOCAL" />
       <updated>1765225921868</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="fix: adiciona valores padrão para configurações RabbitMQ no users-api para evitar erro ao obter variáveis não definidas">
+      <option name="closed" value="true" />
+      <created>1765225963319</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1765225963319</updated>
+    </task>
+    <task id="LOCAL-00029" summary="refactor: ajustes de formatação nos arquivos de configuração e serviços relacionados ao RabbitMQ em diversos módulos">
+      <option name="closed" value="true" />
+      <created>1765226113498</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1765226113498</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -492,8 +530,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="chore:  inclusão de estilos da IDE" />
-    <MESSAGE value="3.2 - " />
     <MESSAGE value="chore: integrate microservices between api-gateway and auth-api, add user module adjustments, update configs, and include new dependencies" />
     <MESSAGE value="3.2 - ajustes no auth-api para inicialização como microservice TCP e integração com o api-gateway via ClientsModule e configuração do host auth-service" />
     <MESSAGE value="3.2 - implementação de comunicação entre api-gateway e auth-api via microservices TCP, ajustes em serviços e DTOs" />
@@ -517,7 +553,9 @@
     <MESSAGE value="3.6.1 (bônus) - implementação de filtro global de exceções para tratamento genérico de erros HTTP, refatoração do RpcToHttpExceptionFilter e ajustes nos controladores do api-gateway" />
     <MESSAGE value="refactor: ajustes gerais no api-gateway, incluindo formatação de código, refinamento dos imports e melhorias no RpcToHttpExceptionFilter" />
     <MESSAGE value="4.3: integração com RabbitMQ nos serviços users-api, auth-api e api-gateway, adicionando configuração, suporte a filas e ajustes no docker-compose" />
-    <option name="LAST_COMMIT_MESSAGE" value="4.3: integração com RabbitMQ nos serviços users-api, auth-api e api-gateway, adicionando configuração, suporte a filas e ajustes no docker-compose" />
+    <MESSAGE value="fix: adiciona valores padrão para configurações RabbitMQ no users-api para evitar erro ao obter variáveis não definidas" />
+    <MESSAGE value="refactor: ajustes de formatação nos arquivos de configuração e serviços relacionados ao RabbitMQ em diversos módulos" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: ajustes de formatação nos arquivos de configuração e serviços relacionados ao RabbitMQ em diversos módulos" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
