@@ -26,4 +26,8 @@ export class UsersService {
     await this.userRepository.save(newUser);
     return newUser;
   }
+
+  public getUserById(subId: string) {
+    return this.userRepository.findOneById(subId);
+  }
 }

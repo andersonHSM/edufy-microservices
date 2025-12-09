@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseFilters } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, UseFilters } from "@nestjs/common";
 import { UsersService } from "src/app/users/application/users.service";
 import { SignupUserDto } from "src/app/users/presentation/dto/signup-user.dto";
 import { Public } from "src/app/users/presentation/public.decorator";
@@ -11,7 +11,12 @@ export class UsersController {
   @Public()
   @UseFilters(new RpcToHttpExceptionFilter())
   @Post("")
-  public async createUser(@Body() body: SignupUserDto) {
+  public createUser(@Body() body: SignupUserDto) {
     return this.usersService.createUser(body);
+  }
+
+  @Get(":subId")
+  public getUserById(@Param("subId") subId: string) {
+    return this.usersService.getUserById(subId);
   }
 }
