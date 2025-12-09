@@ -1,9 +1,8 @@
-import {Inject, Injectable} from '@nestjs/common';
-import {DATABASE} from './constants';
-import {type Database} from './database.type';
+import { Inject, Injectable } from '@nestjs/common';
+import { DATABASE } from './constants';
+import { type Database } from './database.type';
 
 @Injectable()
 export abstract class KyselyRepository {
-	constructor(@Inject(DATABASE) protected readonly database: Database) {
-	}
+  constructor(@Inject(DATABASE) protected readonly database: Database) {}
 }

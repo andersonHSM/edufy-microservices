@@ -1,4 +1,4 @@
-import {UserEntity} from "src/app/users/domain/user.entity";
+import { UserEntity } from 'src/app/users/domain/user.entity';
 
 export const UserRepository = Symbol('UserRepository');
 

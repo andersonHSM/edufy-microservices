@@ -1,12 +1,15 @@
-import {Inject, Injectable} from '@nestjs/common';
-import {JwtService} from "@nestjs/jwt";
-import {ClientProxy, RpcException} from "@nestjs/microservices";
+import { Inject, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import * as argon2 from 'argon2';
-import {USERS_SERVICE} from "src/app/users/users.constants";
-import {UserEntity} from "src/app/users/domain/user.entity";
-import {type IUserRepository, UserRepository} from "src/app/users/domain/user.repository";
-import {UserSignedUpEvent} from "src/app/users/events/user-signed-up.event";
-import {SignupUserDto} from "src/app/users/presentation/dto/signup-user.dto";
+import { UserEntity } from 'src/app/users/domain/user.entity';
+import {
+  type IUserRepository,
+  UserRepository,
+} from 'src/app/users/domain/user.repository';
+import { UserSignedUpEvent } from 'src/app/users/events/user-signed-up.event';
+import { SignupUserDto } from 'src/app/users/presentation/dto/signup-user.dto';
+import { USERS_SERVICE } from 'src/app/users/users.constants';
 
 @Injectable()
 export class UsersService {
@@ -18,7 +21,9 @@ export class UsersService {
   ) {}
 
   public async create(signupUserDto: SignupUserDto) {
-    const userExists = await this.userRepository.findOneByEmail(signupUserDto.email);
+    const userExists = await this.userRepository.findOneByEmail(
+      signupUserDto.email,
+    );
     if (userExists) {
       throw new RpcException({
         message: 'Email already in use',

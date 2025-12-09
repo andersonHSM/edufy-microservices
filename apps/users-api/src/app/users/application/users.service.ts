@@ -1,8 +1,11 @@
-import {Inject, Injectable} from "@nestjs/common";
-import {RpcException} from "@nestjs/microservices";
-import {UserEntity} from "src/app/users/domain/user.entity";
-import {type IUserRepository, UserRepository} from "src/app/users/domain/user.repository";
-import {UserSignedUpEvent} from "src/app/users/events/user-signed-up.event";
+import { Inject, Injectable } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
+import { UserEntity } from 'src/app/users/domain/user.entity';
+import {
+  type IUserRepository,
+  UserRepository,
+} from 'src/app/users/domain/user.repository';
+import { UserSignedUpEvent } from 'src/app/users/events/user-signed-up.event';
 
 @Injectable()
 export class UsersService {

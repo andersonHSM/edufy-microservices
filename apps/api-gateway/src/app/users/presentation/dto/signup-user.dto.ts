@@ -1,5 +1,13 @@
-import {ApiProperty} from "@nestjs/swagger";
-import {IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, IsUrl, MinLength} from 'class-validator';
+import { ApiProperty } from "@nestjs/swagger";
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUrl,
+  MinLength,
+} from "class-validator";
 
 export class SignupUserDto {
   @ApiProperty()
@@ -20,10 +28,10 @@ export class SignupUserDto {
   @MinLength(8)
   password: string;
 
-  @ApiProperty({enum: ['support_agent', 'student', 'instructor']})
-  @IsEnum(['support_agent', 'student', 'instructor'])
+  @ApiProperty({ enum: ["support_agent", "student", "instructor"] })
+  @IsEnum(["support_agent", "student", "instructor"])
   @IsOptional()
-  role?: 'support_agent' | 'student' | 'instructor';
+  role?: "support_agent" | "student" | "instructor";
 
   @ApiProperty()
   @IsString()

@@ -1,4 +1,4 @@
-import {type Kysely} from 'kysely';
+import { type Kysely } from 'kysely';
 
 const CONSTRAINT_NAME = 'users_sub_id_unique';
 
