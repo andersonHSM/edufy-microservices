@@ -1,18 +1,17 @@
-import {Body, Controller, Post, UseFilters} from '@nestjs/common';
-import {UsersService} from 'src/app/users/application/users.service';
-import {SignupUserDto} from "src/app/users/presentation/dto/signup-user.dto";
-import {Public} from "src/app/users/presentation/public.decorator";
-import {RpcToHttpExceptionFilter} from "src/libs/exception-filters/rpc-to-http.exception-filter";
+import { Body, Controller, Post, UseFilters } from "@nestjs/common";
+import { UsersService } from "src/app/users/application/users.service";
+import { SignupUserDto } from "src/app/users/presentation/dto/signup-user.dto";
+import { Public } from "src/app/users/presentation/public.decorator";
+import { RpcToHttpExceptionFilter } from "src/libs/exception-filters/rpc-to-http.exception-filter";
 
-@Controller('users')
+@Controller("users")
 export class UsersController {
-	constructor(private readonly usersService: UsersService) {
-	}
+  constructor(private readonly usersService: UsersService) {}
 
-	@Public()
-	@UseFilters(new RpcToHttpExceptionFilter())
-	@Post("")
-	public async createUser(@Body() body: SignupUserDto) {
-		return this.usersService.createUser(body);
-	}
+  @Public()
+  @UseFilters(new RpcToHttpExceptionFilter())
+  @Post("")
+  public async createUser(@Body() body: SignupUserDto) {
+    return this.usersService.createUser(body);
+  }
 }
