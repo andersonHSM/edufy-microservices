@@ -1,18 +1,33 @@
-import {IsEmail, IsEnum, IsNotEmpty, MinLength} from 'class-validator';
+import {IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, IsUrl, MinLength} from 'class-validator';
 import {UserRole, type UserRoleEnum} from "src/app/users/domain/user.role";
 
 export class SignupUserDto {
-	@IsNotEmpty()
-	name: string;
+  @IsNotEmpty()
+  @IsString()
+  firstName: string;
 
-	@IsNotEmpty()
-	@IsEmail()
-	email: string;
+  @IsNotEmpty()
+  @IsString()
+  lastName: string;
 
-	@MinLength(8)
-	password: string;
+  @IsEmail()
+  email: string;
 
-	@IsNotEmpty()
-	@IsEnum(UserRole, {always: true})
-	role?: UserRoleEnum;
+  @MinLength(8)
+  password: string;
+
+  @IsEnum(UserRole, {always: true})
+  @IsOptional()
+  role?: UserRoleEnum;
+
+  @IsString()
+  @IsOptional()
+  biography?: string;
+
+  @IsOptional()
+  interests?: string[];
+
+  @IsUrl()
+  @IsOptional()
+  profilePictureUrl?: string;
 }
