@@ -1,5 +1,11 @@
 import { Controller, Logger } from '@nestjs/common';
-import { Ctx, EventPattern, Payload, RmqContext } from '@nestjs/microservices';
+import {
+  Ctx,
+  EventPattern,
+  MessagePattern,
+  Payload,
+  RmqContext,
+} from '@nestjs/microservices';
 import { UsersService } from 'src/app/users/application/users.service';
 import { UserSignedUpEvent } from 'src/app/users/events/user-signed-up.event';
 
@@ -7,6 +13,11 @@ import { UserSignedUpEvent } from 'src/app/users/events/user-signed-up.event';
 export class UsersController {
   private readonly logger = new Logger(UsersController.name);
   constructor(private readonly usersService: UsersService) {}
+
+  @MessagePattern('getUserById')
+  public async getUserById(subId: string) {
+    return this.usersService.getUserById(subId);
+  }
 
   @EventPattern('user_signed_up')
   public async handleUserSignedUp(

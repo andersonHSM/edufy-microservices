@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import configuration from "src/libs/config/configuration";
+import usersServiceConfig from "src/libs/configuration/users-service.config";
 import adminConfig from "./admin.config";
 import authServiceConfig from "./auth-service.config";
 import databaseConfig from "./database.config";
@@ -23,6 +24,7 @@ import webhookConfig from "./webhook.config";
         webhookConfig,
         rabbitmqConfig,
         authServiceConfig,
+        usersServiceConfig,
       ],
     }),
   ],
