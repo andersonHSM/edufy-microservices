@@ -16,7 +16,7 @@ export default defineConfig({
     });
   },
   migrations: {
-    migrationFolder: './libs/database/migrations',
+    migrationFolder: './src/libs/database/migrations',
   },
   plugins: [new CamelCasePlugin(), new DeduplicateJoinsPlugin()],
   $env: {

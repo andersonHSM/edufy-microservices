@@ -73,6 +73,7 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq/
       - rabbitmq_log:/var/log/rabbitmq
+      - ./docker/rabbitmq/definitions.json:/opt/rabbitmq/definitions.json:ro
     networks:
       - edufy-network
     restart: unless-stopped
