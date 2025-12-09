@@ -1,12 +1,16 @@
 import {Module} from "@nestjs/common";
-import {ConfigService} from "@nestjs/config";
+import {ConfigType} from "@nestjs/config";
 import {APP_FILTER} from "@nestjs/core";
 import {ClientsModule, Transport} from "@nestjs/microservices";
+import {AppController} from "src/app.controller";
+import {AppService} from "src/app.service";
+import {AUTH_SERVICE} from "src/app/auth/auth.constants";
+import {USERS_SERVICE} from "src/app/users/users.constants";
+import {UsersModule} from "src/app/users/users.module";
+import authServiceConfig from "src/libs/configuration/auth-service.config";
 import {ConfigurationModule} from "src/libs/configuration/configuration.module";
+import rabbitmqConfig from "src/libs/configuration/rabbitmq.config";
 import {RpcToHttpExceptionFilter} from "src/libs/exception-filters/rpc-to-http.exception-filter";
-import {AppController} from "./app.controller";
-import {AppService} from "./app.service";
-import {UsersModule} from './app/users/users.module';
 
 @Module({
 	imports: [
@@ -15,16 +19,30 @@ import {UsersModule} from './app/users/users.module';
 			isGlobal: true,
 			clients: [
 				{
-					name: 'AUTH_API_SERVICE',
-					inject: [ConfigService],
-					useFactory: (configService: ConfigService) => ({
+					name: AUTH_SERVICE,
+					useFactory: (config: ConfigType<typeof authServiceConfig>) => ({
 						transport: Transport.TCP,
 						options: {
-							host: configService.get('authService.host'),
-							port: configService.get('authService.port')
-						}
-					})
-				}
+							host: config.host,
+							port: config.port,
+						},
+					}),
+					inject: [authServiceConfig.KEY],
+				},
+				{
+					name: USERS_SERVICE,
+					useFactory: (config: ConfigType<typeof rabbitmqConfig>) => ({
+						transport: Transport.RMQ,
+						options: {
+							urls: [config.url],
+							queue: config.usersQueue,
+							queueOptions: {
+								durable: false,
+							},
+						},
+					}),
+					inject: [rabbitmqConfig.KEY],
+				},
 			]
 		}),
 		UsersModule,
