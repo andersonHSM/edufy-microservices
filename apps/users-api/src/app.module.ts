@@ -9,7 +9,7 @@ import {AppService} from './app.service';
 	imports: [
 		ConfigurationModule,
 		UsersModule,
-    DatabaseModule,
+		DatabaseModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

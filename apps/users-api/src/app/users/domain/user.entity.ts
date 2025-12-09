@@ -1,3 +1,5 @@
+import {PartialWithNull} from "src/libs/types/partial-with-null.type";
+
 export class UserEntity {
   sub_id: string;
   email: string;
@@ -5,10 +7,16 @@ export class UserEntity {
   lastName: string;
   role?: string;
   biography?: string;
-  interests?: string[];
+  interests?: string[] | unknown;
   profilePictureUrl?: string;
   createdAt: Date;
   updatedAt: Date;
+
+  static fromProps(props: PartialWithNull<UserEntity>): UserEntity {
+    const user = new UserEntity();
+    Object.assign(user, props);
+    return user;
+  }
 
   static create(data: Omit<UserEntity, 'createdAt' | 'updatedAt'>): UserEntity {
     const user = new UserEntity();
