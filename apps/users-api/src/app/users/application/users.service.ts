@@ -10,12 +10,10 @@ import { UserSignedUpEvent } from 'src/app/users/events/user-signed-up.event';
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject(UserRepository)
-    private readonly userRepository: IUserRepository,
+    @Inject(UserRepository) private readonly userRepository: IUserRepository,
   ) {}
-
-  async createUser(data: UserSignedUpEvent) {
-    const userExists = await this.userRepository.findOneByEmail(data.email);
+  public async createUser(payload: UserSignedUpEvent) {
+    const userExists = await this.userRepository.findOneByEmail(payload.email);
     if (userExists) {
       throw new RpcException({
         message: 'Email already in use',
@@ -23,16 +21,7 @@ export class UsersService {
       });
     }
 
-    const newUser = UserEntity.create({
-      sub_id: data.sub_id,
-      email: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      role: data.role,
-      biography: data.biography,
-      interests: data.interests,
-      profilePictureUrl: data.profilePictureUrl,
-    });
+    const newUser = UserEntity.create(payload);
 
     await this.userRepository.save(newUser);
     return newUser;

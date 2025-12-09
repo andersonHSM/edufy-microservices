@@ -1,11 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import rabbitmqConfig from 'src/libs/configuration/rabbitmq.config';
+import rabbitmqConfig, {
+  RabbitMQConfig,
+} from 'src/libs/configuration/rabbitmq.config';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const appContext = await NestFactory.createApplicationContext(AppModule);
-  const config = appContext.get(rabbitmqConfig.KEY);
+  const config = appContext.get<RabbitMQConfig>(rabbitmqConfig.KEY);
 
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
