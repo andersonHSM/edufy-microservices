@@ -29,7 +29,11 @@ import {AppService} from './app.service';
 							urls: [rabbitConfig.url],
 							queue: usersConfig.queue,
 							queueOptions: {
-								durable: false,
+								durable: true,
+								arguments: {
+									'x-dead-letter-exchange': 'users_dlx',
+									'x-dead-letter-routing-key': 'users_dlq_routing_key',
+								}
 							},
 						},
 					}),

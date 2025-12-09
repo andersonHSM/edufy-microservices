@@ -41,14 +41,19 @@ export class KyselyUserRepository
 				subId: user.sub_id,
 				email: user.email,
 				role: user.role,
-				updatedAt: new Date(),
 				firstName: user.firstName,
-				lastName: user.lastName
+				lastName: user.lastName,
+				interests: JSON.stringify(user.interests as string[]),
 			})
 			.onConflict((oc) =>
 				oc.column('subId').doUpdateSet({
 					role: user.role,
+					email: user.email,
+					biography: user.biography,
+					interests: JSON.stringify(user.interests as string[]),
 					updatedAt: new Date(),
+					firstName: user.firstName,
+					lastName: user.lastName,
 				}),
 			)
 			.execute();
