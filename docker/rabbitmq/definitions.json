@@ -1,0 +1,59 @@
+{
+	"exchanges": [
+		{
+			"name": "users_exchange",
+			"vhost": "/",
+			"type": "direct",
+			"durable": true,
+			"auto_delete": false,
+			"internal": false,
+			"arguments": {}
+		},
+		{
+			"name": "users_dlx",
+			"vhost": "/",
+			"type": "fanout",
+			"durable": true,
+			"auto_delete": false,
+			"internal": false,
+			"arguments": {}
+		}
+	],
+	"queues": [
+		{
+			"name": "users_queue",
+			"vhost": "/",
+			"durable": true,
+			"auto_delete": false,
+			"arguments": {
+				"x-dead-letter-exchange": "users_dlx",
+				"x-dead-letter-routing-key": "users_dlq_routing_key"
+			}
+		},
+		{
+			"name": "users_dlq",
+			"vhost": "/",
+			"durable": true,
+			"auto_delete": false,
+			"arguments": {}
+		}
+	],
+	"bindings": [
+		{
+			"source": "users_exchange",
+			"vhost": "/",
+			"destination": "users_queue",
+			"destination_type": "queue",
+			"routing_key": "user_signed_up",
+			"arguments": {}
+		},
+		{
+			"source": "users_dlx",
+			"vhost": "/",
+			"destination": "users_dlq",
+			"destination_type": "queue",
+			"routing_key": "users_dlq_routing_key",
+			"arguments": {}
+		}
+	]
+}
