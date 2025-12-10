@@ -1,4 +1,4 @@
-export class UserSignedUpEvent {
+export class UserCreatedEvent {
   constructor(
     public readonly sub_id: string,
     public readonly email: string,
