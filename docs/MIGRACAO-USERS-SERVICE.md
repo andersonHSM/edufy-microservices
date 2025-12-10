@@ -21,19 +21,20 @@ Gerenciar o ciclo de vida, perfil e dados cadastrais dos usuários, separando es
 
 ## Estratégia de Dados (Duplicação)
 
-
-
 - **Papel:** Source of Truth para Dados Pessoais (Nome, Foto, Bio).
 
 - **Responsabilidade de Eventos:**
 
-  - **EMISSOR CRÍTICO:** Ao atualizar `name` ou `profilePictureUrl` na rota `PATCH /users/me`, DEVE emitir o evento `user_updated` (payload `sub_id`).
+    - **EMISSOR CRÍTICO:** Ao atualizar `name` ou `profilePictureUrl` na rota `PATCH /users/me`, DEVE emitir o evento
+      `user_updated` (payload `sub_id`).
 
-  - Este evento é o gatilho para `courses`, `enrollments` e `support` atualizarem suas cópias locais.
+    - Este evento é o gatilho para `courses`, `enrollments` e `support` atualizarem suas cópias locais.
 
-  - **Escuta:** `user_created` (de `auth-api`, payload `sub`) para criar registro inicial de perfil (`sub` como `sub_id`).
+    - **Escuta:** `user_created` (de `auth-api`, payload `sub`) para criar registro inicial de perfil (`sub` como
+      `sub_id`).
 
-  - **(Nota Importante para Consumidor):** O listener para `user_created` deve implementar `manual acknowledgement` e DLQ para garantir resiliência.
+    - **(Nota Importante para Consumidor):** O listener para `user_created` deve implementar `manual acknowledgement` e
+      DLQ para garantir resiliência.
 
 ## Modelagem de Dados
 

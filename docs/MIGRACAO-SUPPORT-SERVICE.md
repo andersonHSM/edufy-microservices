@@ -25,15 +25,16 @@ Sistema de Tickets de suporte (Helpdesk).
 
 - **Escrita:**
 
-  - Ao criar ticket/resposta, persistir dados do autor (do Token com `sub_id` ou TCP `users-api`).
+    - Ao criar ticket/resposta, persistir dados do autor (do Token com `sub_id` ou TCP `users-api`).
 
 - **Atualização (Consumidor):**
 
-  - Escutar `user_updated` (payload `sub_id`).
+    - Escutar `user_updated` (payload `sub_id`).
 
-  - Se um usuário muda de nome, atualizar tickets ABERTOS. Tickets FECHADOS podem manter histórico (decisão de negócio).
+    - Se um usuário muda de nome, atualizar tickets ABERTOS. Tickets FECHADOS podem manter histórico (decisão de
+      negócio).
 
-  - **(Nota Importante):** O consumidor do `user_updated` deve implementar `manual acknowledgement` e DLQ.
+    - **(Nota Importante):** O consumidor do `user_updated` deve implementar `manual acknowledgement` e DLQ.
 
 - **Benefício:** Painel do agente carrega instantaneamente sem N+1 requests para `users-api`.
 

@@ -27,11 +27,12 @@ Centralizar a lógica de autenticação e gerenciamento de tokens JWT, migrando 
 
 - **Responsabilidade de Eventos:**
 
-  - Emitir `user_created` sempre que um usuário se cadastrar.
+    - Emitir `user_created` sempre que um usuário se cadastrar.
 
-  - Escutar `user_role_assigned` para atualizar roles no token.
+    - Escutar `user_role_assigned` para atualizar roles no token.
 
-  - **(Nota Importante para Consumidor):** O listener para `user_role_assigned` deve implementar `manual acknowledgement` e DLQ para garantir resiliência.
+    - **(Nota Importante para Consumidor):** O listener para `user_role_assigned` deve implementar
+      `manual acknowledgement` e DLQ para garantir resiliência.
 
 ## Modelagem de Dados
 
