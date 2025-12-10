@@ -22,11 +22,11 @@ Este documento detalha o status da migração das rotas do projeto monolítico p
 
 ## 2. Users Service (`users-api`)
 
-| Método  | Rota (Monolito)           | Status         | Rota (Microsserviço) | Notas                                                                                                                                                                                                                                         |
-|:--------|:--------------------------|:---------------|:---------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `GET`   | `/users/me`               | **[OK]**       | `/users/:subId`      | A rota foi migrada, mas o monolito busca `ticketsResolved`, o que é uma dependência do módulo de suporte. A versão do microsserviço deve retornar apenas os dados do usuário.                                                                 |
-| `PATCH` | `/users/me`               | **[Pendente]** | `/users/:subId`      | A ser implementado no `users-api`.                                                                                                                                                                                                            |
-| `POST`  | `/users/self-assign-role` | **[Pendente]** | `/users/me/role`     | A ser implementado no `users-api`.
+| Método  | Rota (Monolito)           | Status         | Rota (Microsserviço) | Notas                                                                                                                                                                         |
+|:--------|:--------------------------|:---------------|:---------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GET`   | `/users/me`               | **[OK]**       | `/users/:subId`      | A rota foi migrada, mas o monolito busca `ticketsResolved`, o que é uma dependência do módulo de suporte. A versão do microsserviço deve retornar apenas os dados do usuário. |
+| `PATCH` | `/users/me`               | **[Pendente]** | `/users/:subId`      | A ser implementado no `users-api`.                                                                                                                                            |
+| `POST`  | `/users/self-assign-role` | **[Pendente]** | `/users/me/role`     | A ser implementado no `users-api`.                                                                                                                                            |
 
 ---
 
