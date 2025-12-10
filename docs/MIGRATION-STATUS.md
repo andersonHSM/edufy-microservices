@@ -25,20 +25,20 @@ Este documento detalha o status da migração das rotas do projeto monolítico p
 
 ## 1. Auth Service (`auth-api`)
 
-| Método | Rota (Monolito) | Status         | Rota (Microsserviço)                                               | Rota (API Gateway) | Notas                                                                                                      |
-|:-------|:----------------|:---------------|:-------------------------------------------------------------------|:-------------------|:-----------------------------------------------------------------------------------------------------------|
-| `POST` | `/users`        | **[OK]**       | `@MessagePattern('create_user')` / `@EventPattern('user_created')` | `POST /users`      | A rota de criação de usuário (`signup`) foi migrada (Síncrono - TCP) e emite evento assíncrono (RabbitMQ). |
-| `POST` | `/users/login`  | **[Pendente]** | `@MessagePattern('auth_login')`                                    | `POST /auth/login` | A lógica de login deve ser centralizada no `auth-api`. **[Protocolo: TCP]**                                |
+| Método | Rota (Monolito) | Status        | Rota (Microsserviço)                                               | Rota (API Gateway) | Notas                                                                                                      |
+|:-------|:----------------|:--------------|:-------------------------------------------------------------------|:-------------------|:-----------------------------------------------------------------------------------------------------------|
+| `POST` | `/users`        | **[OK]**      | `@MessagePattern('create_user')` / `@EventPattern('user_created')` | `POST /users`      | A rota de criação de usuário (`signup`) foi migrada (Síncrono - TCP) e emite evento assíncrono (RabbitMQ). |
+| `POST` | `/users/login`  | **[Parcial]** | `@MessagePattern('auth_login')`                                    | `POST /auth/login` | Implementado no `auth-api`, mas falta expor no `api-gateway`. **[Protocolo: TCP]**                         |
 
 ---
 
 ## 2. Users Service (`users-api`)
 
-| Método  | Rota (Monolito)           | Status         | Rota (Microsserviço)                                                     | Rota (API Gateway)    | Notas                                                                                                                       |
-|:--------|:--------------------------|:---------------|:-------------------------------------------------------------------------|:----------------------|:----------------------------------------------------------------------------------------------------------------------------|
-| `GET`   | `/users/me`               | **[OK]**       | `@MessagePattern('get_user_by_id')`                                      | `GET /users/me`       | O gateway injeta o SUB_ID do usuário token. Monolito busca `ticketsResolved`, o que deve ser removido. **[Protocolo: TCP]** |
-| `PATCH` | `/users/me`               | **[Pendente]** | `@MessagePattern('update_user')` / `@EventPattern('user_updated')`       | `PATCH /users/me`     | A ser implementado. Atualiza localmente e emite evento `user_updated` para réplicas. **[Protocolo: TCP + RabbitMQ]**        |
-| `POST`  | `/users/self-assign-role` | **[Pendente]** | `@MessagePattern('assign_role')` / `@EventPattern('user_role_assigned')` | `POST /users/me/role` | Atribuição de role pelo usuário (Síncrono - TCP) e notifica `auth-api` assincronamente (RabbitMQ).                          |
+| Método  | Rota (Monolito)           | Status   | Rota (Microsserviço)                                                     | Rota (API Gateway)    | Notas                                                                                                                       |
+|:--------|:--------------------------|:---------|:-------------------------------------------------------------------------|:----------------------|:----------------------------------------------------------------------------------------------------------------------------|
+| `GET`   | `/users/me`               | **[OK]** | `@MessagePattern('getUserById')`                                         | `GET /users/me`       | O gateway injeta o SUB_ID do usuário token. Monolito busca `ticketsResolved`, o que deve ser removido. **[Protocolo: TCP]** |
+| `PATCH` | `/users/me`               | **[OK]** | `@MessagePattern('update_user')` / `@EventPattern('user_updated')`       | `PATCH /users/me`     | Implementado. Atualiza localmente e emite evento `user_updated`. **[Protocolo: TCP + RabbitMQ]**                            |
+| `POST`  | `/users/self-assign-role` | **[OK]** | `@MessagePattern('assign_role')` / `@EventPattern('user_role_assigned')` | `POST /users/me/role` | Atribuição de role pelo usuário (Síncrono - TCP) e notifica `auth-api` assincronamente (RabbitMQ).                          |
 
 ---
 
