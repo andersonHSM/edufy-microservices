@@ -9,6 +9,13 @@ Gerenciar o catálogo de cursos, incluindo criação, listagem e detalhes.
 - **Request/Response:** TCP (`@MessagePattern`)
 - **Eventos:** RabbitMQ (`@EventPattern`)
 
+## Configuração de Filas (RabbitMQ)
+
+- **Fila Principal:** `courses_queue`
+- **Exchange de DLQ:** `courses_dlx`
+- **Routing Key de DLQ:** `courses_dlq_routing_key`
+- **Fila de DLQ:** `courses_dlq`
+
 ## Rotas a Migrar
 
 | Origem (Monolito)       | Destino (Microserviço - TCP)          | Destino (Gateway - HTTP)  | Status         |

@@ -10,6 +10,13 @@ Centralizar a lógica de autenticação e gerenciamento de tokens JWT, migrando 
 - **Request/Response:** TCP (`@MessagePattern`)
 - **Eventos:** RabbitMQ (`@EventPattern`)
 
+## Configuração de Filas (RabbitMQ)
+
+- **Fila Principal:** `auth_queue`
+- **Exchange de DLQ:** `auth_dlx`
+- **Routing Key de DLQ:** `auth_dlq_routing_key`
+- **Fila de DLQ:** `auth_dlq`
+
 ## Rotas a Migrar
 
 | Origem (Monolito)      | Destino (Microserviço - TCP)     | Destino (Gateway - HTTP) | Status         |

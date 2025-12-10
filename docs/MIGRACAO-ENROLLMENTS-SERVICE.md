@@ -9,6 +9,13 @@ Gerenciar matrículas, compras e histórico de pagamentos.
 - **Request/Response:** TCP (`@MessagePattern`)
 - **Eventos:** RabbitMQ (`@EventPattern`)
 
+## Configuração de Filas (RabbitMQ)
+
+- **Fila Principal:** `enrollments_queue`
+- **Exchange de DLQ:** `enrollments_dlx`
+- **Routing Key de DLQ:** `enrollments_dlq_routing_key`
+- **Fila de DLQ:** `enrollments_dlq`
+
 ## Rotas a Migrar
 
 | Origem (Monolito)                | Destino (Microserviço - TCP)              | Destino (Gateway - HTTP)          | Status         |

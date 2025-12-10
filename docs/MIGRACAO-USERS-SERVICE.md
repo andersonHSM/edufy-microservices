@@ -9,6 +9,13 @@ Gerenciar o ciclo de vida, perfil e dados cadastrais dos usuários, separando es
 - **Request/Response:** TCP (`@MessagePattern`)
 - **Eventos:** RabbitMQ (`@EventPattern`)
 
+## Configuração de Filas (RabbitMQ)
+
+- **Fila Principal:** `users_queue`
+- **Exchange de DLQ:** `users_dlx`
+- **Routing Key de DLQ:** `users_dlq_routing_key`
+- **Fila de DLQ:** `users_dlq`
+
 ## Rotas a Migrar
 
 | Origem (Monolito)              | Destino (Microserviço - TCP)        | Destino (Gateway - HTTP) | Status         |
