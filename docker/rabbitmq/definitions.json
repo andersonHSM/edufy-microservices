@@ -17,6 +17,51 @@
       "auto_delete": false,
       "internal": false,
       "arguments": {}
+    },
+    {
+      "name": "auth_dlx",
+      "vhost": "/",
+      "type": "fanout",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "courses_dlx",
+      "vhost": "/",
+      "type": "fanout",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "courses_exchange",
+      "vhost": "/",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "enrollments_dlx",
+      "vhost": "/",
+      "type": "fanout",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "support_dlx",
+      "vhost": "/",
+      "type": "fanout",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
     }
   ],
   "queues": [
@@ -32,6 +77,74 @@
     },
     {
       "name": "users_dlq",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "auth_queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "auth_dlx",
+        "x-dead-letter-routing-key": "auth_dlq_routing_key"
+      }
+    },
+    {
+      "name": "auth_dlq",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "courses_queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "courses_dlx",
+        "x-dead-letter-routing-key": "courses_dlq_routing_key"
+      }
+    },
+    {
+      "name": "courses_dlq",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "enrollments_queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "enrollments_dlx",
+        "x-dead-letter-routing-key": "enrollments_dlq_routing_key"
+      }
+    },
+    {
+      "name": "enrollments_dlq",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "support_queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "support_dlx",
+        "x-dead-letter-routing-key": "support_dlq_routing_key"
+      }
+    },
+    {
+      "name": "support_dlq",
       "vhost": "/",
       "durable": true,
       "auto_delete": false,
@@ -53,6 +166,86 @@
       "destination": "users_dlq",
       "destination_type": "queue",
       "routing_key": "users_dlq_routing_key",
+      "arguments": {}
+    },
+    {
+      "source": "auth_dlx",
+      "vhost": "/",
+      "destination": "auth_dlq",
+      "destination_type": "queue",
+      "routing_key": "auth_dlq_routing_key",
+      "arguments": {}
+    },
+    {
+      "source": "users_exchange",
+      "vhost": "/",
+      "destination": "users_queue",
+      "destination_type": "queue",
+      "routing_key": "user_created",
+      "arguments": {}
+    },
+    {
+      "source": "users_exchange",
+      "vhost": "/",
+      "destination": "auth_queue",
+      "destination_type": "queue",
+      "routing_key": "user_role_assigned",
+      "arguments": {}
+    },
+    {
+      "source": "users_exchange",
+      "vhost": "/",
+      "destination": "courses_queue",
+      "destination_type": "queue",
+      "routing_key": "user_updated",
+      "arguments": {}
+    },
+    {
+      "source": "users_exchange",
+      "vhost": "/",
+      "destination": "enrollments_queue",
+      "destination_type": "queue",
+      "routing_key": "user_updated",
+      "arguments": {}
+    },
+    {
+      "source": "users_exchange",
+      "vhost": "/",
+      "destination": "support_queue",
+      "destination_type": "queue",
+      "routing_key": "user_updated",
+      "arguments": {}
+    },
+    {
+      "source": "courses_dlx",
+      "vhost": "/",
+      "destination": "courses_dlq",
+      "destination_type": "queue",
+      "routing_key": "courses_dlq_routing_key",
+      "arguments": {}
+    },
+    {
+      "source": "courses_exchange",
+      "vhost": "/",
+      "destination": "enrollments_queue",
+      "destination_type": "queue",
+      "routing_key": "course_updated",
+      "arguments": {}
+    },
+    {
+      "source": "enrollments_dlx",
+      "vhost": "/",
+      "destination": "enrollments_dlq",
+      "destination_type": "queue",
+      "routing_key": "enrollments_dlq_routing_key",
+      "arguments": {}
+    },
+    {
+      "source": "support_dlx",
+      "vhost": "/",
+      "destination": "support_dlq",
+      "destination_type": "queue",
+      "routing_key": "support_dlq_routing_key",
       "arguments": {}
     }
   ]
