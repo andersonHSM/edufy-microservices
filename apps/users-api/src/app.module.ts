@@ -26,6 +26,10 @@ import { AppService } from './app.service';
               queue: config.authQueue,
               queueOptions: {
                 durable: true,
+                arguments: {
+                  'x-dead-letter-exchange': 'auth_dlx',
+                  'x-dead-letter-routing-key': 'auth_dlq_routing_key',
+                },
               },
             },
           }),

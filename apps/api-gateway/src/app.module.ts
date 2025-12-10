@@ -53,7 +53,11 @@ import { RpcToHttpExceptionFilter } from "src/libs/exception-filters/rpc-to-http
               urls: [config.url],
               queue: config.usersQueue,
               queueOptions: {
-                durable: false,
+                durable: true,
+                arguments: {
+                  "x-dead-letter-exchange": "users_dlx",
+                  "x-dead-letter-routing-key": "users_dlq_routing_key",
+                },
               },
             },
           }),

@@ -55,6 +55,7 @@ export class UsersService {
     if (!user) throw new RpcException({ message: 'User not found', code: 404 });
 
     user.role = role;
+    user.sub_id = subId;
     await this.userRepository.save(user);
 
     this.authClient.emit(
