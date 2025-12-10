@@ -1,5 +1,11 @@
 import { Controller } from '@nestjs/common';
-import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
+import {
+  Ctx,
+  EventPattern,
+  MessagePattern,
+  Payload,
+  RmqContext,
+} from '@nestjs/microservices';
 import { UsersService } from 'src/app/users/application/users.service';
 import { UserRoleAssignedEvent } from 'src/app/users/events/user-role-assigned.event';
 import { LoginDto } from 'src/app/users/presentation/dto/login.dto';
@@ -23,7 +29,18 @@ export class UsersController {
   }
 
   @EventPattern('user_role_assigned')
-  handleUserRoleAssigned(@Payload() data: UserRoleAssignedEvent) {
-    return this.usersService.updateRole(data.sub_id, data.role);
+  async handleUserRoleAssigned(
+    @Payload() data: UserRoleAssignedEvent,
+    @Ctx() context: RmqContext,
+  ) {
+    const channel = context.getChannelRef();
+    const originalMsg = context.getMessage();
+
+    try {
+      await this.usersService.updateRole(data.sub_id, data.role);
+      channel.ack(originalMsg);
+    } catch (error) {
+      channel.nack(originalMsg, false, false);
+    }
   }
 }
