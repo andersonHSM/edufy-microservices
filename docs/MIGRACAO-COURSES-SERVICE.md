@@ -18,11 +18,11 @@ Gerenciar o catálogo de cursos, incluindo criação, listagem e detalhes.
 
 ## Rotas a Migrar
 
-| Origem (Monolito)       | Destino (Microserviço - TCP)          | Destino (Gateway - HTTP)  | Status         |
-|:------------------------|:--------------------------------------|:--------------------------|:---------------|
-| `GET /courses`          | `@MessagePattern('list_courses')`     | `GET /courses`            | **[Pendente]** |
-| `GET /courses/:id`      | `@MessagePattern('get_course_by_id')` | `GET /courses/:id`        | **[Pendente]** |
-| `GET /users/me/courses` | `@MessagePattern('list_my_courses')`  | `GET /courses/my-courses` | **[Pendente]** |
+| Origem (Monolito)       | Destino (Microserviço - TCP)          | Destino (Gateway - HTTP)  | Status   |
+|:------------------------|:--------------------------------------|:--------------------------|:---------|
+| `GET /courses`          | `@MessagePattern('list_courses')`     | `GET /courses`            | **[OK]** |
+| `GET /courses/:id`      | `@MessagePattern('get_course_by_id')` | `GET /courses/:id`        | **[OK]** |
+| `GET /users/me/courses` | `@MessagePattern('list_my_courses')`  | `GET /courses/my-courses` | **[OK]** |
 
 ## Estratégia de Dados (Duplicação)
 
@@ -48,7 +48,3 @@ Gerenciar o catálogo de cursos, incluindo criação, listagem e detalhes.
 | `instructor_avatar` | String  | **[Novo]**                  | Cópia da foto do instrutor (User).  |
 
 *(Nota: Tabelas de Seções/Aulas do Learning Scope também serão criadas aqui, mas focando primeiro na migração)*
-
-## Próximos Passos
-
-- Criar o microsserviço `courses-api`.

@@ -1,5 +1,17 @@
 # Relatório de Status da Migração de Rotas
 
+**Nota Importante:** Todos os microsserviços que interagem com o banco de dados (`auth-api`, `users-api`, `courses-api`) agora utilizam Kysely como ORM, garantindo uma abordagem unificada para acesso a dados.
+
+## Estratégia de Banco de Dados
+
+Cada microsserviço deve possuir seu próprio banco de dados isolado. Esta abordagem garante:
+- **Autonomia:** Microsserviços podem evoluir e serem implantados independentemente, sem afetar outros serviços devido a alterações de esquema de banco de dados.
+- **Acoplamento Fraco:** Reduz a dependência entre os serviços, tornando o sistema mais resiliente a falhas.
+- **Escalabilidade:** Permite escalar bancos de dados individualmente conforme a necessidade de cada serviço.
+- **Propriedade Clara:** Cada equipe ou serviço é responsável pelo seu próprio banco de dados e seus dados.
+
+A replicação de dados entre serviços deve ser feita exclusivamente através de eventos assíncronos (e.g., RabbitMQ), conforme detalhado na seção "Mapeamento de Dependências e Fluxo de Dados". Evite acesso direto ou compartilhamento de bancos de dados entre microsserviços.
+
 Este documento detalha o status da migração das rotas do projeto monolítico para a nova arquitetura de microsserviços.
 
 ## Legenda
@@ -25,10 +37,10 @@ Este documento detalha o status da migração das rotas do projeto monolítico p
 
 ## 1. Auth Service (`auth-api`)
 
-| Método | Rota (Monolito) | Status        | Rota (Microsserviço)                                               | Rota (API Gateway) | Notas                                                                                                      |
-|:-------|:----------------|:--------------|:-------------------------------------------------------------------|:-------------------|:-----------------------------------------------------------------------------------------------------------|
-| `POST` | `/users`        | **[OK]**      | `@MessagePattern('create_user')` / `@EventPattern('user_created')` | `POST /users`      | A rota de criação de usuário (`signup`) foi migrada (Síncrono - TCP) e emite evento assíncrono (RabbitMQ). |
-| `POST` | `/users/login`  | **[OK]**      | `@MessagePattern('auth_login')`                                    | `POST /auth/login` | Rota de login agora exposta via API Gateway. **[Protocolo: TCP]**                                          |
+| Método | Rota (Monolito) | Status   | Rota (Microsserviço)                                               | Rota (API Gateway) | Notas                                                                                                      |
+|:-------|:----------------|:---------|:-------------------------------------------------------------------|:-------------------|:-----------------------------------------------------------------------------------------------------------|
+| `POST` | `/users`        | **[OK]** | `@MessagePattern('create_user')` / `@EventPattern('user_created')` | `POST /users`      | A rota de criação de usuário (`signup`) foi migrada (Síncrono - TCP) e emite evento assíncrono (RabbitMQ). |
+| `POST` | `/users/login`  | **[OK]** | `@MessagePattern('auth_login')`                                    | `POST /auth/login` | Rota de login agora exposta via API Gateway. **[Protocolo: TCP]**                                          |
 
 ---
 
@@ -44,11 +56,11 @@ Este documento detalha o status da migração das rotas do projeto monolítico p
 
 ## 3. Courses Service (`courses-api`)
 
-| Método | Rota (Monolito)     | Status         | Rota (Microsserviço)                  | Rota (API Gateway)        | Notas                                                                                                           |
-|:-------|:--------------------|:---------------|:--------------------------------------|:--------------------------|:----------------------------------------------------------------------------------------------------------------|
-| `GET`  | `/courses`          | **[Pendente]** | `@MessagePattern('list_courses')`     | `GET /courses`            | Lista cursos com dados do instrutor replicados localmente. **[Protocolo: TCP]**                                 |
-| `GET`  | `/courses/:id`      | **[Pendente]** | `@MessagePattern('get_course_by_id')` | `GET /courses/:id`        | Retorna detalhes com dados do instrutor replicados. **[Protocolo: TCP]**                                        |
-| `GET`  | `/users/me/courses` | **[Mover]**    | `@MessagePattern('list_my_courses')`  | `GET /courses/my-courses` | Esta rota deve ser movida para o `courses-api` e receber o `user_sub_id` do `api-gateway`. **[Protocolo: TCP]** |
+| Método | Rota (Monolito)     | Status   | Rota (Microsserviço)                  | Rota (API Gateway)        | Notas                                                                                                           |
+|:-------|:--------------------|:---------|:--------------------------------------|:--------------------------|:----------------------------------------------------------------------------------------------------------------|
+| `GET`  | `/courses`          | **[OK]** | `@MessagePattern('list_courses')`     | `GET /courses`            | Lista cursos com dados do instrutor replicados localmente. **[Protocolo: TCP]**                                 |
+| `GET`  | `/courses/:id`      | **[OK]** | `@MessagePattern('get_course_by_id')` | `GET /courses/:id`        | Retorna detalhes com dados do instrutor replicados. **[Protocolo: TCP]**                                        |
+| `GET`  | `/users/me/courses` | **[OK]** | `@MessagePattern('list_my_courses')`  | `GET /courses/my-courses` | Esta rota deve ser movida para o `courses-api` e receber o `user_sub_id` do `api-gateway`. **[Protocolo: TCP]** |
 
 ---
 
