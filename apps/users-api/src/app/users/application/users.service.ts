@@ -39,6 +39,7 @@ export class UsersService {
     const user = await this.userRepository.findOneById(subId);
     if (!user) throw new RpcException({ message: 'User not found', code: 404 });
 
+    user.sub_id = subId;
     if (dto.firstName) user.firstName = dto.firstName;
     if (dto.lastName) user.lastName = dto.lastName;
     if (dto.biography) user.biography = dto.biography;
