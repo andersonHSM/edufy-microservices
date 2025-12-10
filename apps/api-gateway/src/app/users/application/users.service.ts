@@ -17,6 +17,17 @@ export class UsersService {
     return this.authClientProxy.send("createUser", body).pipe(
       timeout(5000),
       catchError((err) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        return throwError(() => new RpcException(err));
+      }),
+    );
+  }
+
+  public getUserById(subId: string) {
+    return this.usersTcpClientProxy.send("getUserById", subId).pipe(
+      timeout(5000),
+      catchError((err) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         return throwError(() => new RpcException(err));
       }),
     );
