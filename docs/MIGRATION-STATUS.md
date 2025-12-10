@@ -31,21 +31,21 @@ Este documento detalha o status da migração das rotas do projeto monolítico p
 
 ## 2. Users Service (`users-api`)
 
-| Método  | Rota (Monolito)           | Status         | Rota (Microsserviço)                                                     | Rota (API Gateway)    | Notas                                                                                                                   |
-|:--------|:--------------------------|:---------------|:-------------------------------------------------------------------------|:----------------------|:------------------------------------------------------------------------------------------------------------------------|
-| `GET`   | `/users/me`               | **[OK]**       | `@MessagePattern('get_user_by_id')`                                      | `GET /users/me`       | O gateway injeta o ID do usuário token. Monolito busca `ticketsResolved`, o que deve ser removido. **[Protocolo: TCP]** |
-| `PATCH` | `/users/me`               | **[Pendente]** | `@MessagePattern('update_user')` / `@EventPattern('user_updated')`       | `PATCH /users/me`     | A ser implementado. Atualiza localmente e emite evento `user_updated` para réplicas. **[Protocolo: TCP + RabbitMQ]**    |
-| `POST`  | `/users/self-assign-role` | **[Pendente]** | `@MessagePattern('assign_role')` / `@EventPattern('user_role_assigned')` | `POST /users/me/role` | Atribuição de role pelo usuário (Síncrono - TCP) e notifica `auth-api` assincronamente (RabbitMQ).                      |
+| Método  | Rota (Monolito)           | Status         | Rota (Microsserviço)                                                     | Rota (API Gateway)    | Notas                                                                                                                       |
+|:--------|:--------------------------|:---------------|:-------------------------------------------------------------------------|:----------------------|:----------------------------------------------------------------------------------------------------------------------------|
+| `GET`   | `/users/me`               | **[OK]**       | `@MessagePattern('get_user_by_id')`                                      | `GET /users/me`       | O gateway injeta o SUB_ID do usuário token. Monolito busca `ticketsResolved`, o que deve ser removido. **[Protocolo: TCP]** |
+| `PATCH` | `/users/me`               | **[Pendente]** | `@MessagePattern('update_user')` / `@EventPattern('user_updated')`       | `PATCH /users/me`     | A ser implementado. Atualiza localmente e emite evento `user_updated` para réplicas. **[Protocolo: TCP + RabbitMQ]**        |
+| `POST`  | `/users/self-assign-role` | **[Pendente]** | `@MessagePattern('assign_role')` / `@EventPattern('user_role_assigned')` | `POST /users/me/role` | Atribuição de role pelo usuário (Síncrono - TCP) e notifica `auth-api` assincronamente (RabbitMQ).                          |
 
 ---
 
 ## 3. Courses Service (`courses-api`)
 
-| Método | Rota (Monolito)     | Status         | Rota (Microsserviço)                  | Rota (API Gateway)        | Notas                                                                                                      |
-|:-------|:--------------------|:---------------|:--------------------------------------|:--------------------------|:-----------------------------------------------------------------------------------------------------------|
-| `GET`  | `/courses`          | **[Pendente]** | `@MessagePattern('list_courses')`     | `GET /courses`            | Lista cursos com dados do instrutor replicados localmente. **[Protocolo: TCP]**                            |
-| `GET`  | `/courses/:id`      | **[Pendente]** | `@MessagePattern('get_course_by_id')` | `GET /courses/:id`        | Retorna detalhes com dados do instrutor replicados. **[Protocolo: TCP]**                                   |
-| `GET`  | `/users/me/courses` | **[Mover]**    | `@MessagePattern('list_my_courses')`  | `GET /courses/my-courses` | Esta rota deve ser movida para o `courses-api` e receber o `userId` do `api-gateway`. **[Protocolo: TCP]** |
+| Método | Rota (Monolito)     | Status         | Rota (Microsserviço)                  | Rota (API Gateway)        | Notas                                                                                                           |
+|:-------|:--------------------|:---------------|:--------------------------------------|:--------------------------|:----------------------------------------------------------------------------------------------------------------|
+| `GET`  | `/courses`          | **[Pendente]** | `@MessagePattern('list_courses')`     | `GET /courses`            | Lista cursos com dados do instrutor replicados localmente. **[Protocolo: TCP]**                                 |
+| `GET`  | `/courses/:id`      | **[Pendente]** | `@MessagePattern('get_course_by_id')` | `GET /courses/:id`        | Retorna detalhes com dados do instrutor replicados. **[Protocolo: TCP]**                                        |
+| `GET`  | `/users/me/courses` | **[Mover]**    | `@MessagePattern('list_my_courses')`  | `GET /courses/my-courses` | Esta rota deve ser movida para o `courses-api` e receber o `user_sub_id` do `api-gateway`. **[Protocolo: TCP]** |
 
 ---
 
@@ -83,7 +83,7 @@ via Eventos.
 - **Duplicação (Recebe):**
     - Nenhuma (Autossuficiente).
 - **Eventos (Emite):**
-    - `user_created`: Para outros serviços criarem suas réplicas/perfis.
+    - `user_created` (`user_sub_id`): Para outros serviços criarem suas réplicas/perfis.
 
 ### 2. Users Service (`users-api`)
 
@@ -91,9 +91,10 @@ via Eventos.
 - **Duplicação (Recebe):**
     - Nenhuma (Autossuficiente).
 - **Eventos (Emite):**
-    - `user_updated`: **CRÍTICO**. Disparado ao alterar nome/foto. Consumido por `courses`, `enrollments`, `support`
+    - `user_updated` (`user_sub_id`): **CRÍTICO**. Disparado ao alterar nome/foto. Consumido por `courses`,
+      `enrollments`, `support`
       para atualizar réplicas.
-    - `user_role_assigned`: Para `auth-api`.
+    - `user_role_assigned` (`user_sub_id`, `role`): Para `auth-api`.
 
 ### 3. Courses Service (`courses-api`)
 
@@ -113,9 +114,10 @@ via Eventos.
     - `course_title`, `course_thumbnail`: Snapshot no momento da matrícula.
     - `student_name`: Cópia para listagem rápida.
 - **Dependências:**
-    - **Síncrona (TCP):** Validação de `course_id` e `user_id` no checkout (pode ser evitada se tivermos tabela de
+    - **Síncrona (TCP):** Validação de `course_id` e `user_sub_id` no checkout (pode ser evitada se tivermos tabela de
       réplica completa, mas validação síncrona é mais segura para pagamentos).
-    - **Assíncrona (RabbitMQ):** Escuta `user_updated` (atualizar nome do aluno) e `course_updated` (atualizar título do
+    - **Assíncrona (RabbitMQ):** Escuta `user_updated` (atualizar nome do aluno) e `course_updated` (actualizar título
+      do
       curso).
 
 ### 5. Support Service (`support-api`)
