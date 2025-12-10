@@ -1,16 +1,17 @@
+import { ConfigType } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import appConfig, { AppConfig } from 'src/libs/configuration/app.config';
-import rabbitmqConfig, {
-  RabbitMQConfig,
-} from 'src/libs/configuration/rabbitmq.config';
+import appConfig from 'src/libs/configuration/app.config';
+import rabbitmqConfig from 'src/libs/configuration/rabbitmq.config';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const rabbitMQConfig = app.get<RabbitMQConfig>(rabbitmqConfig.KEY);
-  const appConfigs = app.get<AppConfig>(appConfig.KEY);
+  const rabbitMQConfig = app.get<ConfigType<typeof rabbitmqConfig>>(
+    rabbitmqConfig.KEY,
+  );
+  const appConfigs = app.get<ConfigType<typeof appConfig>>(appConfig.KEY);
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,

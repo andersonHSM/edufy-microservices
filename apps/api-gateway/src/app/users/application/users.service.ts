@@ -32,4 +32,8 @@ export class UsersService {
       }),
     );
   }
+
+  public getUserById(subId: string) {
+    return this.usersTcpClientProxy.send("getUserById", subId);
+  }
 }
