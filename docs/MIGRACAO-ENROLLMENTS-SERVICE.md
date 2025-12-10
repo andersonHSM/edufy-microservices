@@ -21,17 +21,24 @@ Gerenciar matrículas, compras e histórico de pagamentos.
 ## Estratégia de Dados (Duplicação)
 
 - **Schema:** A tabela `enrollments` deve armazenar SNAPSHOTS:
-    - `course_title` (para não quebrar histórico se curso mudar nome ou for deletado).
-    - `course_price_at_purchase`.
-    - `student_name` (para facilitar listagem administrativa).
+
+  - `course_title` (para não quebrar histórico se curso mudar nome ou for deletado).
+
+  - `course_price_at_purchase`.
+
+  - `student_name` (para facilitar listagem administrativa).
+
 - **Escrita:**
-    - No checkout, buscar dados atuais via TCP (`courses-api`, `users-api`) e persistir o snapshot. (Validação de
-      `course_id` e `user_sub_id`)
+
+  - No checkout, buscar dados atuais via TCP (`courses-api`, `users-api`) e persistir o snapshot. (Validação de `course_id` e `user_sub_id`)
+
 - **Atualização (Consumidor):**
-    - Escutar `user_updated` (payload `sub_id`) para atualizar `student_name` em matrículas ativas (opcional, histórico
-      pode manter nome antigo).
-    - Escutar `course_updated` (geralmente não altera histórico de compras, mas pode alterar "Meus Cursos" se for
-      exibido via enrollments).
+
+  - Escutar `user_updated` (payload `sub_id`) para atualizar `student_name` em matrículas ativas (opcional, histórico pode manter nome antigo).
+
+  - Escutar `course_updated` (geralmente não altera histórico de compras, mas pode alterar "Meus Cursos" se for exibido via enrollments).
+
+  - **(Nota Importante):** Consumidores de `user_updated` e `course_updated` devem implementar `manual acknowledgement` e DLQ.
 
 ## Modelagem de Dados
 

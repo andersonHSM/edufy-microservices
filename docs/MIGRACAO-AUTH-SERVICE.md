@@ -22,10 +22,16 @@ Centralizar a lógica de autenticação e gerenciamento de tokens JWT, migrando 
 ## Estratégia de Dados (Duplicação)
 
 - **Papel:** Source of Truth para Credenciais.
+
 - **Dependências:** Nenhuma.
+
 - **Responsabilidade de Eventos:**
-    - Emitir `user_created` sempre que um usuário se cadastrar.
-    - Escutar `user_role_assigned` para atualizar roles no token.
+
+  - Emitir `user_created` sempre que um usuário se cadastrar.
+
+  - Escutar `user_role_assigned` para atualizar roles no token.
+
+  - **(Nota Importante para Consumidor):** O listener para `user_role_assigned` deve implementar `manual acknowledgement` e DLQ para garantir resiliência.
 
 ## Modelagem de Dados
 

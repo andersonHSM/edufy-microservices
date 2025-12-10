@@ -15,9 +15,9 @@ Este documento detalha o status da migração das rotas do projeto monolítico p
     - Usado estritamente para validações críticas ou operações de escrita que exigem consistência imediata (ex: Login,
       Checkout).
 - **Lógica Assíncrona (Event-Based):** RabbitMQ (`@EventPattern`)
-    - Usado para propagação de dados (Data Duplication) e efeitos colaterais, garantindo desacoplamento em tempo de
-      execução (Runtime Decoupling).
-
+  - Usado para propagação de dados (Data Duplication) e efeitos colaterais, garantindo desacoplamento em tempo de
+    execução (Runtime Decoupling).
+  - **Mecanismos de Resiliência:** Todos os consumidores de RabbitMQ DEVEM implementar `manual acknowledgement` e configurar uma `Dead Letter Queue (DLQ)` para mensagens que falham no processamento, garantindo que nenhum evento seja perdido e permitindo reprocessamento ou análise posterior.
 ---
 
 ## 1. Auth Service (`auth-api`)
