@@ -19,10 +19,10 @@ Centralizar a lógica de autenticação e gerenciamento de tokens JWT, migrando 
 
 ## Rotas a Migrar
 
-| Origem (Monolito)      | Destino (Microserviço - TCP)     | Destino (Gateway - HTTP) | Status         |
-|:-----------------------|:---------------------------------|:-------------------------|:---------------|
-| `POST /users` (Signup) | `@MessagePattern('create_user')` | `POST /users`            | **[OK]**       |
-| `POST /users/login`    | `@MessagePattern('auth_login')`  | `POST /auth/login`       | **[Pendente]** |
+| Origem (Monolito)      | Destino (Microserviço - TCP)     | Destino (Gateway - HTTP) | Status        |
+|:-----------------------|:---------------------------------|:-------------------------|:--------------|
+| `POST /users` (Signup) | `@MessagePattern('create_user')` | `POST /users`            | **[OK]**      |
+| `POST /users/login`    | `@MessagePattern('auth_login')`  | `POST /auth/login`       | **[Parcial]** |
 
 *(Nota: `POST /users` também emite o evento `@EventPattern('user_created')`)*
 

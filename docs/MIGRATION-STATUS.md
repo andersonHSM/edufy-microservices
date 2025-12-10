@@ -28,7 +28,7 @@ Este documento detalha o status da migração das rotas do projeto monolítico p
 | Método | Rota (Monolito) | Status        | Rota (Microsserviço)                                               | Rota (API Gateway) | Notas                                                                                                      |
 |:-------|:----------------|:--------------|:-------------------------------------------------------------------|:-------------------|:-----------------------------------------------------------------------------------------------------------|
 | `POST` | `/users`        | **[OK]**      | `@MessagePattern('create_user')` / `@EventPattern('user_created')` | `POST /users`      | A rota de criação de usuário (`signup`) foi migrada (Síncrono - TCP) e emite evento assíncrono (RabbitMQ). |
-| `POST` | `/users/login`  | **[Parcial]** | `@MessagePattern('auth_login')`                                    | `POST /auth/login` | Implementado no `auth-api`, mas falta expor no `api-gateway`. **[Protocolo: TCP]**                         |
+| `POST` | `/users/login`  | **[OK]**      | `@MessagePattern('auth_login')`                                    | `POST /auth/login` | Rota de login agora exposta via API Gateway. **[Protocolo: TCP]**                                          |
 
 ---
 

@@ -18,11 +18,11 @@ Gerenciar o ciclo de vida, perfil e dados cadastrais dos usuários, separando es
 
 ## Rotas a Migrar
 
-| Origem (Monolito)              | Destino (Microserviço - TCP)        | Destino (Gateway - HTTP) | Status         |
-|:-------------------------------|:------------------------------------|:-------------------------|:---------------|
-| `GET /users/me`                | `@MessagePattern('get_user_by_id')` | `GET /users/me`          | **[OK]**       |
-| `PATCH /users/me`              | `@MessagePattern('update_user')`    | `PATCH /users/me`        | **[Pendente]** |
-| `POST /users/self-assign-role` | `@MessagePattern('assign_role')`    | `POST /users/me/role`    | **[Pendente]** |
+| Origem (Monolito)              | Destino (Microserviço - TCP)     | Destino (Gateway - HTTP) | Status   |
+|:-------------------------------|:---------------------------------|:-------------------------|:---------|
+| `GET /users/me`                | `@MessagePattern('getUserById')` | `GET /users/me`          | **[OK]** |
+| `PATCH /users/me`              | `@MessagePattern('update_user')` | `PATCH /users/me`        | **[OK]** |
+| `POST /users/self-assign-role` | `@MessagePattern('assign_role')` | `POST /users/me/role`    | **[OK]** |
 
 *(Nota: `PATCH /users/me` emite evento `user_updated`. `POST /users/self-assign-role` emite `user_role_assigned`)*
 

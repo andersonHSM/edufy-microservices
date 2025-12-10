@@ -15,7 +15,7 @@ export class UsersService {
   ) {}
 
   public createUser(body: SignupUserDto) {
-    return this.authClientProxy.send("createUser", body).pipe(
+    return this.authClientProxy.send("create_user", body).pipe(
       timeout(5000),
       catchError((err) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
