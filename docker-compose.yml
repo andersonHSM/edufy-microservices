@@ -45,6 +45,27 @@ services:
       timeout: 10s
       retries: 3
 
+  courses-db:
+    image: postgres:17-alpine
+    container_name: edufy-courses-db
+    environment:
+      POSTGRES_DB: courses_db
+      POSTGRES_USER: courses_user
+      POSTGRES_PASSWORD: courses_password
+    ports:
+      - "5435:5432"
+    volumes:
+      - courses_db_data:/var/lib/postgresql/data
+      - ./docker/init-scripts/courses-init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    networks:
+      - edufy-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U courses_user -d courses_db" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   # Redis para cache e sessões
   redis:
     image: redis:7-alpine
@@ -102,11 +123,14 @@ services:
     depends_on:
       - auth-db
       - users-db
+      - courses-db
 
 volumes:
   auth_db_data:
     driver: local
   users_db_data:
+    driver: local
+  courses_db_data:
     driver: local
   redis_data:
     driver: local
