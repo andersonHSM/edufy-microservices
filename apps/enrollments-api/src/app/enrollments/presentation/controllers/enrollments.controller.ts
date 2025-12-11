@@ -12,7 +12,7 @@ export class EnrollmentsController {
     return this.enrollmentsService.create(data);
   }
 
-  @EventPattern('enrollment.created')
+  @EventPattern('enroll_student_request')
   async enrollStudent(@Payload() data: { enrollment_id: string }) {
     return this.enrollmentsService.enrollStudent(data.enrollment_id);
   }

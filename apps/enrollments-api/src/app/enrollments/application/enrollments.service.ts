@@ -53,7 +53,7 @@ export class EnrollmentsService {
 
     this.logger.log('Enrollment created, emitting event');
 
-    this.enrollmentsClient.emit('enrollment.created', {
+    this.enrollmentsClient.emit('enroll_student_request', {
       enrollment_id: enrollment.id,
     });
 
