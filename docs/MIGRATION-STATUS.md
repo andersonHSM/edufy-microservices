@@ -71,25 +71,25 @@ Este documento detalha o status da migração das rotas do projeto monolítico p
 
 ## 4. Enrollments Service (`enrollments-api`)
 
-| Método | Rota (Monolito)              | Status      | Rota (Microsserviço)                        | Rota (API Gateway)                | Notas                                                                                                                                                    |
-|:-------|:-----------------------------|:------------|:--------------------------------------------|:----------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `POST` | `/courses/:id/checkout`      | **[OK]**    | `@MessagePattern('create_enrollment')`      | `POST /enrollments`               | Valida curso via TCP (ou réplica). Cria matrícula com snapshot de dados. **[Protocolo: TCP]**                                                            |
-| `Job`  | `enroll-student`             | **[OK]**    | `@MessagePattern('enroll_student_request')` | N/A                               | Substitui o job `pg-boss` do monolito por um consumidor RabbitMQ para processar a matrícula de forma assíncrona após a compra, com suporte a `manual acknowledgement` e DLQ. **[Protocolo: RabbitMQ]** |
-| `GET`  | `/users/me/enrollments`      | **[OK]**    | `@MessagePattern('list_my_enrollments')`    | `GET /enrollments/my-enrollments` | Lista matrículas usando dados replicados do curso. **[Protocolo: TCP]**                                                                                  |
-| `GET`  | `/payments/purchases/:id`    | **[OK]**    | `@MessagePattern('get_enrollment_by_id')`   | `GET /enrollments/:id`            | Detalhes da compra. **[Protocolo: TCP]**                                                                                                                 |
-| `GET`  | `/payments/purchase-history` | **[OK]**    | `@MessagePattern('get_purchase_history')`   | `GET /enrollments/my-history`     | Histórico usando dados replicados. **[Protocolo: TCP]**                                                                                                  |
+| Método | Rota (Monolito)              | Status   | Rota (Microsserviço)                        | Rota (API Gateway)                | Notas                                                                                                                                                                                                  |
+|:-------|:-----------------------------|:---------|:--------------------------------------------|:----------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `POST` | `/courses/:id/checkout`      | **[OK]** | `@MessagePattern('create_enrollment')`      | `POST /enrollments`               | Valida curso via TCP (ou réplica). Cria matrícula com snapshot de dados. **[Protocolo: TCP]**                                                                                                          |
+| `Job`  | `enroll-student`             | **[OK]** | `@MessagePattern('enroll_student_request')` | N/A                               | Substitui o job `pg-boss` do monolito por um consumidor RabbitMQ para processar a matrícula de forma assíncrona após a compra, com suporte a `manual acknowledgement` e DLQ. **[Protocolo: RabbitMQ]** |
+| `GET`  | `/users/me/enrollments`      | **[OK]** | `@MessagePattern('list_my_enrollments')`    | `GET /enrollments/my-enrollments` | Lista matrículas usando dados replicados do curso. **[Protocolo: TCP]**                                                                                                                                |
+| `GET`  | `/payments/purchases/:id`    | **[OK]** | `@MessagePattern('get_enrollment_by_id')`   | `GET /enrollments/:id`            | Detalhes da compra. **[Protocolo: TCP]**                                                                                                                                                               |
+| `GET`  | `/payments/purchase-history` | **[OK]** | `@MessagePattern('get_purchase_history')`   | `GET /enrollments/my-history`     | Histórico usando dados replicados. **[Protocolo: TCP]**                                                                                                                                                |
 
 ---
 
 ## 5. Support Service (`support-api`)
 
-| Método | Rota (Monolito)                      | Status         | Rota (Microsserviço)                  | Rota (API Gateway)                  | Notas                                                                                  |
-|:-------|:-------------------------------------|:---------------|:--------------------------------------|:------------------------------------|:---------------------------------------------------------------------------------------|
-| `POST` | `/support/agent/tickets/:id/resolve` | **[Pendente]** | `@MessagePattern('resolve_ticket')`   | `POST /support/tickets/:id/resolve` | A ser criado no `support-api`. **[Protocolo: TCP]**                                    |
-| `POST` | `/support/client/tickets`            | **[Pendente]** | `@MessagePattern('create_ticket')`    | `POST /support/tickets`             | Cria ticket persistindo dados básicos do usuário autor (réplica). **[Protocolo: TCP]** |
-| `GET`  | `/support/client/tickets`            | **[Pendente]** | `@MessagePattern('list_my_tickets')`  | `GET /support/tickets`              | Lista tickets usando dados replicados. **[Protocolo: TCP]**                            |
-| `POST` | `/support/tickets/:id/reply`         | **[Pendente]** | `@MessagePattern('reply_ticket')`     | `POST /support/tickets/:id/reply`   | A ser criado no `support-api`. **[Protocolo: TCP]**                                    |
-| `GET`  | `/support/tickets/:id`               | **[Pendente]** | `@MessagePattern('get_ticket_by_id')` | `GET /support/tickets/:id`          | A ser criado no `support-api`. **[Protocolo: TCP]**                                    |
+| Método | Rota (Monolito)                      | Status   | Rota (Microsserviço)                  | Rota (API Gateway)                  | Notas                                                                                  |
+|:-------|:-------------------------------------|:---------|:--------------------------------------|:------------------------------------|:---------------------------------------------------------------------------------------|
+| `POST` | `/support/agent/tickets/:id/resolve` | **[OK]** | `@MessagePattern('resolve_ticket')`   | `POST /support/tickets/:id/resolve` | A ser criado no `support-api`. **[Protocolo: TCP]**                                    |
+| `POST` | `/support/client/tickets`            | **[OK]** | `@MessagePattern('create_ticket')`    | `POST /support/tickets`             | Cria ticket persistindo dados básicos do usuário autor (réplica). **[Protocolo: TCP]** |
+| `GET`  | `/support/client/tickets`            | **[OK]** | `@MessagePattern('list_my_tickets')`  | `GET /support/tickets`              | Lista tickets usando dados replicados. **[Protocolo: TCP]**                            |
+| `POST` | `/support/tickets/:id/reply`         | **[OK]** | `@MessagePattern('reply_ticket')`     | `POST /support/tickets/:id/reply`   | A ser criado no `support-api`. **[Protocolo: TCP]**                                    |
+| `GET`  | `/support/tickets/:id`               | **[OK]** | `@MessagePattern('get_ticket_by_id')` | `GET /support/tickets/:id`          | A ser criado no `support-api`. **[Protocolo: TCP]**                                    |
 
 ---
 
