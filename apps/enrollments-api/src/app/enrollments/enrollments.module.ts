@@ -51,6 +51,10 @@ import { EnrollmentsController } from './presentation/controllers/enrollments.co
             queue: config.enrollmentsQueue,
             queueOptions: {
               durable: true,
+              arguments: {
+                'x-dead-letter-exchange': 'enrollments_dlx',
+                'x-dead-letter-routing-key': 'enrollments_dlq_routing_key',
+              },
             },
           },
         }),

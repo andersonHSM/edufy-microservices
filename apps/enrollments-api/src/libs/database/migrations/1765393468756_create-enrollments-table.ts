@@ -10,11 +10,15 @@ export async function up(db: Kysely<Database>): Promise<void> {
     .addColumn('id', 'uuid', (col) =>
       col.primaryKey().defaultTo(sql`gen_random_uuid()`),
     )
-    .addColumn('user_id', 'uuid', (col) => col.notNull())
-    .addColumn('course_id', 'uuid', (col) => col.notNull())
     .addColumn('enrolled_at', 'timestamp', (col) =>
       col.notNull().defaultTo(sql`now()`),
     )
+    .addColumn('student_sub_id', 'uuid', (col) => col.notNull())
+    .addColumn('course_id', 'uuid', (col) => col.notNull())
+    .addColumn('status', 'text', (col) => col.notNull())
+    .addColumn('price_paid', 'decimal', (col) => col.notNull())
+    .addColumn('course_title', 'text', (col) => col.notNull())
+    .addColumn('student_name', 'text', (col) => col.notNull())
     .execute();
 }
 

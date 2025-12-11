@@ -16,4 +16,8 @@ export class EnrollmentsService {
       status: "pending",
     });
   }
+
+  listMyEnrollments(studentSubId: string) {
+    return this.client.send("list_my_enrollments", studentSubId);
+  }
 }

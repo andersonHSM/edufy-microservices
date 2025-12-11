@@ -1,4 +1,12 @@
-import { Body, Controller, Post, UseFilters, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseFilters,
+  UseGuards,
+} from "@nestjs/common";
+import { ApiBearerAuth } from "@nestjs/swagger";
 import { EnrollmentsService } from "src/app/enrollments/application/enrollments.service";
 import { CreateEnrollmentDto } from "src/app/enrollments/presentation/dto/create-enrollment.dto";
 import { CurrentUser } from "src/app/users/presentation/current-user.decorator";
@@ -8,17 +16,23 @@ import { RpcToHttpExceptionFilter } from "src/libs/exception-filters/rpc-to-http
 @Controller("enrollments")
 @UseGuards(JwtGuard)
 @UseFilters(new RpcToHttpExceptionFilter())
+@ApiBearerAuth()
 export class EnrollmentsController {
   constructor(private readonly enrollmentsService: EnrollmentsService) {}
 
   @Post()
   create(
     @Body() createEnrollmentDto: CreateEnrollmentDto,
-    @CurrentUser() user: { sub: string },
+    @CurrentUser() userSub: string,
   ) {
     return this.enrollmentsService.create({
       ...createEnrollmentDto,
-      studentSubId: user.sub,
     });
+  }
+
+  @Get("my-enrollments")
+  listMyEnrollments(@CurrentUser() userSub: string) {
+    console.log({ userSub });
+    return this.enrollmentsService.listMyEnrollments(userSub);
   }
 }

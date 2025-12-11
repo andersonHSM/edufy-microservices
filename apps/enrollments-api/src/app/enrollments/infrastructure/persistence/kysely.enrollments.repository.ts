@@ -24,7 +24,7 @@ export class KyselyEnrollmentsRepository
   async create(data: CreateEnrollmentInput): Promise<EnrollmentEntity> {
     const enrollment = EnrollmentEntity.create(data);
     const createdEnrollment = await this.database
-      .insertInto('enrollments')
+      .insertInto('enrollments.enrollments')
       .values({
         id: enrollment.id,
         studentSubId: enrollment.studentSubId,
@@ -43,7 +43,7 @@ export class KyselyEnrollmentsRepository
 
   async findByUserId(userId: string): Promise<EnrollmentEntity[]> {
     const enrollments = await this.database
-      .selectFrom('enrollments')
+      .selectFrom('enrollments.enrollments')
       .selectAll()
       .where('studentSubId', '=', userId)
       .execute();
@@ -57,7 +57,7 @@ export class KyselyEnrollmentsRepository
     status: EnrollmentProps['status'],
   ): Promise<void> {
     await this.database
-      .updateTable('enrollments')
+      .updateTable('enrollments.enrollments')
       .set({ status })
       .where('id', '=', id)
       .execute();

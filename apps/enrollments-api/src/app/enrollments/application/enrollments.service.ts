@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { CourseEntity } from 'src/app/enrollments/domain/course.entity';
 import {
@@ -31,14 +31,20 @@ export class EnrollmentsService {
     this.logger.log('Create enrollment process started');
     const { courseId, studentSubId } = dto;
 
+    console.log(dto);
     const [user, course] = await Promise.all([
       firstValueFrom(
-        this.usersClient.send<UserEntity>('get_user_by_sub_id', studentSubId),
+        this.usersClient.send<UserEntity>('getUserById', studentSubId),
       ),
       firstValueFrom(
         this.coursesClient.send<CourseEntity>('get_course_by_id', courseId),
       ),
     ]);
+
+    console.log({ user });
+    if (!course) {
+      throw new RpcException({ message: 'Course not foud', status: 404 });
+    }
 
     this.logger.log('User and course fetched successfully');
 
@@ -46,9 +52,9 @@ export class EnrollmentsService {
       courseId,
       studentSubId,
       status: 'pending',
-      pricePaid: course.price,
-      courseTitle: course.title,
-      studentName: user.name,
+      pricePaid: course?.price,
+      courseTitle: course?.title,
+      studentName: `${user.firstName} ${user.lastName}`,
     });
 
     this.logger.log('Enrollment created, emitting event');
