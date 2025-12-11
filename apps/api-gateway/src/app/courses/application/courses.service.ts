@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy, RpcException } from "@nestjs/microservices";
 import { catchError, firstValueFrom, throwError, timeout } from "rxjs";
+import { CourseEntity } from "src/app/courses/domain/course.entity";
 import { COURSES_TCP_SERVICE } from "../courses.constants";
 import { CreateCourseDto } from "../presentation/dtos/create-course.dto";
 
@@ -14,7 +15,7 @@ export class CoursesService {
   public async createCourse(dto: CreateCourseDto, instructor_sub_id: string) {
     return firstValueFrom(
       this.coursesTcpClientProxy
-        .send("create_course", { ...dto, instructor_sub_id })
+        .send<CourseEntity>("create_course", { ...dto, instructor_sub_id })
         .pipe(
           timeout(5000),
           catchError((err: Error) => {
@@ -26,7 +27,7 @@ export class CoursesService {
 
   public async listCourses() {
     return firstValueFrom(
-      this.coursesTcpClientProxy.send("list_courses", {}).pipe(
+      this.coursesTcpClientProxy.send<CourseEntity[]>("list_courses", {}).pipe(
         timeout(5000),
         catchError((err: Error) => {
           return throwError(() => new RpcException(err));
@@ -37,19 +38,21 @@ export class CoursesService {
 
   public async getCourseById(id: string) {
     return firstValueFrom(
-      this.coursesTcpClientProxy.send("get_course_by_id", id).pipe(
-        timeout(5000),
-        catchError((err: Error) => {
-          return throwError(() => new RpcException(err));
-        }),
-      ),
+      this.coursesTcpClientProxy
+        .send<CourseEntity>("get_course_by_id", id)
+        .pipe(
+          timeout(5000),
+          catchError((err: Error) => {
+            return throwError(() => new RpcException(err));
+          }),
+        ),
     );
   }
 
   public async listMyCourses(instructor_sub_id: string) {
     return firstValueFrom(
       this.coursesTcpClientProxy
-        .send("list_my_courses", instructor_sub_id)
+        .send<CourseEntity[]>("list_my_courses", instructor_sub_id)
         .pipe(
           timeout(5000),
           catchError((err: Error) => {
