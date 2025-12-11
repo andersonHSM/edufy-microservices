@@ -68,4 +68,3 @@ Gerenciar matrículas, compras e histórico de pagamentos.
 
 ## Próximos Passos
 
-- Criar o microsserviço `enrollments-api`.

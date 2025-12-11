@@ -66,6 +66,27 @@ services:
       timeout: 10s
       retries: 3
 
+  enrollments-db:
+    image: postgres:17-alpine
+    container_name: edufy-enrollments-db
+    environment:
+      POSTGRES_DB: enrollments_db
+      POSTGRES_USER: enrollments_user
+      POSTGRES_PASSWORD: enrollments_password
+    ports:
+      - "5436:5432"
+    volumes:
+      - enrollments_db_data:/var/lib/postgresql/data
+      - ./docker/init-scripts/enrollments-init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    networks:
+      - edufy-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U enrollments_user -d enrollments_db" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   # Redis para cache e sessões
   redis:
     image: redis:7-alpine
@@ -124,6 +145,7 @@ services:
       - auth-db
       - users-db
       - courses-db
+      - enrollments-db
 
 volumes:
   auth_db_data:
@@ -131,6 +153,8 @@ volumes:
   users_db_data:
     driver: local
   courses_db_data:
+    driver: local
+  enrollments_db_data:
     driver: local
   redis_data:
     driver: local
