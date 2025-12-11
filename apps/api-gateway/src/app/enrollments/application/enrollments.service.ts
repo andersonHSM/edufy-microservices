@@ -10,7 +10,10 @@ export class EnrollmentsService {
     @Inject(ENROLLMENTS_SERVICE) private readonly client: ClientProxy,
   ) {}
 
-  create(createEnrollmentDto: CreateEnrollmentDto & { studentSubId: string }) {
-    return this.client.send("create_enrollment", createEnrollmentDto);
+  create(createEnrollmentDto: CreateEnrollmentDto) {
+    return this.client.send("create_enrollment", {
+      ...createEnrollmentDto,
+      status: "pending",
+    });
   }
 }
