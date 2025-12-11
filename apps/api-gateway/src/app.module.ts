@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ConfigType } from "@nestjs/config";
-import { APP_FILTER } from "@nestjs/core";
+import { APP_FILTER, APP_GUARD } from "@nestjs/core";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 import { AppController } from "src/app.controller";
 import { AppService } from "src/app.service";
@@ -19,6 +19,8 @@ import coursesServiceConfig from "src/libs/configuration/courses-service.config"
 import rabbitmqConfig from "src/libs/configuration/rabbitmq.config";
 import usersServiceConfig from "src/libs/configuration/users-service.config";
 import { RpcToHttpExceptionFilter } from "src/libs/exception-filters/rpc-to-http.exception-filter";
+import { ConfiguredJwtModule } from "src/libs/jwt/jwt.module";
+import { JwtGuard } from "./app/users/presentation/jwt.guard";
 
 @Module({
   imports: [
@@ -79,6 +81,7 @@ import { RpcToHttpExceptionFilter } from "src/libs/exception-filters/rpc-to-http
         },
       ],
     }),
+    ConfiguredJwtModule,
     UsersModule,
     AuthModule,
     CoursesModule,
@@ -86,6 +89,7 @@ import { RpcToHttpExceptionFilter } from "src/libs/exception-filters/rpc-to-http
   controllers: [AppController],
   providers: [
     AppService,
+    { provide: APP_GUARD, useClass: JwtGuard },
     { provide: APP_FILTER, useClass: RpcToHttpExceptionFilter },
   ],
 })

@@ -17,8 +17,7 @@ export class CoursesService {
         .send("create_course", { ...dto, instructor_sub_id })
         .pipe(
           timeout(5000),
-          catchError((err) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          catchError((err: Error) => {
             return throwError(() => new RpcException(err));
           }),
         ),
@@ -29,8 +28,7 @@ export class CoursesService {
     return firstValueFrom(
       this.coursesTcpClientProxy.send("list_courses", {}).pipe(
         timeout(5000),
-        catchError((err) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        catchError((err: Error) => {
           return throwError(() => new RpcException(err));
         }),
       ),
@@ -41,8 +39,7 @@ export class CoursesService {
     return firstValueFrom(
       this.coursesTcpClientProxy.send("get_course_by_id", id).pipe(
         timeout(5000),
-        catchError((err) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        catchError((err: Error) => {
           return throwError(() => new RpcException(err));
         }),
       ),
@@ -55,8 +52,7 @@ export class CoursesService {
         .send("list_my_courses", instructor_sub_id)
         .pipe(
           timeout(5000),
-          catchError((err) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          catchError((err: Error) => {
             return throwError(() => new RpcException(err));
           }),
         ),
