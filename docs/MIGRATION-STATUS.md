@@ -1,16 +1,21 @@
 # Relatório de Status da Migração de Rotas
 
-**Nota Importante:** Todos os microsserviços que interagem com o banco de dados (`auth-api`, `users-api`, `courses-api`) agora utilizam Kysely como ORM, garantindo uma abordagem unificada para acesso a dados.
+**Nota Importante:** Todos os microsserviços que interagem com o banco de dados (`auth-api`, `users-api`, `courses-api`)
+agora utilizam Kysely como ORM, garantindo uma abordagem unificada para acesso a dados.
 
 ## Estratégia de Banco de Dados
 
 Cada microsserviço deve possuir seu próprio banco de dados isolado. Esta abordagem garante:
-- **Autonomia:** Microsserviços podem evoluir e serem implantados independentemente, sem afetar outros serviços devido a alterações de esquema de banco de dados.
+
+- **Autonomia:** Microsserviços podem evoluir e serem implantados independentemente, sem afetar outros serviços devido a
+  alterações de esquema de banco de dados.
 - **Acoplamento Fraco:** Reduz a dependência entre os serviços, tornando o sistema mais resiliente a falhas.
 - **Escalabilidade:** Permite escalar bancos de dados individualmente conforme a necessidade de cada serviço.
 - **Propriedade Clara:** Cada equipe ou serviço é responsável pelo seu próprio banco de dados e seus dados.
 
-A replicação de dados entre serviços deve ser feita exclusivamente através de eventos assíncronos (e.g., RabbitMQ), conforme detalhado na seção "Mapeamento de Dependências e Fluxo de Dados". Evite acesso direto ou compartilhamento de bancos de dados entre microsserviços.
+A replicação de dados entre serviços deve ser feita exclusivamente através de eventos assíncronos (e.g., RabbitMQ),
+conforme detalhado na seção "Mapeamento de Dependências e Fluxo de Dados". Evite acesso direto ou compartilhamento de
+bancos de dados entre microsserviços.
 
 Este documento detalha o status da migração das rotas do projeto monolítico para a nova arquitetura de microsserviços.
 
@@ -66,12 +71,13 @@ Este documento detalha o status da migração das rotas do projeto monolítico p
 
 ## 4. Enrollments Service (`enrollments-api`)
 
-| Método | Rota (Monolito)              | Status         | Rota (Microsserviço)                      | Rota (API Gateway)                | Notas                                                                                         |
-|:-------|:-----------------------------|:---------------|:------------------------------------------|:----------------------------------|:----------------------------------------------------------------------------------------------|
-| `POST` | `/courses/:id/checkout`      | **[Pendente]** | `@MessagePattern('create_enrollment')`    | `POST /enrollments`               | Valida curso via TCP (ou réplica). Cria matrícula com snapshot de dados. **[Protocolo: TCP]** |
-| `GET`  | `/users/me/enrollments`      | **[Mover]**    | `@MessagePattern('list_my_enrollments')`  | `GET /enrollments/my-enrollments` | Lista matrículas usando dados replicados do curso. **[Protocolo: TCP]**                       |
-| `GET`  | `/payments/purchases/:id`    | **[Mover]**    | `@MessagePattern('get_enrollment_by_id')` | `GET /enrollments/:id`            | Detalhes da compra. **[Protocolo: TCP]**                                                      |
-| `GET`  | `/payments/purchase-history` | **[Mover]**    | `@MessagePattern('get_purchase_history')` | `GET /enrollments/my-history`     | Histórico usando dados replicados. **[Protocolo: TCP]**                                       |
+| Método | Rota (Monolito)              | Status         | Rota (Microsserviço)                        | Rota (API Gateway)                | Notas                                                                                                                                                    |
+|:-------|:-----------------------------|:---------------|:--------------------------------------------|:----------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `POST` | `/courses/:id/checkout`      | **[Pendente]** | `@MessagePattern('create_enrollment')`      | `POST /enrollments`               | Valida curso via TCP (ou réplica). Cria matrícula com snapshot de dados. **[Protocolo: TCP]**                                                            |
+| `Job`  | `enroll-student`             | **[Pendente]** | `@MessagePattern('enroll_student_request')` | N/A                               | Substitui o job `pg-boss` do monolito por um consumidor RabbitMQ para processar a matrícula de forma assíncrona após a compra. **[Protocolo: RabbitMQ]** |
+| `GET`  | `/users/me/enrollments`      | **[Mover]**    | `@MessagePattern('list_my_enrollments')`    | `GET /enrollments/my-enrollments` | Lista matrículas usando dados replicados do curso. **[Protocolo: TCP]**                                                                                  |
+| `GET`  | `/payments/purchases/:id`    | **[Mover]**    | `@MessagePattern('get_enrollment_by_id')`   | `GET /enrollments/:id`            | Detalhes da compra. **[Protocolo: TCP]**                                                                                                                 |
+| `GET`  | `/payments/purchase-history` | **[Mover]**    | `@MessagePattern('get_purchase_history')`   | `GET /enrollments/my-history`     | Histórico usando dados replicados. **[Protocolo: TCP]**                                                                                                  |
 
 ---
 

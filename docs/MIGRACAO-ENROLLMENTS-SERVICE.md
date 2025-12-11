@@ -25,6 +25,12 @@ Gerenciar matrículas, compras e histórico de pagamentos.
 | `GET /payments/purchase-history` | `@MessagePattern('get_purchase_history')` | `GET /enrollments/my-history`     | **[Pendente]** |
 | `GET /payments/purchases/:id`    | `@MessagePattern('get_enrollment_by_id')` | `GET /enrollments/:id`            | **[Pendente]** |
 
+## Fluxos Assíncronos a Migrar
+
+| Origem (Monolito)     | Destino (Microserviço - RabbitMQ)           | Gatilho                                   | Status         |
+|:----------------------|:--------------------------------------------|:------------------------------------------|:---------------|
+| `Job: enroll-student` | `@MessagePattern('enroll_student_request')` | Disparado após a conclusão de uma compra. | **[Pendente]** |
+
 ## Estratégia de Dados (Duplicação)
 
 - **Schema:** A tabela `enrollments` deve armazenar SNAPSHOTS:
