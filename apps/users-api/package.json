@@ -19,6 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "kysely": "kysely",
+    "kysely:create": "pnpm exec kysely migrate:make",
     "migrate": "pnpm run kysely migrate:latest",
     "postmigrate": "pnpm run codegen",
     "codegen": "kysely-codegen --camel-case --out-file ./src/libs/database/generated/db.ts"
