@@ -28,6 +28,18 @@ export class UsersController {
     return this.usersService.login(loginDto);
   }
 
+  @MessagePattern('validate_user_exists_and_role')
+  async validateUserExistsAndRole(
+    @Payload() data: { sub_id: string; role?: string },
+  ) {
+    const user = await this.usersService.validateUserExistsAndRole(
+      data.sub_id,
+      data.role,
+    );
+    // Return a simplified user object or just a confirmation of existence and role
+    return { sub: user.sub, email: user.email, role: user.role };
+  }
+
   @EventPattern('user_role_assigned')
   async handleUserRoleAssigned(
     @Payload() data: UserRoleAssignedEvent,
