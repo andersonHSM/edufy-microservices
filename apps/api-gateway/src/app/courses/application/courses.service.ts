@@ -12,10 +12,10 @@ export class CoursesService {
     private readonly coursesTcpClientProxy: ClientProxy,
   ) {}
 
-  public async createCourse(dto: CreateCourseDto, instructor_sub_id: string) {
+  public async createCourse(dto: CreateCourseDto, instructorSubId: string) {
     return firstValueFrom(
       this.coursesTcpClientProxy
-        .send<CourseEntity>("create_course", { ...dto, instructor_sub_id })
+        .send<CourseEntity>("create_course", { ...dto, instructorSubId })
         .pipe(
           timeout(5000),
           catchError((err: Error) => {

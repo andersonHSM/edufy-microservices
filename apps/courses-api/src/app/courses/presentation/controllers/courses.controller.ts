@@ -39,6 +39,7 @@ export class CoursesController {
     @Payload() payload: UserUpdatedEvent,
     @Ctx() context: RmqContext,
   ) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const channel = context.getChannelRef();
     const originalMsg = context.getMessage();
 
@@ -48,9 +49,11 @@ export class CoursesController {
         payload.name, // This is still snake_case from the event
         payload.profilePictureUrl, // This is still snake_case from the event
       );
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       channel.ack(originalMsg);
     } catch (error) {
       console.error('Failed to process user_updated event:', error);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       channel.nack(originalMsg, false, false);
     }
   }

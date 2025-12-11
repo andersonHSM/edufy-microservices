@@ -6,6 +6,7 @@ import {
   CoursesRepository,
   type ICoursesRepository,
 } from 'src/app/courses/domain/courses.repository';
+import { UserEntity } from 'src/app/users/domain/user.entity';
 import { CreateCourseDto } from '../presentation/dtos/create-course.dto';
 
 @Injectable()
@@ -17,15 +18,18 @@ export class CoursesService {
     @Inject(AUTH_SERVICE) private readonly authClient: ClientProxy,
   ) {}
 
-  async createCourse(dto: CreateCourseDto & { instructorSubId: string }) {
+  async createCourse(dto: CreateCourseDto) {
     // 1. Validate instructorSubId exists and has a valid role (e.g., instructor)
     // from auth-api (TCP call)
     const authUser = await firstValueFrom(
-      this.authClient.send('validate_user_exists_and_role', {
-        sub_id: dto.instructorSubId,
-        role: 'instructor',
-      }),
-    ).catch((err) => {
+      this.authClient.send<Pick<UserEntity, 'role' | 'sub_id' | 'email'>>(
+        'validate_user_exists_and_role',
+        {
+          sub_id: dto.instructorSubId,
+          role: 'instructor',
+        },
+      ),
+    ).catch((err: Error) => {
       throw new RpcException(
         `Auth service error during instructor validation: ${err.message}`,
       );
@@ -39,8 +43,8 @@ export class CoursesService {
 
     // 2. Get instructor name and avatar from users-api (TCP call) for duplication
     const instructorProfile = await firstValueFrom(
-      this.usersClient.send('getUserById', dto.instructorSubId),
-    ).catch((err) => {
+      this.usersClient.send<UserEntity>('getUserById', dto.instructorSubId),
+    ).catch((err: Error) => {
       throw new RpcException(
         `Users service error fetching instructor profile: ${err.message}`,
       );
@@ -54,9 +58,9 @@ export class CoursesService {
       title: dto.title,
       description: dto.description,
       price: dto.price,
-      instructorSubId: dto.instructorSubId,
-      instructorName: instructorProfile.name, // Assuming 'name' field in UsersService's user
-      instructorAvatar: instructorProfile.profilePictureUrl, // Assuming 'profilePictureUrl' field
+      instructorSubId: instructorProfile.sub_id,
+      instructorName: `${instructorProfile.firstName} ${instructorProfile.lastName}`,
+      instructorAvatar: instructorProfile.profilePictureUrl,
     });
   }
 

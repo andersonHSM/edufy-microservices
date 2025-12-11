@@ -31,7 +31,7 @@ Gerenciar o catálogo de cursos, incluindo criação, listagem e detalhes.
     - Na criação (`create_course`), pegar dados do Token ou chamar `users-api` uma vez e salvar.
 - **Atualização (Consumidor):**
     - Implementar `@EventPattern('user_updated')`.
-    - Ao receber evento, buscar todos cursos onde `instructor_sub_id == event.sub_id` e atualizar nome/foto.
+    - Ao receber evento, buscar todos cursos onde `instructorSubId == event.sub_id` e atualizar nome/foto.
     - **(Nota Importante):** O consumidor do `user_updated` deve implementar `manual acknowledgement` e DLQ.
 - **Benefício:** Zero latência de rede para exibir listagem de cursos.
 

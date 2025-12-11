@@ -36,8 +36,7 @@ export class UsersController {
       data.sub_id,
       data.role,
     );
-    // Return a simplified user object or just a confirmation of existence and role
-    return { sub: user.sub, email: user.email, role: user.role };
+    return { sub_id: user.sub, email: user.email, role: user.role };
   }
 
   @EventPattern('user_role_assigned')
@@ -45,13 +44,16 @@ export class UsersController {
     @Payload() data: UserRoleAssignedEvent,
     @Ctx() context: RmqContext,
   ) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const channel = context.getChannelRef();
     const originalMsg = context.getMessage();
 
     try {
       await this.usersService.updateRole(data.sub_id, data.role);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       channel.ack(originalMsg);
-    } catch (error) {
+    } catch {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       channel.nack(originalMsg, false, false);
     }
   }
