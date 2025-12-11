@@ -18,12 +18,12 @@ Gerenciar matrículas, compras e histórico de pagamentos.
 
 ## Rotas a Migrar
 
-| Origem (Monolito)                | Destino (Microserviço - TCP)              | Destino (Gateway - HTTP)          | Status         |
-|:---------------------------------|:------------------------------------------|:----------------------------------|:---------------|
-| `POST /courses/:id/checkout`     | `@MessagePattern('create_enrollment')`    | `POST /enrollments`               | **[OK]**       |
-| `GET /users/me/enrollments`      | `@MessagePattern('list_my_enrollments')`  | `GET /enrollments/my-enrollments` | **[OK]**       |
-| `GET /payments/purchase-history` | `@MessagePattern('get_purchase_history')` | `GET /enrollments/my-history`     | **[Pendente]** |
-| `GET /payments/purchases/:id`    | `@MessagePattern('get_enrollment_by_id')` | `GET /enrollments/:id`            | **[Pendente]** |
+| Origem (Monolito)                | Destino (Microserviço - TCP)              | Destino (Gateway - HTTP)          | Status   |
+|:---------------------------------|:------------------------------------------|:----------------------------------|:---------|
+| `POST /courses/:id/checkout`     | `@MessagePattern('create_enrollment')`    | `POST /enrollments`               | **[OK]** |
+| `GET /users/me/enrollments`      | `@MessagePattern('list_my_enrollments')`  | `GET /enrollments/my-enrollments` | **[OK]** |
+| `GET /payments/purchase-history` | `@MessagePattern('get_purchase_history')` | `GET /enrollments/my-history`     | **[OK]** |
+| `GET /payments/purchases/:id`    | `@MessagePattern('get_enrollment_by_id')` | `GET /enrollments/:id`            | **[OK]** |
 
 ## Fluxos Assíncronos a Migrar
 
@@ -71,6 +71,4 @@ Gerenciar matrículas, compras e histórico de pagamentos.
 | `enrolled_at`    | Date    | `EnrollmentEntity.enrolledAt` | Data da efetivação.               |
 | `course_title`   | String  | **[Novo]**                    | Título do curso (Snapshot).       |
 | `student_name`   | String  | **[Novo]**                    | Nome do aluno (Cópia).            |
-
-## Próximos Passos
 

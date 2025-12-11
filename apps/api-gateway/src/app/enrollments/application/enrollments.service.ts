@@ -20,4 +20,12 @@ export class EnrollmentsService {
   listMyEnrollments(studentSubId: string) {
     return this.client.send("list_my_enrollments", studentSubId);
   }
+
+  getPurchaseHistory(studentSubId: string) {
+    return this.client.send("get_purchase_history", studentSubId);
+  }
+
+  getEnrollmentById(id: string) {
+    return this.client.send("get_enrollment_by_id", id);
+  }
 }

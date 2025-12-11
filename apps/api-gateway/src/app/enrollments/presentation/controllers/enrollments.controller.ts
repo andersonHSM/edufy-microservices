@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   UseFilters,
   UseGuards,
@@ -21,10 +22,7 @@ export class EnrollmentsController {
   constructor(private readonly enrollmentsService: EnrollmentsService) {}
 
   @Post()
-  create(
-    @Body() createEnrollmentDto: CreateEnrollmentDto,
-    @CurrentUser() userSub: string,
-  ) {
+  create(@Body() createEnrollmentDto: CreateEnrollmentDto) {
     return this.enrollmentsService.create({
       ...createEnrollmentDto,
     });
@@ -34,5 +32,15 @@ export class EnrollmentsController {
   listMyEnrollments(@CurrentUser() userSub: string) {
     console.log({ userSub });
     return this.enrollmentsService.listMyEnrollments(userSub);
+  }
+
+  @Get("my-history")
+  getPurchaseHistory(@CurrentUser() userSub: string) {
+    return this.enrollmentsService.getPurchaseHistory(userSub);
+  }
+
+  @Get(":id")
+  getEnrollmentById(@Param("id") id: string) {
+    return this.enrollmentsService.getEnrollmentById(id);
   }
 }

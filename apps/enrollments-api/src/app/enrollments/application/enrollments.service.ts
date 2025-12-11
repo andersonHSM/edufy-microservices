@@ -75,4 +75,12 @@ export class EnrollmentsService {
   async listMyEnrollments(userId: string) {
     return this.enrollmentsRepository.findByUserId(userId);
   }
+
+  async getPurchaseHistory(userId: string) {
+    return this.enrollmentsRepository.findByUserId(userId);
+  }
+
+  async getEnrollmentById(id: string) {
+    return this.enrollmentsRepository.findById(id);
+  }
 }

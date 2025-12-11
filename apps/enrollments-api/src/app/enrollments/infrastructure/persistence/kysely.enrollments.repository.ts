@@ -62,4 +62,13 @@ export class KyselyEnrollmentsRepository
       .where('id', '=', id)
       .execute();
   }
+
+  async findById(id: string): Promise<EnrollmentEntity | null> {
+    const enrollment = await this.database
+      .selectFrom('enrollments.enrollments')
+      .selectAll()
+      .where('id', '=', id)
+      .executeTakeFirst();
+    return enrollment ? EnrollmentEntity.fromProps(enrollment) : null;
+  }
 }
