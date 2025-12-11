@@ -3,11 +3,17 @@ import { ConfigType } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { EnrollmentsRepository } from 'src/app/enrollments/domain/enrollments.repository';
 import { KyselyEnrollmentsRepository } from 'src/app/enrollments/infrastructure/persistence/kysely.enrollments.repository';
-import authServiceConfig from 'src/libs/configuration/auth-service.config';
 import coursesServiceConfig from 'src/libs/configuration/courses-service.config';
+import rabbitmqConfig from 'src/libs/configuration/rabbitmq.config';
+import usersServiceConfig from 'src/libs/configuration/users-service.config';
 import { DatabaseModule } from 'src/libs/database/database.module';
+
 import { EnrollmentsService } from './application/enrollments.service';
-import { AUTH_SERVICE, COURSES_SERVICE } from './enrollments.constants';
+import {
+  COURSES_SERVICE,
+  ENROLLMENTS_SERVICE,
+  USERS_SERVICE,
+} from './enrollments.constants';
 import { EnrollmentsController } from './presentation/controllers/enrollments.controller';
 
 @Module({
@@ -15,15 +21,15 @@ import { EnrollmentsController } from './presentation/controllers/enrollments.co
     DatabaseModule,
     ClientsModule.registerAsync([
       {
-        name: AUTH_SERVICE,
-        useFactory: (config: ConfigType<typeof authServiceConfig>) => ({
+        name: USERS_SERVICE,
+        useFactory: (config: ConfigType<typeof usersServiceConfig>) => ({
           transport: Transport.TCP,
           options: {
             host: config.host,
             port: config.port,
           },
         }),
-        inject: [authServiceConfig.KEY],
+        inject: [usersServiceConfig.KEY],
       },
       {
         name: COURSES_SERVICE,
@@ -35,6 +41,20 @@ import { EnrollmentsController } from './presentation/controllers/enrollments.co
           },
         }),
         inject: [coursesServiceConfig.KEY],
+      },
+      {
+        name: ENROLLMENTS_SERVICE,
+        useFactory: (config: ConfigType<typeof rabbitmqConfig>) => ({
+          transport: Transport.RMQ,
+          options: {
+            urls: [config.url],
+            queue: config.enrollmentsQueue,
+            queueOptions: {
+              durable: true,
+            },
+          },
+        }),
+        inject: [rabbitmqConfig.KEY],
       },
     ]),
   ],

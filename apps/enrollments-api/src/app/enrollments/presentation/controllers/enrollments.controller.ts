@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { EnrollmentsService } from 'src/app/enrollments/application/enrollments.service';
 import { CreateEnrollmentDto } from '../dtos/create-enrollment.dto';
 
@@ -10,6 +10,11 @@ export class EnrollmentsController {
   @MessagePattern('create_enrollment')
   async createEnrollment(@Payload() data: CreateEnrollmentDto) {
     return this.enrollmentsService.create(data);
+  }
+
+  @EventPattern('enrollment.created')
+  async enrollStudent(@Payload() data: { enrollment_id: string }) {
+    return this.enrollmentsService.enrollStudent(data.enrollment_id);
   }
 
   @MessagePattern('list_my_enrollments')

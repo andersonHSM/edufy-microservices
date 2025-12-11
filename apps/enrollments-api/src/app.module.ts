@@ -8,11 +8,8 @@ import {
 import { EnrollmentsModule } from 'src/app/enrollments/enrollments.module';
 import { ConfigurationModule } from 'src/libs/configuration/configuration.module';
 import coursesServiceConfig from 'src/libs/configuration/courses-service.config';
-import rabbitmqConfig from 'src/libs/configuration/rabbitmq.config';
 import usersServiceConfig from 'src/libs/configuration/users-service.config';
 import { DatabaseModule } from 'src/libs/database/database.module';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -24,20 +21,14 @@ import { AppService } from './app.service';
       clients: [
         {
           name: USERS_SERVICE,
-          useFactory: (
-            rabbitConfig: ConfigType<typeof rabbitmqConfig>,
-            usersConfig: ConfigType<typeof usersServiceConfig>,
-          ) => ({
-            transport: Transport.RMQ,
+          useFactory: (config: ConfigType<typeof usersServiceConfig>) => ({
+            transport: Transport.TCP,
             options: {
-              urls: [rabbitConfig.url],
-              queue: usersConfig.queue,
-              queueOptions: {
-                durable: true,
-              },
+              host: config.host,
+              port: config.port,
             },
           }),
-          inject: [rabbitmqConfig.KEY, usersServiceConfig.KEY],
+          inject: [usersServiceConfig.KEY],
         },
         {
           name: COURSES_SERVICE,
@@ -53,7 +44,7 @@ import { AppService } from './app.service';
       ],
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

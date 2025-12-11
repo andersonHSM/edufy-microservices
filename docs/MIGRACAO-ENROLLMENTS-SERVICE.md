@@ -20,16 +20,16 @@ Gerenciar matrículas, compras e histórico de pagamentos.
 
 | Origem (Monolito)                | Destino (Microserviço - TCP)              | Destino (Gateway - HTTP)          | Status         |
 |:---------------------------------|:------------------------------------------|:----------------------------------|:---------------|
-| `POST /courses/:id/checkout`     | `@MessagePattern('create_enrollment')`    | `POST /enrollments`               | **[Pendente]** |
+| `POST /courses/:id/checkout`     | `@MessagePattern('create_enrollment')`    | `POST /enrollments`               | **[OK]**       |
 | `GET /users/me/enrollments`      | `@MessagePattern('list_my_enrollments')`  | `GET /enrollments/my-enrollments` | **[Pendente]** |
 | `GET /payments/purchase-history` | `@MessagePattern('get_purchase_history')` | `GET /enrollments/my-history`     | **[Pendente]** |
 | `GET /payments/purchases/:id`    | `@MessagePattern('get_enrollment_by_id')` | `GET /enrollments/:id`            | **[Pendente]** |
 
 ## Fluxos Assíncronos a Migrar
 
-| Origem (Monolito)     | Destino (Microserviço - RabbitMQ)           | Gatilho                                   | Status         |
-|:----------------------|:--------------------------------------------|:------------------------------------------|:---------------|
-| `Job: enroll-student` | `@MessagePattern('enroll_student_request')` | Disparado após a conclusão de uma compra. | **[Pendente]** |
+| Origem (Monolito)     | Destino (Microserviço - RabbitMQ)           | Gatilho                                   | Status   |
+|:----------------------|:--------------------------------------------|:------------------------------------------|:---------|
+| `Job: enroll-student` | `@MessagePattern('enroll_student_request')` | Disparado após a conclusão de uma compra. | **[OK]** |
 
 ## Estratégia de Dados (Duplicação)
 

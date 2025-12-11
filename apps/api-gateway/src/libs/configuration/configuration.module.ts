@@ -6,6 +6,7 @@ import adminConfig from "./admin.config";
 import authServiceConfig from "./auth-service.config";
 import coursesServiceConfig from "./courses-service.config";
 import databaseConfig from "./database.config";
+import enrollmentsServiceConfig from "./enrollments-service.config";
 import jwtConfig from "./jwt.config";
 import rabbitmqConfig from "./rabbitmq.config";
 import webhookConfig from "./webhook.config";
@@ -27,6 +28,7 @@ import webhookConfig from "./webhook.config";
         authServiceConfig,
         usersServiceConfig,
         coursesServiceConfig,
+        enrollmentsServiceConfig,
       ],
     }),
   ],

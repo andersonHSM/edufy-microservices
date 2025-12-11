@@ -3,6 +3,7 @@ import { Kysely } from 'kysely';
 import {
   CreateEnrollmentInput,
   EnrollmentEntity,
+  EnrollmentProps,
 } from 'src/app/enrollments/domain/enrollment.entity';
 import { IEnrollmentsRepository } from 'src/app/enrollments/domain/enrollments.repository';
 import { DATABASE } from 'src/libs/database/constants';
@@ -23,11 +24,15 @@ export class KyselyEnrollmentsRepository
   async create(data: CreateEnrollmentInput): Promise<EnrollmentEntity> {
     const enrollment = EnrollmentEntity.create(data);
     const createdEnrollment = await this.database
-      .insertInto('enrollments.enrollments') // schema and table
+      .insertInto('enrollments')
       .values({
         id: enrollment.id,
-        userId: enrollment.userId,
+        studentSubId: enrollment.studentSubId,
         courseId: enrollment.courseId,
+        status: enrollment.status,
+        pricePaid: enrollment.pricePaid,
+        courseTitle: enrollment.courseTitle,
+        studentName: enrollment.studentName,
         enrolledAt: enrollment.enrolledAt,
       })
       .returningAll()
@@ -38,12 +43,23 @@ export class KyselyEnrollmentsRepository
 
   async findByUserId(userId: string): Promise<EnrollmentEntity[]> {
     const enrollments = await this.database
-      .selectFrom('enrollments.enrollments')
+      .selectFrom('enrollments')
       .selectAll()
-      .where('userId', '=', userId)
+      .where('studentSubId', '=', userId)
       .execute();
     return enrollments.map((enrollment) =>
       EnrollmentEntity.fromProps(enrollment),
     );
+  }
+
+  async updateStatus(
+    id: string,
+    status: EnrollmentProps['status'],
+  ): Promise<void> {
+    await this.database
+      .updateTable('enrollments')
+      .set({ status })
+      .where('id', '=', id)
+      .execute();
   }
 }
