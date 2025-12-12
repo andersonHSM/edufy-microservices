@@ -8,6 +8,8 @@ import {
 } from '@nestjs/microservices';
 import { UsersService } from 'src/app/users/application/users.service';
 import { UserSignedUpEvent } from 'src/app/users/events/user-signed-up.event';
+import { AssignRoleDto } from 'src/app/users/presentation/dto/assign-role.dto';
+import { UpdateUserDto } from 'src/app/users/presentation/dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -19,7 +21,19 @@ export class UsersController {
     return this.usersService.getUserById(subId);
   }
 
-  @EventPattern('user_signed_up')
+  @MessagePattern('update_user')
+  public async updateUser(@Payload() data: UpdateUserDto & { sub_id: string }) {
+    const { sub_id, ...dto } = data;
+    return this.usersService.updateUser(sub_id, dto);
+  }
+
+  @MessagePattern('assign_role')
+  public async assignRole(@Payload() data: AssignRoleDto & { sub_id: string }) {
+    const { sub_id, role } = data;
+    return this.usersService.assignRole(sub_id, role);
+  }
+
+  @EventPattern('user_created')
   public async handleUserSignedUp(
     @Payload() payload: UserSignedUpEvent,
     @Ctx() context: RmqContext,

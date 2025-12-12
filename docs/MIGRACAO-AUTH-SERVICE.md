@@ -10,22 +10,36 @@ Centralizar a lógica de autenticação e gerenciamento de tokens JWT, migrando 
 - **Request/Response:** TCP (`@MessagePattern`)
 - **Eventos:** RabbitMQ (`@EventPattern`)
 
+## Configuração de Filas (RabbitMQ)
+
+- **Fila Principal:** `auth_queue`
+- **Exchange de DLQ:** `auth_dlx`
+- **Routing Key de DLQ:** `auth_dlq_routing_key`
+- **Fila de DLQ:** `auth_dlq`
+
 ## Rotas a Migrar
 
-| Origem (Monolito)      | Destino (Microserviço - TCP)     | Destino (Gateway - HTTP) | Status         |
-|:-----------------------|:---------------------------------|:-------------------------|:---------------|
-| `POST /users` (Signup) | `@MessagePattern('create_user')` | `POST /users`            | **[OK]**       |
-| `POST /users/login`    | `@MessagePattern('auth_login')`  | `POST /auth/login`       | **[Pendente]** |
+| Origem (Monolito)      | Destino (Microserviço - TCP)     | Destino (Gateway - HTTP) | Status        |
+|:-----------------------|:---------------------------------|:-------------------------|:--------------|
+| `POST /users` (Signup) | `@MessagePattern('create_user')` | `POST /users`            | **[OK]**      |
+| `POST /users/login`    | `@MessagePattern('auth_login')`  | `POST /auth/login`       | **[Parcial]** |
 
 *(Nota: `POST /users` também emite o evento `@EventPattern('user_created')`)*
 
 ## Estratégia de Dados (Duplicação)
 
 - **Papel:** Source of Truth para Credenciais.
+
 - **Dependências:** Nenhuma.
+
 - **Responsabilidade de Eventos:**
+
     - Emitir `user_created` sempre que um usuário se cadastrar.
+
     - Escutar `user_role_assigned` para atualizar roles no token.
+
+    - **(Nota Importante para Consumidor):** O listener para `user_role_assigned` deve implementar
+      `manual acknowledgement` e DLQ para garantir resiliência.
 
 ## Modelagem de Dados
 

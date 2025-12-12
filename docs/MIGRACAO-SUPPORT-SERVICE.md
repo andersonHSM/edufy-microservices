@@ -9,6 +9,13 @@ Sistema de Tickets de suporte (Helpdesk).
 - **Request/Response:** TCP (`@MessagePattern`)
 - **Eventos:** RabbitMQ (`@EventPattern`)
 
+## Configuração de Filas (RabbitMQ)
+
+- **Fila Principal:** `support_queue`
+- **Exchange de DLQ:** `support_dlx`
+- **Routing Key de DLQ:** `support_dlq_routing_key`
+- **Fila de DLQ:** `support_dlq`
+
 ## Rotas a Migrar
 
 | Origem (Monolito)                         | Destino (Microserviço - TCP)          | Destino (Gateway - HTTP)            | Status         |
@@ -22,12 +29,20 @@ Sistema de Tickets de suporte (Helpdesk).
 ## Estratégia de Dados (Duplicação)
 
 - **Schema:** Tabela `tickets` e `messages` devem ter `author_name` e `author_email`.
+
 - **Escrita:**
+
     - Ao criar ticket/resposta, persistir dados do autor (do Token com `sub_id` ou TCP `users-api`).
+
 - **Atualização (Consumidor):**
+
     - Escutar `user_updated` (payload `sub_id`).
+
     - Se um usuário muda de nome, atualizar tickets ABERTOS. Tickets FECHADOS podem manter histórico (decisão de
       negócio).
+
+    - **(Nota Importante):** O consumidor do `user_updated` deve implementar `manual acknowledgement` e DLQ.
+
 - **Benefício:** Painel do agente carrega instantaneamente sem N+1 requests para `users-api`.
 
 ## Modelagem de Dados

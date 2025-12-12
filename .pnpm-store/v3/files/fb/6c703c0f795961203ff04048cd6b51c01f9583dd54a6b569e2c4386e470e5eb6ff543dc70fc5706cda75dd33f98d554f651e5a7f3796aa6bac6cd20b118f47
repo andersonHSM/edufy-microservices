@@ -1,0 +1,152 @@
+import { C12InputConfig } from 'c12';
+import { PartialDeep } from 'type-fest';
+import { Kysely, Dialect, MigratorProps, MigrationProvider, Migrator, SqliteDialectConfig, MysqlDialectConfig, PostgresDialectConfig, MssqlDialectConfig, KyselyPlugin, Migration } from 'kysely';
+import { PostgresJSDialectConfig } from 'kysely-postgres-js';
+
+declare class Seeder {
+    #private;
+    constructor(props: SeederProps);
+    getSeeds(seedNames?: string | string[]): Promise<SeedInfo[]>;
+    run(seedNames?: string | string[]): Promise<SeedResultSet>;
+}
+interface Seed {
+    seed(db: Kysely<any>): Promise<void>;
+}
+interface SeedProvider {
+    getSeeds(seedNames?: string | string[]): Promise<Record<string, Seed>>;
+}
+interface SeederProps {
+    db: Kysely<any>;
+    provider: SeedProvider;
+}
+interface SeedInfo {
+    name: string;
+    seed: Seed;
+}
+interface SeedResultSet {
+    readonly error?: unknown;
+    readonly results: SeedResult[];
+}
+interface SeedResult {
+    readonly seedName: string;
+    readonly status: 'Success' | 'Error' | 'NotExecuted';
+}
+
+type KyselyDialect = ResolvableKyselyDialect | Dialect;
+type ResolvableKyselyDialect = KyselyCoreDialect | KyselyOrganizationDialect;
+type KyselyCoreDialect = 'pg' | 'mysql2' | 'tedious' | 'better-sqlite3';
+type KyselyOrganizationDialect = 'postgres';
+type Factory<T, P extends any[] = []> = (...args: P) => T | Promise<T>;
+type OrFactory<T, P extends any[] = []> = T | Factory<T, P>;
+interface KyselyDialectConfigDictionary extends Record<ResolvableKyselyDialect, unknown> {
+    'better-sqlite3': SqliteDialectConfig;
+    mysql2: MysqlDialectConfig;
+    pg: PostgresDialectConfig;
+    postgres: PostgresJSDialectConfig;
+    tedious: MssqlDialectConfig;
+}
+type KyselyDialectConfig<Dialect extends KyselyDialect> = Dialect extends ResolvableKyselyDialect ? KyselyDialectConfigDictionary[Dialect] : never;
+type KyselyCTLConfig<Dialect extends KyselyDialect = KyselyDialect> = {
+    destroyOnExit?: boolean;
+    migrations?: MigratorlessMigrationsConfig | MigratorfulMigrationsConfig;
+    seeds?: SeederlessSeedsConfig | SeederfulSeedsConfig;
+} & (Dialect extends ResolvableKyselyDialect ? {
+    dialect: Dialect;
+    dialectConfig: OrFactory<KyselyDialectConfig<Dialect>>;
+    kysely?: never;
+    plugins?: OrFactory<KyselyPlugin[]>;
+} : {
+    dialect: OrFactory<Dialect>;
+    kysely?: never;
+    plugins?: OrFactory<KyselyPlugin[]>;
+} | {
+    dialect?: never;
+    dialectConfig?: never;
+    kysely: OrFactory<Kysely<any>>;
+    plugins?: never;
+});
+type MigratorfulMigrationsConfig = Pick<MigrationsBaseConfig, 'getMigrationPrefix'> & {
+    allowJS?: never;
+    migrationFolder?: never;
+    migrator: Factory<Migrator, [db: Kysely<any>]>;
+    provider?: never;
+};
+type MigratorlessMigrationsConfig = MigrationsBaseConfig & ({
+    allowJS?: boolean;
+    migrationFolder?: string;
+    migrator?: never;
+    provider?: never;
+} | {
+    allowJS?: never;
+    migrationFolder?: never;
+    migrator?: never;
+    provider: OrFactory<MigrationProvider>;
+});
+type SeederfulSeedsConfig = Pick<SeedsBaseConfig, 'getSeedPrefix'> & {
+    allowJS?: never;
+    provider?: never;
+    seeder: Factory<Seeder, [db: Kysely<any>]>;
+    seedFolder?: never;
+};
+type SeederlessSeedsConfig = SeedsBaseConfig & ({
+    allowJS?: boolean;
+    provider?: never;
+    seeder?: never;
+    seedFolder?: string;
+} | {
+    allowJS?: never;
+    provider: OrFactory<SeedProvider>;
+    seeder?: never;
+    seedFolder?: never;
+});
+type MigrationsBaseConfig = Omit<MigratorProps, 'db' | 'provider'> & {
+    getMigrationPrefix?(): string | Promise<string>;
+};
+type SeedsBaseConfig = Omit<SeederProps, 'db' | 'provider'> & {
+    getSeedPrefix?(): string | Promise<string>;
+};
+
+type PartialKyselyCTLConfig = PartialDeep<KyselyCTLConfig>;
+type DefineConfigInput = ((PartialKyselyCTLConfig & {
+    extends: string | string[];
+}) | (KyselyCTLConfig & {
+    extends?: never;
+})) & C12InputConfig<PartialKyselyCTLConfig>;
+declare const defineConfig: (input: DefineConfigInput) => DefineConfigInput;
+
+declare function DUMMY_DIALECT_CONFIG(): never;
+
+declare function getKnexTimestampPrefix(): string;
+
+interface GetJitiArgs {
+    debug?: boolean;
+    experimentalResolveTSConfigPaths?: boolean;
+    filesystemCaching?: boolean;
+}
+
+/**
+ * An opinionated migration provider that reads migrations from TypeScript files.
+ * Same as `FileMigrationProvider` but works in ESM/CJS without loader flag/s,
+ * and on Windows too.
+ */
+declare class TSFileMigrationProvider implements MigrationProvider {
+    #private;
+    constructor(props: TSFileMigrationProviderProps);
+    getMigrations(): Promise<Record<string, Migration>>;
+}
+interface TSFileMigrationProviderProps extends GetJitiArgs {
+    allowJS?: boolean;
+    migrationFolder: string;
+}
+
+declare class FileSeedProvider implements SeedProvider {
+    #private;
+    constructor(props: FileSeedProviderProps);
+    getSeeds(seedNames?: string | string[]): Promise<Record<string, Seed>>;
+}
+interface FileSeedProviderProps extends GetJitiArgs {
+    allowJS?: boolean;
+    seedFolder: string;
+}
+
+export { DUMMY_DIALECT_CONFIG, type DefineConfigInput, FileSeedProvider, type FileSeedProviderProps, type KyselyCTLConfig, type KyselyCoreDialect, type KyselyDialect, type KyselyDialectConfig, type KyselyOrganizationDialect, type MigrationsBaseConfig, type ResolvableKyselyDialect, type Seed, type SeedInfo, type SeedProvider, type SeedResult, type SeedResultSet, Seeder, type SeederProps, type SeedsBaseConfig, TSFileMigrationProvider, type TSFileMigrationProviderProps, defineConfig, getKnexTimestampPrefix };

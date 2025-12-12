@@ -1,0 +1,1357 @@
+#!/usr/bin/env node
+import {
+  FileSeedProvider,
+  Seeder,
+  TSFileMigrationProvider,
+  __dirname,
+  __filename,
+  assertDefined,
+  getCWD,
+  getJiti,
+  getMillisPrefix
+} from "./chunk-5AYN4WRA.js";
+
+// src/bin.mts
+import { process as process3 } from "std-env";
+
+// src/cli.mts
+import { createMain } from "citty";
+
+// src/commands/root.mts
+import { showUsage as showUsage3 } from "citty";
+import { consola as consola20, LogLevels } from "consola";
+
+// src/utils/define-args.mts
+function defineArgs(args12, dontSort) {
+  return dontSort ? args12 : sortArgs(args12);
+}
+function sortArgs(args12) {
+  return Object.fromEntries(
+    Object.entries(args12).sort(([nameA, argA], [nameB, argB]) => {
+      const aliasA = getAlias(argA);
+      const aliasB = getAlias(argB);
+      if (aliasA) {
+        nameA = aliasA;
+      }
+      if (aliasB) {
+        nameB = aliasB;
+      }
+      return nameA.localeCompare(nameB);
+    })
+  );
+}
+function getAlias(arg) {
+  const { alias } = arg;
+  if (!alias) {
+    return null;
+  }
+  if (Array.isArray(alias)) {
+    return alias.at(0) || null;
+  }
+  return alias;
+}
+
+// src/utils/define-command.mts
+function defineCommand(args12, command) {
+  return {
+    ...command,
+    args: args12,
+    subCommands: sortSubCommands(command.subCommands)
+  };
+}
+function sortSubCommands(subCommands3) {
+  if (!subCommands3) {
+    return;
+  }
+  return Object.fromEntries(
+    Object.entries(subCommands3).sort(
+      ([nameA], [nameB]) => nameA.localeCompare(nameB)
+    )
+  );
+}
+
+// src/utils/is-in-subcommand.mts
+function isInSubcommand(context) {
+  const {
+    cmd: { subCommands: subCommands3 },
+    rawArgs
+  } = context;
+  if (!subCommands3) {
+    return false;
+  }
+  const potentialSubCommand = rawArgs.find((arg) => !arg.startsWith("-"));
+  return potentialSubCommand !== void 0 && potentialSubCommand in subCommands3;
+}
+
+// src/utils/version.mts
+import { consola } from "consola";
+import { ofetch } from "ofetch";
+import { isCI } from "std-env";
+
+// src/utils/package-manager.mts
+import { detectPackageManager } from "nypm";
+import { isBun, isDeno } from "std-env";
+async function getPackageManager(args12) {
+  const packageManager = await detectPackageManager(getCWD(args12), {
+    ignoreArgv: true,
+    includeParentDirs: true
+  });
+  if (packageManager) {
+    return { ...packageManager, inProject: true };
+  }
+  const name = isDeno ? "deno" : isBun ? "bun" : "npm";
+  return { name, command: name, inProject: false };
+}
+
+// src/utils/pkg-json.mts
+import { readPackageJSON } from "pkg-types";
+var PACKAGE_JSONS = {};
+async function getConsumerPackageJSON(args12) {
+  return await getPackageJSON({ startingFrom: getCWD(args12) });
+}
+async function getCTLPackageJSON() {
+  return await getPackageJSON({ id: "kysely-ctl" });
+}
+async function getPackageJSON(options) {
+  const { id, startingFrom = __dirname } = options;
+  return PACKAGE_JSONS[`${String(id)}_${startingFrom}`] ||= await readPackageJSON(id, { from: startingFrom });
+}
+
+// src/utils/version.mts
+async function getKyselyInstalledVersion(args12) {
+  try {
+    const pkgJSON = await getConsumerPackageJSON(args12);
+    return getVersionFromPackageJSON("kysely", pkgJSON);
+  } catch {
+    return null;
+  }
+}
+async function getCTLInstalledVersion() {
+  try {
+    const pkgJSON = await getCTLPackageJSON();
+    return getVersionFromPackageJSON("kysely-ctl", pkgJSON);
+  } catch {
+    return null;
+  }
+}
+function getVersionFromPackageJSON(name, pkgJSON) {
+  if (pkgJSON.name === name) {
+    return pkgJSON.version || null;
+  }
+  const rawVersion = pkgJSON.dependencies?.[name] || pkgJSON.devDependencies?.[name];
+  return rawVersion?.replace(/^[\^~]?(.+)$/, "$1") || null;
+}
+async function printInstalledVersions(args12) {
+  const [cliVersion, kyselyVersion] = await Promise.all([
+    getCTLInstalledVersion(),
+    getKyselyInstalledVersion(args12)
+  ]);
+  consola.log(
+    `kysely ${kyselyVersion ? `v${kyselyVersion}` : "[not installed]"}`
+  );
+  consola.log(`kysely-ctl v${cliVersion}`);
+}
+async function getKyselyLatestVersion() {
+  return await getPackageLatestVersion("kysely");
+}
+async function getCTLLatestVersion() {
+  return await getPackageLatestVersion("kysely-ctl");
+}
+async function getPackageLatestVersion(packageName) {
+  const response = await ofetch(
+    `https://registry.npmjs.org/${packageName}`
+  );
+  return response["dist-tags"].latest;
+}
+async function printUpgradeNotice(args12) {
+  if (args12["outdated-check"] === false || isCI) {
+    return;
+  }
+  const [
+    kyselyInstalledVersion,
+    kyselyLatestVersion,
+    ctlInstalledVersion,
+    ctlLatestVersion
+  ] = await Promise.all([
+    getKyselyInstalledVersion(args12),
+    getKyselyLatestVersion(),
+    getCTLInstalledVersion(),
+    getCTLLatestVersion()
+  ]);
+  const notices = [];
+  if (kyselyInstalledVersion && kyselyInstalledVersion !== kyselyLatestVersion) {
+    notices.push(["Kysely", "kysely", kyselyLatestVersion]);
+  }
+  if (ctlInstalledVersion !== ctlLatestVersion) {
+    notices.push(["KyselyCTL", "kysely-ctl", ctlLatestVersion]);
+  }
+  if (!notices.length) {
+    return;
+  }
+  const { command, name: packageManagerName } = await getPackageManager(args12);
+  const installGloballyCommand = {
+    bun: (name) => `add -g ${name}@latest`,
+    deno: (name) => `install -g -f npm:${name}@latest`,
+    npm: (name) => `i -g ${name}@latest`,
+    pnpm: (name) => `add -g ${name}@latest`,
+    // doesn't support global installs in modern versions.
+    yarn: (name) => `add -D ${name}@latest`
+  }[packageManagerName];
+  const installLocallyCommand = {
+    bun: (name, dev) => `add ${dev ? "-D " : ""}${name}@latest`,
+    deno: (name, dev) => `install ${dev ? "-D " : ""}npm:${name}@latest`,
+    npm: (name, dev) => `i ${dev ? "-D " : ""}${name}@latest`,
+    pnpm: (name, dev) => `add ${dev ? "-D " : ""}${name}@latest`,
+    yarn: (name, dev) => `add ${dev ? "-D " : ""}${name}@latest`
+  }[packageManagerName];
+  consola.box(
+    notices.map(
+      ([prettyName, name, latestVersion]) => `A new version of ${prettyName} is available: v${latestVersion}
+Run \`${command} ${name === "kysely-ctl" ? installGloballyCommand(name) : installLocallyCommand(name)}\` to upgrade.`
+    ).join("\n\n")
+  );
+}
+
+// src/commands/init.mts
+import { copyFile, mkdir } from "node:fs/promises";
+import { consola as consola3 } from "consola";
+import { join } from "pathe";
+
+// src/arguments/cwd.mts
+var CWDArg = defineArgs(
+  {
+    cwd: {
+      description: "The current working directory to use for relative paths.",
+      type: "string"
+    }
+  },
+  true
+);
+
+// src/arguments/debug.mts
+var DebugArg = defineArgs(
+  {
+    debug: {
+      default: false,
+      description: "Show debug information.",
+      type: "boolean"
+    }
+  },
+  true
+);
+
+// src/arguments/extension.mts
+var TS_EXTENSIONS = ["ts", "mts", "cts"];
+var JS_EXTENSIONS = ["js", "mjs", "cjs"];
+var ALL_EXTENSIONS = [...TS_EXTENSIONS, ...JS_EXTENSIONS];
+var ExtensionArg = defineArgs(
+  {
+    extension: {
+      alias: "x",
+      default: "ts",
+      description: "The file extension to use.",
+      type: "string",
+      valueHint: ALL_EXTENSIONS.map((extension) => `"${extension}"`).join(
+        " | "
+      )
+    }
+  },
+  true
+);
+function assertExtension(thing, config, context) {
+  const allowJS = config?.[context || "migrations"].allowJS ?? true;
+  if (!allowJS && JS_EXTENSIONS.includes(thing)) {
+    throw new Error(
+      `Invalid file extension "${thing}"! Expected ${TS_EXTENSIONS.map(
+        (extension) => `"${extension}"`
+      ).join(" | ")}. To use JS extensions, set "${context}.allowJS" to true.`
+    );
+  }
+  const extensions = allowJS ? ALL_EXTENSIONS : TS_EXTENSIONS;
+  if (!extensions.includes(thing)) {
+    throw new Error(
+      `Invalid file extension "${thing}"! Expected ${ExtensionArg.extension.valueHint}`
+    );
+  }
+}
+
+// src/arguments/no-outdated-check.mts
+var NoOutdatedCheckArg = defineArgs(
+  {
+    "no-outdated-check": {
+      description: "Will not check for latest kysely/kysely-ctl versions and notice newer versions exist.",
+      type: "boolean"
+    }
+  },
+  true
+);
+
+// src/config/get-config.mts
+import { loadConfig } from "c12";
+import { consola as consola2 } from "consola";
+import { basename, dirname, resolve } from "pathe";
+import { findNearestFile } from "pkg-types";
+async function getConfig(args12) {
+  const { config: configArg } = args12;
+  const configPath = configArg ? resolve(getCWD(), dirname(configArg)) : await findNearestKyselyConfigPath();
+  if (!configPath) {
+    return null;
+  }
+  const jiti = await getJiti({
+    debug: args12.debug,
+    filesystemCaching: args12["filesystem-caching"],
+    experimentalResolveTSConfigPaths: args12["experimental-resolve-tsconfig-paths"]
+  });
+  consola2.debug("configPath", configPath);
+  const loadedConfig = await loadConfig({
+    configFile: configArg ? basename(configArg) : void 0,
+    cwd: configPath,
+    dotenv: true,
+    envName: args12.environment,
+    jiti,
+    globalRc: false,
+    name: configArg ? void 0 : "kysely",
+    packageJson: false,
+    rcFile: false
+  });
+  consola2.debug("loadedConfig", loadedConfig);
+  const { config, ...configMetadata } = loadedConfig;
+  return {
+    ...config,
+    args: args12,
+    configMetadata,
+    cwd: configPath,
+    migrations: {
+      allowJS: false,
+      getMigrationPrefix: getMillisPrefix,
+      ...config.migrations,
+      disableTransactions: args12.transaction === false || config.migrations?.disableTransactions,
+      migrationFolder: resolveCollectionFolderPath(
+        configPath,
+        config.migrations?.migrationFolder,
+        "migrations"
+      )
+    },
+    seeds: {
+      allowJS: false,
+      getSeedPrefix: getMillisPrefix,
+      ...config.seeds,
+      seedFolder: resolveCollectionFolderPath(
+        configPath,
+        config.seeds?.seedFolder,
+        "seeds"
+      )
+    }
+  };
+}
+async function getConfigOrFail(args12) {
+  const config = await getConfig(args12);
+  if (!configFileExists(config)) {
+    throw new Error(
+      "No config file found. Try creating one by running `kysely init`."
+    );
+  }
+  return config;
+}
+function configFileExists(config) {
+  if (!config) {
+    return false;
+  }
+  const { configFile } = config.configMetadata;
+  return configFile !== void 0 && configFile !== "kysely.config";
+}
+var BASE_CONFIG_FILESNAMES = ALL_EXTENSIONS.flatMap((extension) => [
+  `.config/kysely.config.${extension}`,
+  `kysely.config.${extension}`
+]);
+async function findNearestKyselyConfigPath() {
+  try {
+    const kyselyConfigPath = await findNearestFile(BASE_CONFIG_FILESNAMES, {
+      startingFrom: getCWD()
+    });
+    consola2.debug("found kysely config file at", kyselyConfigPath);
+    return dirname(kyselyConfigPath);
+  } catch {
+    return null;
+  }
+}
+function resolveCollectionFolderPath(configPath, configuredFolderPath, defaultFolderName) {
+  const defaultRelativeFolderPath = `${basename(configPath) === ".config" ? "../" : "./"}${defaultFolderName}`;
+  return resolve(configPath, configuredFolderPath || defaultRelativeFolderPath);
+}
+
+// src/utils/create-subcommand.mts
+function createSubcommand(name, def) {
+  return {
+    [name]: { ...def, meta: { ...def.meta, name } }
+  };
+}
+
+// src/utils/get-template-extension.mts
+async function getTemplateExtension(extension) {
+  if (extension === "js") {
+    const pkgJSON = await getConsumerPackageJSON();
+    return pkgJSON.type === "module" ? "mjs" : "cjs";
+  }
+  return extension === "cjs" || extension === "mjs" ? extension : "ts";
+}
+
+// src/commands/init.mts
+var args = defineArgs({
+  ...CWDArg,
+  ...DebugArg,
+  ...ExtensionArg,
+  ...NoOutdatedCheckArg
+});
+var Command = defineCommand(args, {
+  meta: {
+    description: "Create a sample `kysely.config` file"
+  },
+  async run(context) {
+    const { args: args12 } = context;
+    const { extension } = args12;
+    consola3.debug(context, []);
+    const config = await getConfig(args12);
+    if (configFileExists(config)) {
+      return consola3.warn(
+        `Init skipped: config file already exists at ${config.configMetadata.configFile}`
+      );
+    }
+    assertExtension(extension);
+    const configFolderPath = join(getCWD(), ".config");
+    consola3.debug("Config folder path:", configFolderPath);
+    const wasConfigFolderCreated = Boolean(
+      await mkdir(configFolderPath, { recursive: true })
+    );
+    if (wasConfigFolderCreated) {
+      consola3.debug("Config folder created");
+    }
+    const filePath = join(configFolderPath, `kysely.config.${extension}`);
+    consola3.debug("File path:", filePath);
+    const templateExtension = await getTemplateExtension(extension);
+    const templatePath = join(
+      __dirname,
+      `templates/config-template.${templateExtension}`
+    );
+    consola3.debug("Template path:", templatePath);
+    await copyFile(templatePath, filePath);
+    consola3.success(`Config file created at ${filePath}`);
+  }
+});
+var InitCommand = createSubcommand("init", Command);
+
+// src/commands/migrate/down.mts
+import { consola as consola7 } from "consola";
+
+// src/arguments/config.mts
+var ConfigArg = defineArgs(
+  {
+    config: {
+      alias: "c",
+      description: "Path to the config file.",
+      type: "string"
+    }
+  },
+  true
+);
+
+// src/arguments/environment.mts
+var EnvironmentArg = defineArgs(
+  {
+    environment: {
+      alias: "e",
+      description: "Apply environment-specific overrides to the configuration. See https://github.com/unjs/c12#environment-specific-configuration for more information.",
+      type: "string",
+      valueHint: "production | development | test | ..."
+    }
+  },
+  true
+);
+
+// src/arguments/jiti.mts
+var JitiArgs = defineArgs(
+  {
+    "experimental-resolve-tsconfig-paths": {
+      default: false,
+      description: "Attempts to resolve path aliases using your `tsconfig.json` file/s.",
+      type: "boolean"
+    },
+    "no-filesystem-caching": {
+      description: "Will not write cache files to disk. See https://github.com/unjs/jiti#fscache for more information.",
+      type: "boolean"
+    }
+  },
+  true
+);
+
+// src/arguments/common.mts
+var CommonArgs = defineArgs({
+  ...ConfigArg,
+  ...CWDArg,
+  ...DebugArg,
+  ...EnvironmentArg,
+  ...JitiArgs,
+  ...NoOutdatedCheckArg
+});
+
+// src/arguments/migrate.mts
+var MigrateArgs = defineArgs(
+  {
+    "no-transaction": {
+      description: "Don't use a transaction when running the migrations. This will not work for now if you've provided your own Migrator factory.",
+      type: "boolean"
+    }
+  },
+  true
+);
+
+// src/arguments/migration-name.mts
+var createMigrationNameArg = (required = false) => defineArgs(
+  {
+    migration_name: {
+      description: "Migration name to run/undo.",
+      required,
+      type: "positional"
+    }
+  },
+  true
+);
+
+// src/kysely/is-wrong-direction.mts
+async function isWrongDirection(migrationName, expectedDirection, migrator) {
+  if (!migrationName) {
+    return false;
+  }
+  const migrations2 = await migrator.getMigrations();
+  return migrations2.find(
+    (migration) => migration.name === migrationName && (expectedDirection === "up" && migration.executedAt !== void 0 || expectedDirection === "down" && !migration.executedAt)
+  ) !== void 0;
+}
+
+// src/kysely/process-migration-result-set.mts
+import { consola as consola5 } from "consola";
+import { colorize } from "consola/utils";
+
+// src/utils/error.mts
+import { consola as consola4 } from "consola";
+import { process } from "std-env";
+function exitWithError(error) {
+  if (error instanceof AggregateError) {
+    for (const subError of error.errors) {
+      consola4.error(subError);
+    }
+  } else {
+    consola4.error(error);
+  }
+  process.exit?.(1);
+  throw error;
+}
+
+// src/kysely/get-migrations.mts
+var migrations;
+async function getMigrations(migrator) {
+  return migrations ||= await migrator.getMigrations();
+}
+
+// src/kysely/process-migration-result-set.mts
+async function processMigrationResultSet(resultSet, direction, migrator) {
+  consola5.debug(resultSet);
+  let { error, results } = resultSet;
+  if (error) {
+    const failedMigration = results?.find((result) => result.status === "Error");
+    consola5.fail(
+      `Migration failed with \`${error}\`${failedMigration ? ` @ "${failedMigration.migrationName}"` : ""}`
+    );
+    exitWithError(error);
+  }
+  if (!results?.length) {
+    return consola5.info(
+      `Migration skipped: no ${direction === "up" ? "new" : "completed"} migrations found`
+    );
+  }
+  consola5.success("Migration complete");
+  consola5.info(
+    `${direction === "up" ? "Ran" : "Undone"} ${results.length} migration${results.length > 1 ? "s" : ""}:`
+  );
+  if (direction === "down") {
+    results = [...results].reverse();
+  }
+  const migrations2 = await getMigrations(migrator);
+  const firstResult = results[0];
+  assertDefined(firstResult);
+  const { migrationName: firstResultMigrationName } = firstResult;
+  const untouchedMigrationsBefore = migrations2.slice(
+    0,
+    migrations2.findIndex(
+      (migration) => migration.name === firstResultMigrationName
+    )
+  );
+  const lastResult = results.at(-1);
+  assertDefined(lastResult);
+  const { migrationName: lastResultMigrationName } = lastResult;
+  const untouchedMigrationsAfter = migrations2.slice(
+    migrations2.findIndex(
+      (migration) => migration.name === lastResultMigrationName
+    ) + 1
+  );
+  for (const migration of untouchedMigrationsBefore) {
+    consola5.log(`[\u2713] ${migration.name}`);
+  }
+  for (const result of results) {
+    consola5.log(
+      `[${colorize("green", result.direction === "Up" ? "\u2713" : "\u237B")}] ${result.migrationName}`
+    );
+  }
+  for (const migration of untouchedMigrationsAfter) {
+    consola5.log(`[ ] ${migration.name}`);
+  }
+}
+
+// src/kysely/get-migrator.mts
+import { Migrator } from "kysely";
+
+// src/utils/hydrate.mts
+async function hydrate(factory, parameters, defaultValue) {
+  if (factory == null) {
+    return defaultValue?.() ?? factory;
+  }
+  if (typeof factory !== "function") {
+    return factory;
+  }
+  return await factory(...parameters);
+}
+
+// src/kysely/get-migrator.mts
+async function getMigrator(config) {
+  const { args: args12, kysely, migrations: migrations2 } = config;
+  const { allowJS, migrationFolder, migrator, ...migratorOptions } = migrations2;
+  if (migrator) {
+    return await hydrate(migrator, [kysely]);
+  }
+  const provider = await hydrate(
+    migrations2.provider,
+    [],
+    () => new TSFileMigrationProvider({
+      allowJS,
+      debug: args12.debug,
+      experimentalResolveTSConfigPaths: args12["experimental-resolve-tsconfig-paths"],
+      filesystemCaching: args12["filesystem-caching"],
+      migrationFolder
+    })
+  );
+  return new Migrator({ ...migratorOptions, db: kysely, provider });
+}
+
+// src/kysely/get-kysely.mts
+import { consola as consola6 } from "consola";
+import { Kysely } from "kysely";
+
+// src/kysely/get-dialect.mts
+import {
+  MysqlDialect,
+  PostgresDialect,
+  SqliteDialect
+} from "kysely";
+async function getDialect(config) {
+  const { dialect } = config;
+  if (!dialect) {
+    throw new Error("No dialect provided");
+  }
+  if (typeof dialect !== "string") {
+    return await hydrate(dialect, []);
+  }
+  const dialectConfig = await hydrate(config.dialectConfig, []);
+  if (dialect === "pg") {
+    return new PostgresDialect(dialectConfig);
+  }
+  if (dialect === "mysql2") {
+    return new MysqlDialect(dialectConfig);
+  }
+  if (dialect === "tedious") {
+    return new (await import("kysely")).MssqlDialect(dialectConfig);
+  }
+  if (dialect === "better-sqlite3") {
+    return new SqliteDialect(dialectConfig);
+  }
+  if (dialect === "postgres") {
+    return new (await import("kysely-postgres-js")).PostgresJSDialect(
+      dialectConfig
+    );
+  }
+  throw new Error(`Unknown dialect: ${dialect}`);
+}
+
+// src/kysely/get-kysely.mts
+async function getKysely(config, debug = false) {
+  const { kysely } = config;
+  if (kysely) {
+    return await hydrate(kysely, []);
+  }
+  const [dialect, plugins] = await Promise.all([
+    getDialect(config),
+    hydrate(config.plugins, [])
+  ]);
+  return new Kysely({
+    dialect,
+    log: debug ? (event) => {
+      if (event.level === "error") {
+        return consola6.error(event.error);
+      }
+      return consola6.log(
+        `executed \`${event.query.sql}\` in ${event.queryDurationMillis}ms`
+      );
+    } : [],
+    plugins
+  });
+}
+
+// src/kysely/using-kysely.mts
+async function usingKysely(config, callback) {
+  const kysely = await getKysely(config);
+  try {
+    return await callback(kysely);
+  } finally {
+    if (config.destroyOnExit !== false) {
+      await kysely.destroy();
+    }
+  }
+}
+
+// src/kysely/using-migrator.mts
+async function usingMigrator(args12, callback) {
+  const config = await getConfigOrFail(args12);
+  return await usingKysely(config, async (kysely) => {
+    const migrator = await getMigrator({ ...config, kysely });
+    return await callback(migrator);
+  });
+}
+
+// src/commands/migrate/down.mts
+var args2 = defineArgs({
+  ...CommonArgs,
+  ...MigrateArgs,
+  ...createMigrationNameArg()
+});
+var Command2 = defineCommand(args2, {
+  meta: {
+    description: "Undo the last/specified migration that was run"
+  },
+  async run(context) {
+    const { args: args12 } = context;
+    const { migration_name } = context.args;
+    consola7.debug(context, []);
+    await usingMigrator(args12, async (migrator) => {
+      if (await isWrongDirection(migration_name, "down", migrator)) {
+        return consola7.info(
+          `Migration skipped: "${migration_name}" has not been run yet`
+        );
+      }
+      consola7.start("Starting migration down");
+      const resultSet = migration_name ? await migrator.migrateTo(migration_name) : await migrator.migrateDown();
+      await processMigrationResultSet(resultSet, "down", migrator);
+    });
+  }
+});
+var DownCommand = createSubcommand("down", Command2);
+var LegacyDownCommand = createSubcommand("migrate:down", Command2);
+
+// src/commands/migrate/latest.mts
+import { consola as consola8 } from "consola";
+var args3 = defineArgs({ ...CommonArgs, ...MigrateArgs });
+var Command3 = defineCommand(args3, {
+  meta: {
+    description: "Update the database schema to the latest version"
+  },
+  async run(context) {
+    consola8.debug(context, []);
+    await usingMigrator(context.args, async (migrator) => {
+      consola8.start("Starting migration to latest");
+      const resultSet = await migrator.migrateToLatest();
+      await processMigrationResultSet(resultSet, "up", migrator);
+    });
+  }
+});
+var LatestCommand = createSubcommand("latest", Command3);
+var LegacyLatestCommand = createSubcommand("migrate:latest", Command3);
+
+// src/commands/migrate/list.mts
+import { consola as consola9 } from "consola";
+var args4 = defineArgs({
+  ...CommonArgs,
+  "fail-on-pending": {
+    default: false,
+    description: "Fail if there are pending migrations",
+    type: "boolean"
+  }
+});
+var Command4 = defineCommand(args4, {
+  meta: {
+    description: "List both completed and pending migrations"
+  },
+  async run(context) {
+    consola9.debug(context, []);
+    const migrations2 = await usingMigrator(context.args, getMigrations);
+    consola9.debug(migrations2);
+    if (!migrations2.length) {
+      return consola9.info("No migrations found.");
+    }
+    consola9.info(
+      `Found ${migrations2.length} migration${migrations2.length > 1 ? "s" : ""}:`
+    );
+    for (const migration of migrations2) {
+      consola9.log(`[${migration.executedAt ? "`\u2713`" : " "}] ${migration.name}`);
+    }
+    if (!context.args["fail-on-pending"]) {
+      return;
+    }
+    const hasPending = migrations2.some(
+      (migration) => migration.executedAt == null
+    );
+    if (hasPending) {
+      exitWithError("Failed due to pending migrations.");
+    }
+  }
+});
+var ListCommand = createSubcommand("list", Command4);
+var LegacyListCommand = createSubcommand("migrate:list", Command4);
+
+// src/commands/migrate/make.mts
+import { copyFile as copyFile2, mkdir as mkdir2 } from "node:fs/promises";
+import { consola as consola10 } from "consola";
+import { join as join2 } from "pathe";
+var args5 = defineArgs({
+  ...CommonArgs,
+  ...createMigrationNameArg(true),
+  ...ExtensionArg
+});
+var Command5 = defineCommand(args5, {
+  meta: {
+    description: "Create a new migration file"
+  },
+  async run(context) {
+    const { args: args12 } = context;
+    const { extension } = args12;
+    consola10.debug(context, []);
+    const config = await getConfigOrFail(args12);
+    assertExtension(extension, config, "migrations");
+    const { getMigrationPrefix, migrationFolder } = config.migrations;
+    const wasMigrationsFolderCreated = Boolean(
+      await mkdir2(migrationFolder, { recursive: true })
+    );
+    if (wasMigrationsFolderCreated) {
+      consola10.debug("Migrations folder created");
+    }
+    const filename = `${await getMigrationPrefix()}${args12.migration_name}.${extension}`;
+    consola10.debug("Filename:", filename);
+    const filePath = join2(migrationFolder, filename);
+    consola10.debug("File path:", filePath);
+    const templateExtension = await getTemplateExtension(extension);
+    const templatePath = join2(
+      __dirname,
+      `templates/migration-template.${templateExtension}`
+    );
+    consola10.debug("Template path:", templatePath);
+    await copyFile2(templatePath, filePath);
+    consola10.success(`Created migration file at ${filePath}`);
+  }
+});
+var MakeCommand = createSubcommand("make", Command5);
+var LegacyMakeCommand = createSubcommand("migrate:make", Command5);
+
+// src/commands/migrate/rollback.mts
+import { consola as consola11 } from "consola";
+import { NO_MIGRATIONS } from "kysely";
+var args6 = defineArgs({
+  ...CommonArgs,
+  ...MigrateArgs,
+  all: {
+    description: "Rollback all completed migrations",
+    required: true,
+    // remove this if and when Migrator supports migration batches.
+    type: "boolean"
+  }
+});
+var Command6 = defineCommand(args6, {
+  meta: {
+    description: "Rollback all the completed migrations"
+  },
+  async run(context) {
+    consola11.debug(context, []);
+    await usingMigrator(context.args, async (migrator) => {
+      consola11.start("Starting migration rollback");
+      const resultSet = await migrator.migrateTo(NO_MIGRATIONS);
+      await processMigrationResultSet(resultSet, "down", migrator);
+    });
+  }
+});
+var RollbackCommand = createSubcommand("rollback", Command6);
+var LegacyRollbackCommand = createSubcommand(
+  "migrate:rollback",
+  Command6
+);
+
+// src/commands/migrate/root.mts
+import { showUsage } from "citty";
+import { consola as consola13 } from "consola";
+
+// src/commands/migrate/up.mts
+import { consola as consola12 } from "consola";
+var args7 = defineArgs({
+  ...CommonArgs,
+  ...MigrateArgs,
+  ...createMigrationNameArg()
+});
+var Command7 = defineCommand(args7, {
+  meta: {
+    description: "Run the next migration that has not yet been run"
+  },
+  async run(context) {
+    const { args: args12 } = context;
+    const { migration_name } = args12;
+    consola12.debug(context, []);
+    await usingMigrator(args12, async (migrator) => {
+      if (await isWrongDirection(migration_name, "up", migrator)) {
+        return consola12.info(
+          `Migration skipped: migration "${migration_name}" has already been run`
+        );
+      }
+      consola12.start("Starting migration up");
+      const resultSet = migration_name ? await migrator.migrateTo(migration_name) : await migrator.migrateUp();
+      await processMigrationResultSet(resultSet, "up", migrator);
+    });
+  }
+});
+var UpCommand = createSubcommand("up", Command7);
+var LegacyUpCommand = createSubcommand("migrate:up", Command7);
+
+// src/commands/migrate/root.mts
+var subCommands = {
+  ...DownCommand,
+  ...LatestCommand,
+  ...ListCommand,
+  ...MakeCommand,
+  ...RollbackCommand,
+  ...UpCommand
+  // biome-ignore lint/suspicious/noExplicitAny: it's fine
+};
+var MigrateCommand = createSubcommand("migrate", {
+  args: {},
+  meta: {
+    description: `\`${Object.keys(subCommands).sort().join("|")}\``
+  },
+  async run(context) {
+    if (!isInSubcommand(context)) {
+      consola13.debug(context, []);
+      await showUsage(context.cmd, RootCommand);
+    }
+  },
+  subCommands
+});
+
+// src/commands/seed/make.mts
+import { copyFile as copyFile3, mkdir as mkdir3 } from "node:fs/promises";
+import { consola as consola14 } from "consola";
+import { join as join3 } from "pathe";
+var args8 = defineArgs({
+  ...CommonArgs,
+  ...ExtensionArg,
+  seed_name: {
+    description: "Seed file name to create",
+    required: true,
+    type: "positional"
+  }
+});
+var Command8 = defineCommand(args8, {
+  meta: {
+    description: "Create a new seed file"
+  },
+  async run(context) {
+    const { args: args12 } = context;
+    const { extension } = args12;
+    consola14.debug(context, []);
+    const config = await getConfigOrFail(args12);
+    assertExtension(extension, config, "seeds");
+    const { getSeedPrefix, seedFolder } = config.seeds;
+    const wasSeedsFolderCreated = Boolean(
+      await mkdir3(seedFolder, { recursive: true })
+    );
+    if (wasSeedsFolderCreated) {
+      consola14.debug("Seeds folder created");
+    }
+    const filename = `${await getSeedPrefix()}${args12.seed_name}.${extension}`;
+    consola14.debug("Filename:", filename);
+    const filePath = join3(seedFolder, filename);
+    consola14.debug("File path:", filePath);
+    const templateExtension = await getTemplateExtension(extension);
+    const templatePath = join3(
+      __dirname,
+      `templates/seed-template.${templateExtension}`
+    );
+    consola14.debug("Template path:", templatePath);
+    await copyFile3(templatePath, filePath);
+    consola14.success(`Created seed file at ${filePath}`);
+  }
+});
+var MakeCommand2 = createSubcommand("make", Command8);
+var LegacyMakeCommand2 = createSubcommand("seed:make", Command8);
+
+// src/commands/seed/root.mts
+import { showUsage as showUsage2 } from "citty";
+import { consola as consola17 } from "consola";
+
+// src/commands/seed/list.mts
+import { consola as consola15 } from "consola";
+
+// src/seeds/get-seeder.mts
+async function getSeeder(config) {
+  const { args: args12, kysely, seeds } = config;
+  const { allowJS, seedFolder, seeder, ...seederOptions } = seeds;
+  if (seeder) {
+    return await hydrate(seeder, [kysely]);
+  }
+  const provider = await hydrate(
+    seeds.provider,
+    [],
+    () => new FileSeedProvider({
+      allowJS,
+      debug: args12.debug,
+      filesystemCaching: args12["filesystem-caching"],
+      experimentalResolveTSConfigPaths: args12["experimental-resolve-tsconfig-paths"],
+      seedFolder
+    })
+  );
+  return new Seeder({ ...seederOptions, db: kysely, provider });
+}
+
+// src/seeds/using-seeder.mts
+async function usingSeeder(args12, callback) {
+  const config = await getConfigOrFail(args12);
+  return await usingKysely(config, async (kysely) => {
+    const seeder = await getSeeder({ ...config, kysely });
+    return await callback(seeder);
+  });
+}
+
+// src/commands/seed/list.mts
+var Command9 = defineCommand(CommonArgs, {
+  meta: {
+    description: "List seeds"
+  },
+  async run(context) {
+    consola15.debug(context, []);
+    const seeds = await usingSeeder(context.args, (seeder) => seeder.getSeeds());
+    consola15.debug(seeds);
+    if (!seeds.length) {
+      return consola15.info("No seeds found.");
+    }
+    consola15.info(`Found ${seeds.length} seed${seeds.length > 1 ? "s" : ""}:`);
+    for (const seed of seeds) {
+      consola15.log(seed.name);
+    }
+  }
+});
+var ListCommand2 = createSubcommand("list", Command9);
+
+// src/commands/seed/run.mts
+import { consola as consola16 } from "consola";
+import { colorize as colorize2 } from "consola/utils";
+var args9 = defineArgs({
+  ...CommonArgs,
+  specific: {
+    description: "Run seed file/s with given name/s",
+    type: "string"
+  }
+});
+var Command10 = defineCommand(args9, {
+  meta: {
+    description: "Run seed files"
+  },
+  async run(context) {
+    const { args: args12 } = context;
+    const { specific } = args12;
+    consola16.debug(context, []);
+    consola16.start("Starting seed run");
+    const resultSet = await usingSeeder(args12, (seeder) => seeder.run(specific));
+    consola16.debug(resultSet);
+    const { error, results } = resultSet;
+    if (!results.length) {
+      return consola16.info("No seeds found.");
+    }
+    if (!error) {
+      consola16.success("Seed successful");
+    }
+    const actuallyRan = error ? results.filter((result) => result.status !== "NotExecuted") : results;
+    consola16.info(
+      `Ran ${actuallyRan.length} seed${actuallyRan.length > 1 ? "s" : ""}:`
+    );
+    for (const result of results) {
+      consola16.log(
+        `[${{
+          Error: colorize2("red", "\u2717"),
+          NotExecuted: " ",
+          Success: colorize2("green", "\u2713")
+        }[result.status]}] ${result.seedName}${error && result.status === "Error" ? ` - ${error}` : ""}`
+      );
+    }
+    if (error) {
+      exitWithError(error);
+    }
+  }
+});
+var RunCommand = createSubcommand("run", Command10);
+var LegacyRunCommand = createSubcommand("seed:run", Command10);
+
+// src/commands/seed/root.mts
+var subCommands2 = {
+  ...ListCommand2,
+  ...MakeCommand2,
+  ...RunCommand
+  // biome-ignore lint/suspicious/noExplicitAny: it's fine
+};
+var SeedCommand = createSubcommand("seed", {
+  args: {},
+  meta: {
+    description: `\`${Object.keys(subCommands2).sort().join("|")}\``
+  },
+  async run(context) {
+    if (!isInSubcommand(context)) {
+      consola17.debug(context, []);
+      await showUsage2(context.cmd, RootCommand);
+    }
+  },
+  subCommands: subCommands2
+});
+
+// src/commands/sql.mts
+import { createInterface } from "node:readline/promises";
+import { consola as consola19 } from "consola";
+import { colorize as colorize3 } from "consola/utils";
+import { isCI as isCI2, process as process2 } from "std-env";
+
+// src/kysely/execute-query.mts
+import { CompiledQuery } from "kysely";
+async function executeQuery(query, config) {
+  return await config.kysely.executeQuery(
+    CompiledQuery.raw(query.sql, query.parameters)
+  );
+}
+
+// src/kysely/infer-dialect-name.mts
+var CAPTURE_COMMON_CLASS_SUFFIXES = /adapter|dialect/i;
+function inferDialectName(kysely) {
+  return kysely.getExecutor().adapter.constructor.name.replaceAll(CAPTURE_COMMON_CLASS_SUFFIXES, "").toLowerCase();
+}
+
+// src/utils/print-csv.mts
+import { consola as consola18 } from "consola";
+function printCSV(rows) {
+  const [row0] = rows;
+  if (!row0) {
+    return;
+  }
+  consola18.log(`"${Object.keys(row0).join('","')}"`);
+  for (const row of rows) {
+    const transformedValues = [];
+    for (const value of Object.values(row)) {
+      transformedValues.push(typeof value === "string" ? `"${value}"` : value);
+    }
+    consola18.log(transformedValues.join(","));
+  }
+}
+
+// src/commands/sql.mts
+var args10 = defineArgs({
+  ...CommonArgs,
+  format: {
+    alias: "f",
+    default: "csv",
+    description: "The format to output the result in.",
+    required: false,
+    type: "string",
+    valueHint: "csv | json"
+  },
+  query: {
+    description: "The SQL query to execute. When not provided, and not in CI, will open an interactive SQL shell.",
+    required: isCI2,
+    type: "positional"
+  }
+});
+var Command11 = defineCommand(args10, {
+  meta: {
+    name: "sql",
+    description: "Execute SQL queries"
+  },
+  subCommands: {},
+  async run(context) {
+    const { args: args12 } = context;
+    const { format, query } = args12;
+    consola19.debug(context, []);
+    assertQuery(query);
+    assertFormat(format);
+    const config = await getConfigOrFail(args12);
+    await usingKysely(config, async (kysely) => {
+      const hydratedConfig = { ...config, kysely };
+      if (query) {
+        return await executeQueryAndPrint(args12, hydratedConfig);
+      }
+      await startInteractiveExecution(args12, hydratedConfig);
+    });
+  }
+});
+var SqlCommand = createSubcommand("sql", Command11);
+function assertQuery(thing) {
+  if (!isCI2 && typeof thing !== "string" || typeof thing === "string" && thing.length > 0) {
+    return;
+  }
+  throw new Error("Query must be a non-empty string!");
+}
+var FORMATS = ["csv", "json"];
+function assertFormat(thing) {
+  if (thing == null || FORMATS.includes(thing)) {
+    return;
+  }
+  throw new Error(
+    `Invalid format "${thing}"! Expected ${FORMATS.map(
+      (format) => `"${format}"`
+    ).join(" | ")}`
+  );
+}
+async function executeQueryAndPrint(argz, config) {
+  const result = await executeQuery({ sql: argz.query }, config);
+  if (argz.format === "json") {
+    return consola19.log(JSON.stringify(result, null, 2));
+  }
+  const { insertId, numAffectedRows, numChangedRows, rows } = result;
+  const [row0] = rows;
+  if (!row0 && (insertId != null || numAffectedRows != null || numChangedRows != null)) {
+    const summary = {
+      "Affected Rows": numAffectedRows,
+      "Changed Rows": numChangedRows,
+      "Insert ID": insertId,
+      rowCount: rows.length
+    };
+    return printCSV([summary]);
+  }
+  return printCSV(rows);
+}
+async function startInteractiveExecution(argz, config) {
+  while (true) {
+    let query = await consola19.prompt(getPrompt(argz, config), {
+      cancel: "null",
+      placeholder: "select 1",
+      required: true,
+      type: "text"
+    });
+    if (query == null) {
+      return;
+    }
+    query = query.trim();
+    if (isSafeword(query)) {
+      return;
+    }
+    if (!query.endsWith(";")) {
+      const readline = createInterface({
+        // biome-ignore lint/style/noNonNullAssertion: yolo
+        input: process2.stdin,
+        output: process2.stdout
+      });
+      do {
+        const moreQuery = await readline.question("");
+        query += ` ${moreQuery.trim()}`;
+      } while (!query.endsWith(";"));
+      readline.close();
+    }
+    try {
+      await executeQueryAndPrint({ ...argz, query }, config);
+    } catch (error) {
+      consola19.error(error instanceof Error ? error.message : error);
+    }
+  }
+}
+var SAFEWORDS = ["exit", "quit", "bye", ":q"];
+function isSafeword(thing) {
+  return SAFEWORDS.includes(thing);
+}
+function getPrompt(argz, config) {
+  const { environment } = argz;
+  const { dialect } = config;
+  return [
+    typeof dialect === "string" ? dialect : inferDialectName(config.kysely),
+    environment ? colorize3("gray", `(${environment})`) : null,
+    colorize3("cyan", "\u276F")
+  ].filter(Boolean).join(" ");
+}
+
+// src/commands/root.mts
+var args11 = defineArgs({
+  help: {
+    alias: "h",
+    default: false,
+    description: "Show help information",
+    type: "boolean"
+  },
+  version: {
+    alias: "v",
+    default: false,
+    description: "Show version number",
+    type: "boolean"
+  }
+});
+var RootCommand = defineCommand(args11, {
+  meta: {
+    name: "kysely",
+    description: "A command-line tool for Kysely"
+  },
+  subCommands: {
+    ...InitCommand,
+    ...LegacyDownCommand,
+    ...LegacyLatestCommand,
+    ...LegacyListCommand,
+    ...LegacyMakeCommand,
+    ...LegacyRollbackCommand,
+    ...LegacyRunCommand,
+    ...LegacyMakeCommand2,
+    ...LegacyUpCommand,
+    ...MigrateCommand,
+    ...SeedCommand,
+    ...SqlCommand
+  },
+  setup(context) {
+    const { args: args12 } = context;
+    if (args12.debug) {
+      consola20.level = LogLevels.debug;
+    }
+    consola20.options.formatOptions.date = false;
+    consola20.debug("cwd", getCWD(args12));
+  },
+  async run(context) {
+    const { args: args12 } = context;
+    if (!isInSubcommand(context)) {
+      consola20.debug(context, []);
+      if (args12.version) {
+        return await printInstalledVersions(args12);
+      }
+      await showUsage3(context.cmd);
+    }
+    try {
+      await printUpgradeNotice(args12);
+    } catch (error) {
+      consola20.debug("Failed to print upgrade notice:", error);
+    }
+    consola20.debug(`finished running from "${__filename}"`);
+  }
+});
+
+// src/cli.mts
+function buildCLI() {
+  const runCLI = createMain(RootCommand);
+  return {
+    parse: async (argv) => {
+      await runCLI({ rawArgs: argv });
+    }
+  };
+}
+
+// src/bin.mts
+var cli = buildCLI();
+cli.parse(process3.argv.slice(2));

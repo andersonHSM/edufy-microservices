@@ -1,0 +1,384 @@
+"use strict";
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getProtoOf = Object.getPrototypeOf;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.mts
+var index_exports = {};
+__export(index_exports, {
+  DUMMY_DIALECT_CONFIG: () => DUMMY_DIALECT_CONFIG,
+  FileSeedProvider: () => FileSeedProvider,
+  Seeder: () => Seeder,
+  TSFileMigrationProvider: () => TSFileMigrationProvider,
+  defineConfig: () => defineConfig,
+  getKnexTimestampPrefix: () => getKnexTimestampPrefix
+});
+module.exports = __toCommonJS(index_exports);
+
+// node_modules/.pnpm/tsup@8.5.0_jiti@2.5.1_postcss@8.5.6_tsx@4.19.2_typescript@5.9.2_yaml@2.4.5/node_modules/tsup/assets/cjs_shims.js
+var getImportMetaUrl = () => typeof document === "undefined" ? new URL(`file:${__filename}`).href : document.currentScript && document.currentScript.src || new URL("main.js", document.baseURI).href;
+var importMetaUrl = /* @__PURE__ */ getImportMetaUrl();
+
+// src/config/define-config.mts
+var defineConfig = (input) => input;
+
+// src/config/dummy-dialect-config.mts
+function DUMMY_DIALECT_CONFIG() {
+  throw new Error(
+    "`DUMMY_DIALECT_CONFIG` is a dummy dialect config that should be overriden by environment-specific configuration. You must run the command with the `-e <environment>` flag and make sure there is a configuration for `<environment>` in your `kysely.config` file."
+  );
+}
+
+// src/config/get-file-prefix.mts
+function getKnexTimestampPrefix() {
+  const now = /* @__PURE__ */ new Date();
+  const year = now.getUTCFullYear().toString();
+  const month = toPaddedNumber(now.getUTCMonth() + 1);
+  const day = toPaddedNumber(now.getUTCDate());
+  const hour = toPaddedNumber(now.getUTCHours());
+  const minute = toPaddedNumber(now.getUTCMinutes());
+  const second = toPaddedNumber(now.getUTCSeconds());
+  return `${year}${month}${day}${hour}${minute}${second}_`;
+}
+function toPaddedNumber(number) {
+  return number.toString().padStart(2, "0");
+}
+
+// src/kysely/ts-file-migration-provider.mts
+var import_consola3 = require("consola");
+var import_pathe4 = require("pathe");
+var import_utils = require("pathe/utils");
+
+// src/utils/get-file-type.mts
+function getFileType(path) {
+  let extension = "";
+  const lastIndex = path.length - 1;
+  let i = 0;
+  for (; i < 3; i++) {
+    const char = path.charAt(lastIndex - i);
+    if (char === ".") {
+      break;
+    }
+    extension = `${char}${extension}`;
+  }
+  if (extension.length < 2 || path.charAt(lastIndex - i) !== "." || path.charAt(lastIndex - (i + 1)) === "d" && path.charAt(lastIndex - (i + 2)) === ".") {
+    return "IRRELEVANT";
+  }
+  if (["ts", "mts", "cts"].includes(extension)) {
+    return "TS";
+  }
+  if (["js", "mjs", "cjs"].includes(extension)) {
+    return "JS";
+  }
+  return "IRRELEVANT";
+}
+
+// src/utils/import-ts-file.mts
+var import_std_env3 = require("std-env");
+
+// src/utils/jiti.mts
+var import_consola2 = require("consola");
+var import_pathe3 = require("pathe");
+var import_std_env2 = require("std-env");
+
+// src/utils/tsconfig.mts
+var import_consola = require("consola");
+var import_pathe2 = require("pathe");
+var import_tsconfck = require("tsconfck");
+
+// src/config/get-cwd.mts
+var import_pathe = require("pathe");
+var import_std_env = require("std-env");
+var ACTUAL_CWD = (
+  // biome-ignore lint/suspicious/noExplicitAny: it's fine
+  import_std_env.process.cwd?.() || (import_std_env.isDeno ? globalThis.Deno.cwd() : "")
+);
+var cwd;
+function getCWD(args) {
+  return cwd ||= args?.cwd ? (0, import_pathe.resolve)(ACTUAL_CWD, args.cwd) : ACTUAL_CWD;
+}
+
+// src/utils/tsconfig.mts
+var cache = new import_tsconfck.TSConfckCache();
+async function getTSConfigs() {
+  const { extended, tsconfig, tsconfigFile } = await (0, import_tsconfck.parse)(
+    (0, import_pathe2.join)(getCWD(), "index.ts"),
+    { cache }
+  );
+  import_consola.consola.debug("extended", JSON.stringify(extended, null, 2));
+  import_consola.consola.debug("tsconfig", JSON.stringify(tsconfig, null, 2));
+  return {
+    configs: extended?.map((result) => ({
+      filepath: result.tsconfigFile,
+      tsconfig: result.tsconfig
+    })) || (tsconfig ? [{ filepath: tsconfigFile, tsconfig }] : []),
+    merged: tsconfig
+  };
+}
+
+// src/utils/jiti.mts
+async function getJiti(args) {
+  const jitiOptions = await getJitiOptions(args);
+  import_consola2.consola.debug("jitiOptions", jitiOptions);
+  const { createJiti } = await import("jiti");
+  return createJiti(importMetaUrl, jitiOptions);
+}
+async function getJitiOptions(args) {
+  return {
+    alias: args.experimentalResolveTSConfigPaths ? await getJitiAliasFromTSConfig() : void 0,
+    debug: Boolean(args.debug),
+    fsCache: Boolean(args.filesystemCaching),
+    jsx: true,
+    tryNative: import_std_env2.runtime !== "node"
+  };
+}
+async function getJitiAliasFromTSConfig() {
+  try {
+    const { configs, merged } = await getTSConfigs();
+    if (!configs.length) {
+      return {};
+    }
+    const { filepath, paths } = resolvePaths(configs) || {};
+    import_consola2.consola.debug("filepath", filepath);
+    import_consola2.consola.debug("paths", JSON.stringify(paths, null, 2));
+    if (!paths) {
+      return {};
+    }
+    const { baseUrl = "." } = merged?.compilerOptions || {};
+    const dirpath = (0, import_pathe3.dirname)(filepath);
+    const jitiAlias = {};
+    for (const [alias, [path]] of Object.entries(paths)) {
+      if (!path) {
+        continue;
+      }
+      jitiAlias[removeWildcards(alias)] = removeWildcards(
+        (0, import_pathe3.resolve)(dirpath, baseUrl, path)
+      );
+    }
+    return jitiAlias;
+  } catch {
+    return {};
+  }
+}
+function resolvePaths(results) {
+  for (const result of results) {
+    const { filepath, tsconfig } = result;
+    const { paths } = tsconfig.compilerOptions || {};
+    if (paths) {
+      return {
+        filepath,
+        paths
+      };
+    }
+  }
+  return null;
+}
+function removeWildcards(path) {
+  return path.replace(/(\/?\*\*?)+$/, "");
+}
+
+// src/utils/import-ts-file.mts
+async function importTSFile(path, args) {
+  if (import_std_env3.runtime !== "node") {
+    return await import(path);
+  }
+  const jiti = await getJiti(args);
+  return await jiti.import(path);
+}
+
+// src/utils/is-object.mts
+function isObject(thing) {
+  return typeof thing === "object" && thing !== null && !Array.isArray(thing);
+}
+
+// src/utils/safe-readdir.mts
+var import_promises = require("fs/promises");
+async function safeReaddir(path) {
+  try {
+    return await (0, import_promises.readdir)(path);
+  } catch {
+    await (0, import_promises.mkdir)(path);
+    return await (0, import_promises.readdir)(path);
+  }
+}
+
+// src/kysely/ts-file-migration-provider.mts
+var TSFileMigrationProvider = class {
+  #props;
+  constructor(props) {
+    this.#props = props;
+  }
+  async getMigrations() {
+    const files = await safeReaddir(this.#props.migrationFolder);
+    const migrations = {};
+    for (const fileName of files) {
+      const fileType = getFileType(fileName);
+      const isTS = fileType === "TS";
+      if (!isTS) {
+        if (!this.#props.allowJS) {
+          import_consola3.consola.warn(`Ignoring \`${fileName}\` - not a TS file.`);
+          continue;
+        }
+        if (fileType !== "JS") {
+          import_consola3.consola.warn(`Ignoring \`${fileName}\` - not a TS/JS file.`);
+          continue;
+        }
+      }
+      const filePath = (0, import_pathe4.join)(this.#props.migrationFolder, fileName);
+      const migrationModule = await (isTS ? importTSFile(filePath, this.#props) : import(filePath));
+      const migrationKey = (0, import_utils.filename)(fileName);
+      if (!migrationKey) {
+        continue;
+      }
+      const migration = isMigration(migrationModule?.default) ? migrationModule.default : isMigration(migrationModule) ? migrationModule : null;
+      if (!migration) {
+        import_consola3.consola.warn(`Ignoring \`${fileName}\` - not a migration.`);
+        continue;
+      }
+      migrations[migrationKey] = migration;
+    }
+    return migrations;
+  }
+};
+function isMigration(thing) {
+  return isObject(thing) && typeof thing.up === "function";
+}
+
+// src/seeds/file-seed-provider.mts
+var import_consola4 = require("consola");
+var import_pathe5 = require("pathe");
+var import_utils2 = require("pathe/utils");
+
+// src/utils/as-array.mts
+function asArray(thing) {
+  return Array.isArray(thing) ? thing : [thing];
+}
+
+// src/seeds/file-seed-provider.mts
+var FileSeedProvider = class {
+  #props;
+  constructor(props) {
+    this.#props = props;
+  }
+  async getSeeds(seedNames) {
+    const seedNamesMap = {};
+    if (seedNames) {
+      for (const seedName of asArray(seedNames)) {
+        seedNamesMap[seedName] = true;
+      }
+    }
+    const fileNames = await safeReaddir(this.#props.seedFolder);
+    const seeds = {};
+    for (const fileName of fileNames) {
+      const fileType = getFileType(fileName);
+      const isTS = fileType === "TS";
+      if (!isTS) {
+        if (!this.#props.allowJS) {
+          import_consola4.consola.warn(`Ignoring \`${fileName}\` - not a TS file.`);
+          continue;
+        }
+        if (fileType !== "JS") {
+          import_consola4.consola.warn(`Ignoring \`${fileName}\` - not a TS/JS file.`);
+          continue;
+        }
+      }
+      const seedKey = (0, import_utils2.filename)(fileName);
+      if (!seedKey || seedNames && !seedNamesMap[seedKey]) {
+        continue;
+      }
+      const filePath = (0, import_pathe5.join)(this.#props.seedFolder, fileName);
+      const seedModule = await (isTS ? importTSFile(filePath, this.#props) : import(filePath));
+      const seed = isSeed(seedModule?.default) ? seedModule.default : isSeed(seedModule) ? seedModule : null;
+      if (!seed) {
+        import_consola4.consola.warn(`Ignoring \`${fileName}\` - not a seed.`);
+        continue;
+      }
+      seeds[seedKey] = seed;
+    }
+    return seeds;
+  }
+};
+function isSeed(thing) {
+  return isObject(thing) && typeof thing.seed === "function";
+}
+
+// src/utils/assert-defined.mts
+function assertDefined(thing) {
+  if (thing === void 0) {
+    throw new Error("Expected value to be defined");
+  }
+}
+
+// src/seeds/seeder.mts
+var Seeder = class {
+  #props;
+  constructor(props) {
+    this.#props = props;
+  }
+  async getSeeds(seedNames) {
+    const seeds = await this.#props.provider.getSeeds(seedNames);
+    return Object.entries(seeds).map(([name, seed]) => ({
+      name,
+      seed
+    }));
+  }
+  async run(seedNames) {
+    const seeds = await this.getSeeds(seedNames);
+    const resultSet = {
+      error: void 0,
+      results: seeds.map(
+        (seed) => ({
+          seedName: seed.name,
+          status: "NotExecuted"
+        })
+      )
+    };
+    for (let i = 0, len = seeds.length; i < len && !resultSet.error; ++i) {
+      const result = resultSet.results[i];
+      assertDefined(result);
+      const seedInfo = seeds[i];
+      assertDefined(seedInfo);
+      try {
+        await seedInfo.seed.seed(this.#props.db);
+        result.status = "Success";
+      } catch (err) {
+        result.status = "Error";
+        resultSet.error = err;
+      }
+    }
+    return resultSet;
+  }
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  DUMMY_DIALECT_CONFIG,
+  FileSeedProvider,
+  Seeder,
+  TSFileMigrationProvider,
+  defineConfig,
+  getKnexTimestampPrefix
+});

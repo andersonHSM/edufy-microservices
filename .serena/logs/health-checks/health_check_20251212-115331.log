@@ -1,0 +1,67 @@
+INFO  2025-12-12 11:53:31,992 serena.cli:health_check:627 - Starting health check for project: /Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices
+INFO  2025-12-12 11:53:31,992 serena.cli:health_check:631 - Creating SerenaAgent with disabled dashboard...
+INFO  2025-12-12 11:53:31,992 serena.agent:__init__:222 - Will record tool usage statistics with token count estimator: CHAR_COUNT.
+INFO  2025-12-12 11:53:32,042 serena.agent:__init__:226 - Starting Serena server (version=0.1.4-6e2a73a1-dirty, process id=94464, parent process id=94463)
+INFO  2025-12-12 11:53:32,042 serena.agent:__init__:227 - Configuration file: None
+INFO  2025-12-12 11:53:32,042 serena.agent:__init__:228 - Available projects: 
+INFO  2025-12-12 11:53:32,042 serena.agent:__init__:229 - Loaded tools (38): read_file, create_text_file, list_dir, find_file, replace_content, delete_lines, replace_lines, insert_at_line, search_for_pattern, restart_language_server, get_symbols_overview, find_symbol, find_referencing_symbols, replace_symbol_body, insert_after_symbol, insert_before_symbol, rename_symbol, write_memory, read_memory, list_memories, delete_memory, edit_memory, execute_shell_command, activate_project, remove_project, switch_modes, get_current_config, check_onboarding_performed, onboarding, think_about_collected_information, think_about_task_adherence, think_about_whether_you_are_done, summarize_changes, prepare_for_new_conversation, initial_instructions, jet_brains_find_symbol, jet_brains_find_referencing_symbols, jet_brains_get_symbols_overview
+INFO  2025-12-12 11:53:32,042 serena.agent:apply:126 - SerenaAgentContext[name='desktop-app'] included 1 tools: switch_modes
+INFO  2025-12-12 11:53:32,043 serena.agent:__init__:243 - Number of exposed tools: 29
+INFO  2025-12-12 11:53:32,051 serena.agent:_update_active_tools:480 - Active tools (29): activate_project, check_onboarding_performed, create_text_file, delete_memory, edit_memory, execute_shell_command, find_file, find_referencing_symbols, find_symbol, get_current_config, get_symbols_overview, initial_instructions, insert_after_symbol, insert_before_symbol, list_dir, list_memories, onboarding, prepare_for_new_conversation, read_file, read_memory, rename_symbol, replace_content, replace_symbol_body, search_for_pattern, switch_modes, think_about_collected_information, think_about_task_adherence, think_about_whether_you_are_done, write_memory
+INFO  2025-12-12 11:53:32,053 serena.util.file_system:start:360 - Loading of .gitignore files starting ...
+INFO  2025-12-12 11:53:32,053 serena.util.file_system:_load_gitignore_files:148 - Processing .gitignore file: /Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/.gitignore
+INFO  2025-12-12 11:53:32,059 serena.util.file_system:stop:367 - Loading of .gitignore files completed in 0.005 seconds
+INFO  2025-12-12 11:53:32,059 serena.agent:load_project_from_path_or_name:547 - Added new project edufy-microservices for path /Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices
+INFO  2025-12-12 11:53:32,059 serena.agent:_activate_project:517 - Activating edufy-microservices at /Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices
+INFO  2025-12-12 11:53:32,059 serena.agent:_update_active_tools:480 - Active tools (29): activate_project, check_onboarding_performed, create_text_file, delete_memory, edit_memory, execute_shell_command, find_file, find_referencing_symbols, find_symbol, get_current_config, get_symbols_overview, initial_instructions, insert_after_symbol, insert_before_symbol, list_dir, list_memories, onboarding, prepare_for_new_conversation, read_file, read_memory, rename_symbol, replace_content, replace_symbol_body, search_for_pattern, switch_modes, think_about_collected_information, think_about_task_adherence, think_about_whether_you_are_done, write_memory
+INFO  2025-12-12 11:53:32,059 serena.task_executor:issue_task:192 - Scheduling Task-1:init_language_server_manager
+INFO  2025-12-12 11:53:32,059 serena.cli:health_check:634 - SerenaAgent created successfully
+INFO  2025-12-12 11:53:32,059 serena.cli:health_check:637 - Searching for analyzable files...
+INFO  2025-12-12 11:53:32,082 serena.cli:health_check:646 - Found analyzable file: packages/eslint-config/base.js
+INFO  2025-12-12 11:53:32,082 serena.cli:health_check:664 - Testing GetSymbolsOverviewTool on file: packages/eslint-config/base.js
+INFO  2025-12-12 11:53:32,082 serena.task_executor:issue_task:192 - Scheduling Task-2:<lambda>
+INFO  2025-12-12 11:53:32,143 serena.task_executor:_process_task_queue:123 - Starting execution of Task-1:init_language_server_manager
+INFO  2025-12-12 11:53:32,143 serena.task_executor:start:360 - Task-1:init_language_server_manager starting ...
+INFO  2025-12-12 11:53:32,144 serena.agent:start:360 - Language server initialization starting ...
+INFO  2025-12-12 11:53:32,144 serena.project:create_language_server_manager:384 - Creating language server manager for /Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices
+INFO  2025-12-12 11:53:32,144 sensai.util.logging:start:360 - Language server startup (language=typescript) starting ...
+INFO  2025-12-12 11:53:32,144 serena.ls_manager:create_language_server:41 - Creating language server instance for /Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices, language=typescript.
+INFO  2025-12-12 11:53:32,165 solidlsp.ls:_load_raw_document_symbols_cache:1754 - Loading document symbols cache from /Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/.serena/cache/typescript/raw_document_symbols.pkl
+INFO  2025-12-12 11:53:32,167 solidlsp.ls:_load_raw_document_symbols_cache:1759 - Loaded 226 entries from raw document symbols cache.
+INFO  2025-12-12 11:53:32,167 solidlsp.ls:_load_document_symbols_cache:1789 - Loading document symbols cache from /Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/.serena/cache/typescript/document_symbols.pkl
+INFO  2025-12-12 11:53:32,170 solidlsp.ls:_load_document_symbols_cache:1794 - Loaded 226 entries from document symbols cache.
+INFO  2025-12-12 11:53:32,170 solidlsp.ls:start:1886 - Starting language server with language typescript for /Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices
+INFO  2025-12-12 11:53:32,170 solidlsp.language_servers.typescript_language_server:_start_server:275 - Starting TypeScript server process
+INFO  2025-12-12 11:53:32,170 solidlsp.ls_handler:start:194 - Starting language server process via command: ['/Users/andersonhenrique/.serena/language_servers/static/TypeScriptLanguageServer/ts-lsp/node_modules/.bin/typescript-language-server', '--stdio']
+INFO  2025-12-12 11:53:32,173 solidlsp.language_servers.typescript_language_server:_start_server:279 - Sending initialize request from LSP client to LSP server and awaiting response
+INFO  2025-12-12 11:53:32,227 solidlsp.language_servers.typescript_language_server:window_log_message:258 - LSP: window/logMessage: {'type': 3, 'message': 'Using Typescript version (workspace) 5.9.2 from path "/Users/andersonhenrique/WebstormProjects/edufy/edufy-microservices/node_modules/typescript/lib/tsserver.js"'}
+INFO  2025-12-12 11:53:33,232 solidlsp.language_servers.typescript_language_server:_start_server:296 - Timeout waiting for TypeScript server to become ready, proceeding anyway
+INFO  2025-12-12 11:53:33,233 sensai.util.logging:stop:367 - Language server startup (language=typescript) completed in 1.089 seconds
+INFO  2025-12-12 11:53:33,234 serena.agent:stop:367 - Language server initialization completed in 1.090 seconds
+INFO  2025-12-12 11:53:33,235 serena.task_executor:stop:367 - Task-1:init_language_server_manager completed in 1.091 seconds
+INFO  2025-12-12 11:53:33,235 serena.task_executor:_process_task_queue:123 - Starting execution of Task-2:<lambda>
+INFO  2025-12-12 11:53:33,236 serena.task_executor:start:360 - Task-2:<lambda> starting ...
+INFO  2025-12-12 11:53:33,239 serena.task_executor:stop:367 - Task-2:<lambda> completed in 0.003 seconds
+INFO  2025-12-12 11:53:33,240 serena.cli:health_check:667 - GetSymbolsOverviewTool returned 1 symbols
+INFO  2025-12-12 11:53:33,241 serena.cli:health_check:688 - No class or function found, using first available symbol
+INFO  2025-12-12 11:53:33,253 serena.cli:health_check:695 - Testing FindSymbolTool for symbol: config
+INFO  2025-12-12 11:53:33,253 serena.task_executor:issue_task:192 - Scheduling Task-3:<lambda>
+INFO  2025-12-12 11:53:33,343 serena.task_executor:_process_task_queue:123 - Starting execution of Task-3:<lambda>
+INFO  2025-12-12 11:53:33,344 serena.task_executor:start:360 - Task-3:<lambda> starting ...
+INFO  2025-12-12 11:53:33,344 serena.task_executor:stop:367 - Task-3:<lambda> completed in 0.001 seconds
+INFO  2025-12-12 11:53:33,345 serena.cli:health_check:700 - FindSymbolTool found 1 matches for symbol config
+INFO  2025-12-12 11:53:33,345 serena.cli:health_check:703 - Testing FindReferencingSymbolsTool for symbol: config
+INFO  2025-12-12 11:53:33,345 serena.task_executor:issue_task:192 - Scheduling Task-4:<lambda>
+INFO  2025-12-12 11:53:33,450 serena.task_executor:_process_task_queue:123 - Starting execution of Task-4:<lambda>
+INFO  2025-12-12 11:53:33,450 serena.task_executor:start:360 - Task-4:<lambda> starting ...
+INFO  2025-12-12 11:53:34,489 serena.task_executor:stop:367 - Task-4:<lambda> completed in 1.039 seconds
+INFO  2025-12-12 11:53:34,489 serena.cli:health_check:707 - FindReferencingSymbolsTool found 0 references for symbol config
+INFO  2025-12-12 11:53:34,489 serena.cli:health_check:713 - Testing SearchForPatternTool for pattern: config
+INFO  2025-12-12 11:53:34,489 serena.task_executor:issue_task:192 - Scheduling Task-5:<lambda>
+INFO  2025-12-12 11:53:34,591 serena.task_executor:_process_task_queue:123 - Starting execution of Task-5:<lambda>
+INFO  2025-12-12 11:53:34,591 serena.task_executor:start:360 - Task-5:<lambda> starting ...
+INFO  2025-12-12 11:53:34,652 serena.text_utils:search_files:365 - Processing 226 files.
+INFO  2025-12-12 11:53:34,684 serena.text_utils:search_files:406 - Found 296 total matches across 226 files
+INFO  2025-12-12 11:53:34,684 serena.task_executor:stop:367 - Task-5:<lambda> completed in 0.093 seconds
+INFO  2025-12-12 11:53:34,685 serena.cli:health_check:720 - SearchForPatternTool found 296 pattern matches for config
+INFO  2025-12-12 11:53:34,685 serena.cli:health_check:734 - Health check completed successfully

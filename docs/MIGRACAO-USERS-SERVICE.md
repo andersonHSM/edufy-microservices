@@ -9,25 +9,39 @@ Gerenciar o ciclo de vida, perfil e dados cadastrais dos usuários, separando es
 - **Request/Response:** TCP (`@MessagePattern`)
 - **Eventos:** RabbitMQ (`@EventPattern`)
 
+## Configuração de Filas (RabbitMQ)
+
+- **Fila Principal:** `users_queue`
+- **Exchange de DLQ:** `users_dlx`
+- **Routing Key de DLQ:** `users_dlq_routing_key`
+- **Fila de DLQ:** `users_dlq`
+
 ## Rotas a Migrar
 
-| Origem (Monolito)              | Destino (Microserviço - TCP)        | Destino (Gateway - HTTP) | Status         |
-|:-------------------------------|:------------------------------------|:-------------------------|:---------------|
-| `GET /users/me`                | `@MessagePattern('get_user_by_id')` | `GET /users/me`          | **[OK]**       |
-| `PATCH /users/me`              | `@MessagePattern('update_user')`    | `PATCH /users/me`        | **[Pendente]** |
-| `POST /users/self-assign-role` | `@MessagePattern('assign_role')`    | `POST /users/me/role`    | **[Pendente]** |
+| Origem (Monolito)              | Destino (Microserviço - TCP)     | Destino (Gateway - HTTP) | Status   |
+|:-------------------------------|:---------------------------------|:-------------------------|:---------|
+| `GET /users/me`                | `@MessagePattern('getUserById')` | `GET /users/me`          | **[OK]** |
+| `PATCH /users/me`              | `@MessagePattern('update_user')` | `PATCH /users/me`        | **[OK]** |
+| `POST /users/self-assign-role` | `@MessagePattern('assign_role')` | `POST /users/me/role`    | **[OK]** |
 
 *(Nota: `PATCH /users/me` emite evento `user_updated`. `POST /users/self-assign-role` emite `user_role_assigned`)*
 
 ## Estratégia de Dados (Duplicação)
 
 - **Papel:** Source of Truth para Dados Pessoais (Nome, Foto, Bio).
+
 - **Responsabilidade de Eventos:**
+
     - **EMISSOR CRÍTICO:** Ao atualizar `name` ou `profilePictureUrl` na rota `PATCH /users/me`, DEVE emitir o evento
       `user_updated` (payload `sub_id`).
+
     - Este evento é o gatilho para `courses`, `enrollments` e `support` atualizarem suas cópias locais.
+
     - **Escuta:** `user_created` (de `auth-api`, payload `sub`) para criar registro inicial de perfil (`sub` como
       `sub_id`).
+
+    - **(Nota Importante para Consumidor):** O listener para `user_created` deve implementar `manual acknowledgement` e
+      DLQ para garantir resiliência.
 
 ## Modelagem de Dados
 

@@ -9,6 +9,13 @@ Gerenciar o catálogo de cursos, incluindo criação, listagem e detalhes.
 - **Request/Response:** TCP (`@MessagePattern`)
 - **Eventos:** RabbitMQ (`@EventPattern`)
 
+## Configuração de Filas (RabbitMQ)
+
+- **Fila Principal:** `courses_queue`
+- **Exchange de DLQ:** `courses_dlx`
+- **Routing Key de DLQ:** `courses_dlq_routing_key`
+- **Fila de DLQ:** `courses_dlq`
+
 ## Rotas a Migrar
 
 | Origem (Monolito)       | Destino (Microserviço - TCP)          | Destino (Gateway - HTTP)  | Status         |
@@ -24,8 +31,9 @@ Gerenciar o catálogo de cursos, incluindo criação, listagem e detalhes.
     - Na criação (`create_course`), pegar dados do Token ou chamar `users-api` uma vez e salvar.
 - **Atualização (Consumidor):**
     - Implementar `@EventPattern('user_updated')`.
-        - Ao receber evento, buscar todos cursos onde `instructor_sub_id == event.sub_id` e atualizar nome/foto.- *
-          *Benefício:** Zero latência de rede para exibir listagem de cursos.
+    - Ao receber evento, buscar todos cursos onde `instructor_sub_id == event.sub_id` e atualizar nome/foto.
+    - **(Nota Importante):** O consumidor do `user_updated` deve implementar `manual acknowledgement` e DLQ.
+- **Benefício:** Zero latência de rede para exibir listagem de cursos.
 
 ## Modelagem de Dados
 

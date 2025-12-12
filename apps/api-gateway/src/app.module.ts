@@ -5,6 +5,7 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
 import { AppController } from "src/app.controller";
 import { AppService } from "src/app.service";
 import { AUTH_SERVICE } from "src/app/auth/auth.constants";
+import { AuthModule } from "src/app/auth/auth.module";
 import {
   USERS_RMQ_SERVICE,
   USERS_TCP_SERVICE,
@@ -52,7 +53,11 @@ import { RpcToHttpExceptionFilter } from "src/libs/exception-filters/rpc-to-http
               urls: [config.url],
               queue: config.usersQueue,
               queueOptions: {
-                durable: false,
+                durable: true,
+                arguments: {
+                  "x-dead-letter-exchange": "users_dlx",
+                  "x-dead-letter-routing-key": "users_dlq_routing_key",
+                },
               },
             },
           }),
@@ -61,6 +66,7 @@ import { RpcToHttpExceptionFilter } from "src/libs/exception-filters/rpc-to-http
       ],
     }),
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

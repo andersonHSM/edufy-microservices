@@ -44,6 +44,8 @@ export class KyselyUserRepository
         role: user.role,
         firstName: user.firstName,
         lastName: user.lastName,
+        biography: user.biography,
+        profilePictureUrl: user.profilePictureUrl,
         interests: JSON.stringify(user.interests as string[]),
       })
       .onConflict((oc) =>
@@ -51,6 +53,7 @@ export class KyselyUserRepository
           role: user.role,
           email: user.email,
           biography: user.biography,
+          profilePictureUrl: user.profilePictureUrl,
           interests: JSON.stringify(user.interests as string[]),
           updatedAt: new Date(),
           firstName: user.firstName,
