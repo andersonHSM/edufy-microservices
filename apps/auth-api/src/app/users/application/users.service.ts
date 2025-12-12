@@ -23,6 +23,26 @@ export class UsersService {
     @Inject(USERS_SERVICE) private readonly usersClient: ClientProxy,
   ) {}
 
+  public async validateUserExistsAndRole(
+    sub_id: string,
+    role?: string,
+  ): Promise<UserEntity> {
+    const user = await this.userRepository.findOneById(sub_id);
+    if (!user) {
+      throw new RpcException({
+        message: 'User not found',
+        code: 404,
+      });
+    }
+    if (role && user.role !== role) {
+      throw new RpcException({
+        message: `User does not have the required role: ${role}`,
+        code: 403,
+      });
+    }
+    return user;
+  }
+
   public async updateRole(sub_id: string, role: string) {
     const user = await this.userRepository.findOneById(sub_id);
     if (!user) {

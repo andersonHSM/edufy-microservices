@@ -28,18 +28,32 @@ export class UsersController {
     return this.usersService.login(loginDto);
   }
 
+  @MessagePattern('validate_user_exists_and_role')
+  async validateUserExistsAndRole(
+    @Payload() data: { sub_id: string; role?: string },
+  ) {
+    const user = await this.usersService.validateUserExistsAndRole(
+      data.sub_id,
+      data.role,
+    );
+    return { sub_id: user.sub, email: user.email, role: user.role };
+  }
+
   @EventPattern('user_role_assigned')
   async handleUserRoleAssigned(
     @Payload() data: UserRoleAssignedEvent,
     @Ctx() context: RmqContext,
   ) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const channel = context.getChannelRef();
     const originalMsg = context.getMessage();
 
     try {
       await this.usersService.updateRole(data.sub_id, data.role);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       channel.ack(originalMsg);
-    } catch (error) {
+    } catch {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       channel.nack(originalMsg, false, false);
     }
   }

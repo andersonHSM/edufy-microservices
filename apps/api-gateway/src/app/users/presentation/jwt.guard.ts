@@ -3,10 +3,10 @@ import {
   ExecutionContext,
   Injectable,
   Logger,
+  UnauthorizedException,
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
-import { RpcException } from "@nestjs/microservices";
 import { type Request } from "express";
 import { IncomingMessage } from "http";
 import { IS_PUBLIC_KEY } from "./public.decorator";
@@ -25,6 +25,7 @@ export class JwtGuard implements CanActivate {
       context.getHandler(),
       context.getClass(),
     ]);
+
     if (isPublic) {
       return true;
     }
@@ -37,13 +38,16 @@ export class JwtGuard implements CanActivate {
     }
 
     try {
+      console.log(this.jwtService);
       request.sub = (
         await this.jwtService.verifyAsync<{ sub: string }>(token)
       ).sub;
       return true;
     } catch (e) {
       this.logger.error("JWT validation failed", e);
-      throw new RpcException({ message: "Invalid JWT token", code: 401 });
+      throw new UnauthorizedException({
+        message: "Invalid JWT token",
+      });
     }
   }
 
@@ -56,11 +60,11 @@ export class JwtGuard implements CanActivate {
   private getToken(request: Request): string {
     const authorization = request.headers["authorization"];
     if (!authorization || Array.isArray(authorization)) {
-      throw new RpcException({
+      throw new UnauthorizedException({
         message: "Authorization header is missing or malformed",
-        code: 401,
       });
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_bearer, token] = authorization.split(" ");
     return token;
   }
