@@ -1,56 +1,87 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
+import { firstValueFrom } from "rxjs";
+import { ReplyTicketDto } from "src/app/support/presentation/dtos/reply-ticket.dto";
+import { UserEntity } from "src/app/users/domain/user.entity";
+import { USERS_TCP_SERVICE } from "src/app/users/users.constants";
 import { CreateTicketDto } from "./presentation/dtos/create-ticket.dto";
-import { ReplyTicketDto } from "./presentation/dtos/reply-ticket.dto";
+import {
+  TicketMessageResponseDto,
+  TicketResponseDto,
+} from "./presentation/dtos/ticket-response.dto";
 
 export const SUPPORT_SERVICE = "SUPPORT_SERVICE";
 
 @Injectable()
 export class SupportService {
-  constructor(@Inject(SUPPORT_SERVICE) private readonly client: ClientProxy) {}
+  constructor(
+    @Inject(SUPPORT_SERVICE) private readonly client: ClientProxy,
+    @Inject(USERS_TCP_SERVICE) private readonly usersClient: ClientProxy,
+  ) {}
 
-  createTicket(
+  async createTicket(
     createTicketDto: CreateTicketDto,
     creatorSubId: string,
-    creatorName: string,
-    creatorEmail: string,
-  ) {
-    return this.client.send("create_ticket", {
-      ...createTicketDto,
-      creatorSubId,
-      creatorName,
-      creatorEmail,
-    });
+  ): Promise<TicketResponseDto> {
+    const user: UserEntity = await this._fetchUserDetails(creatorSubId);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return firstValueFrom(
+      this.client.send<TicketResponseDto>("create_ticket", {
+        ...createTicketDto,
+        creatorSubId: user.sub_id,
+        creatorName: `${user.firstName} ${user.lastName}`,
+        creatorEmail: user.email,
+      }),
+    );
   }
 
-  listMyTickets(creatorSubId: string) {
-    return this.client.send("list_my_tickets", creatorSubId);
+  async listMyTickets(userSub: string): Promise<TicketResponseDto[]> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return firstValueFrom(
+      this.client.send<TicketResponseDto[]>("list_my_tickets", userSub),
+    );
   }
 
-  replyTicket(
+  async replyTicket(
     ticketId: string,
     replyTicketDto: ReplyTicketDto,
     authorSubId: string,
-    authorName: string,
-  ) {
-    return this.client.send("reply_ticket", {
-      ticketId,
-      dto: {
-        ...replyTicketDto,
-        authorSubId,
-        authorName,
-      },
-    });
+  ): Promise<TicketMessageResponseDto> {
+    const user: UserEntity = await this._fetchUserDetails(authorSubId);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return firstValueFrom(
+      this.client.send<TicketMessageResponseDto>("reply_ticket", {
+        ticketId,
+        dto: {
+          ...replyTicketDto,
+          authorSubId: user.sub_id,
+          authorName: `${user.firstName} ${user.lastName}`,
+        },
+      }),
+    );
   }
 
-  resolveTicket(ticketId: string, resolvedBy: string) {
-    return this.client.send("resolve_ticket", {
-      ticketId,
-      dto: { resolvedBy },
-    });
+  resolveTicket(
+    ticketId: string,
+    resolvedBy: string,
+  ): Promise<TicketResponseDto> {
+    return firstValueFrom(
+      this.client.send<TicketResponseDto>("resolve_ticket", {
+        ticketId,
+        dto: { resolvedBy },
+      }),
+    );
   }
 
-  getTicketById(ticketId: string) {
-    return this.client.send("get_ticket_by_id", ticketId);
+  getTicketById(ticketId: string): Promise<TicketResponseDto> {
+    return firstValueFrom(
+      this.client.send<TicketResponseDto>("get_ticket_by_id", ticketId),
+    );
+  }
+
+  private async _fetchUserDetails(userSubId: string): Promise<UserEntity> {
+    return firstValueFrom(
+      this.usersClient.send<UserEntity>("getUserById", userSubId),
+    );
   }
 }

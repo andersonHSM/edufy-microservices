@@ -28,13 +28,7 @@ export class SupportController {
     @Body() createTicketDto: CreateTicketDto,
     @CurrentUser() userSub: string,
   ) {
-    // TODO: Fetch user's name and email from users-api instead of placeholders
-    return this.supportService.createTicket(
-      createTicketDto,
-      userSub,
-      "User Name Placeholder",
-      "user@example.com",
-    );
+    return this.supportService.createTicket(createTicketDto, userSub);
   }
 
   @Get()
@@ -53,13 +47,7 @@ export class SupportController {
     @Body() replyTicketDto: ReplyTicketDto,
     @CurrentUser() userSub: string,
   ) {
-    // TODO: Fetch user's name from users-api instead of placeholder
-    return this.supportService.replyTicket(
-      ticketId,
-      replyTicketDto,
-      userSub,
-      "User Name Placeholder",
-    );
+    return this.supportService.replyTicket(ticketId, replyTicketDto, userSub);
   }
 
   @Post(":id/resolve")

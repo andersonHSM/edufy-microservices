@@ -19,7 +19,7 @@ Sistema de Tickets de suporte (Helpdesk).
 ## Rotas a Migrar
 
 | Origem (Monolito)                         | Destino (Microserviço - TCP)          | Destino (Gateway - HTTP)            | Status   |
-|:------------------------------------------|:--------------------------------------|:------------------------------------|:---------|
+| :---------------------------------------- | :------------------------------------ | :---------------------------------- | :------- |
 | `POST /support/client/tickets`            | `@MessagePattern('create_ticket')`    | `POST /support/tickets`             | **[OK]** |
 | `GET /support/client/tickets`             | `@MessagePattern('list_my_tickets')`  | `GET /support/tickets`              | **[OK]** |
 | `POST /support/tickets/:id/reply`         | `@MessagePattern('reply_ticket')`     | `POST /support/tickets/:id/reply`   | **[OK]** |
