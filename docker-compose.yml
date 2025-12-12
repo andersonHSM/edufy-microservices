@@ -87,6 +87,28 @@ services:
       timeout: 10s
       retries: 3
 
+  # PostgreSQL para Support API
+  support-db:
+    image: postgres:17-alpine
+    container_name: edufy-support-db
+    environment:
+      POSTGRES_DB: support_db
+      POSTGRES_USER: support_user
+      POSTGRES_PASSWORD: support_password
+    ports:
+      - "5437:5432"
+    volumes:
+      - support_db_data:/var/lib/postgresql/data
+      - ./docker/init-scripts/support-init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    networks:
+      - edufy-network
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U support_user -d support_db" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   # Redis para cache e sessões
   redis:
     image: redis:7-alpine
@@ -146,6 +168,7 @@ services:
       - users-db
       - courses-db
       - enrollments-db
+      - support-db
 
 volumes:
   auth_db_data:
@@ -155,6 +178,8 @@ volumes:
   courses_db_data:
     driver: local
   enrollments_db_data:
+    driver: local
+  support_db_data:
     driver: local
   redis_data:
     driver: local

@@ -16,7 +16,7 @@ export async function up(db: Kysely<DB>): Promise<void> {
     .addColumn('creator_sub_id', 'uuid', (col) => col.notNull())
     .addColumn('creator_name', 'varchar(255)', (col) => col.notNull())
     .addColumn('creator_email', 'varchar(255)', (col) => col.notNull())
-    .addColumn('resolved_by', 'uuid', (col) => col.references('auth.users.id')) // Assuming a users table in auth schema for FK
+    .addColumn('resolved_by', 'uuid')
     .addColumn('created_at', 'timestamp', (col) =>
       col.notNull().defaultTo(sql`now()`),
     )

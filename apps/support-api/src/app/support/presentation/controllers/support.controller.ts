@@ -10,6 +10,10 @@ import { ExceptionFilter } from 'libs/filters/rpc-exception.filter';
 import { CreateTicketDto } from '../dtos/create-ticket.dto';
 import { ReplyTicketDto } from '../dtos/reply-ticket.dto';
 import { ResolveTicketDto } from '../dtos/resolve-ticket.dto';
+import {
+  TicketMessageResponseDto,
+  TicketResponseDto,
+} from '../dtos/ticket-response.dto';
 
 @UseFilters(new ExceptionFilter())
 @Controller()
@@ -18,34 +22,40 @@ export class SupportController {
 
   @MessagePattern('create_ticket')
   async createTicket(@Payload() data: CreateTicketDto) {
-    return this.supportService.createTicket(data);
+    const ticket = await this.supportService.createTicket(data);
+    return TicketResponseDto.fromEntity(ticket);
   }
 
   @MessagePattern('list_my_tickets')
   async listMyTickets(@Payload() creatorSubId: string) {
-    return this.supportService.listMyTickets(creatorSubId);
+    const tickets = await this.supportService.listMyTickets(creatorSubId);
+    return tickets.map((ticket) => TicketResponseDto.fromEntity(ticket));
   }
 
   @MessagePattern('reply_ticket')
   async replyTicket(
     @Payload() data: { ticketId: string; dto: ReplyTicketDto },
   ) {
-    return this.supportService.replyTicket(data.ticketId, data.dto);
+    const message = await this.supportService.replyTicket(
+      data.ticketId,
+      data.dto,
+    );
+    return TicketMessageResponseDto.fromEntity(message);
   }
 
   @MessagePattern('resolve_ticket')
   async resolveTicket(
     @Payload() data: { ticketId: string; dto: ResolveTicketDto },
   ) {
-    return this.supportService.resolveTicket(
-      data.ticketId,
-      data.dto.resolvedBy,
-    );
+    await this.supportService.resolveTicket(data.ticketId, data.dto.resolvedBy);
+    const ticket = await this.supportService.getTicketById(data.ticketId);
+    return TicketResponseDto.fromEntity(ticket);
   }
 
   @MessagePattern('get_ticket_by_id')
   async getTicketById(@Payload() id: string) {
-    return this.supportService.getTicketById(id);
+    const ticket = await this.supportService.getTicketById(id);
+    return TicketResponseDto.fromEntity(ticket);
   }
 
   @MessagePattern('user_updated')

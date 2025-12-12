@@ -32,7 +32,10 @@ export class KyselySupportRepository
       .values(ticket.toPersistence())
       .returningAll()
       .executeTakeFirstOrThrow();
-    return TicketEntity.fromProps(createdTicket as TicketTable);
+    return TicketEntity.fromProps(
+      createdTicket as TicketTable,
+      createdTicket.id,
+    );
   }
 
   async createTicketMessage(
@@ -44,7 +47,7 @@ export class KyselySupportRepository
       .values(message.toPersistence())
       .returningAll()
       .executeTakeFirstOrThrow();
-    return TicketMessageEntity.fromProps(createdMessage);
+    return TicketMessageEntity.fromProps(createdMessage, createdMessage.id);
   }
 
   async listMyTickets(creatorSubId: string): Promise<TicketEntity[]> {
@@ -53,7 +56,7 @@ export class KyselySupportRepository
       .selectAll()
       .where('creatorSubId', '=', creatorSubId)
       .execute();
-    return tickets.map((ticket) => TicketEntity.fromProps(ticket));
+    return tickets.map((ticket) => TicketEntity.fromProps(ticket, ticket.id));
   }
 
   async findTicketById(id: string): Promise<TicketEntity | null> {
@@ -62,7 +65,27 @@ export class KyselySupportRepository
       .selectAll()
       .where('id', '=', id)
       .executeTakeFirst();
-    return ticket ? TicketEntity.fromProps(ticket) : null;
+
+    if (!ticket) return null;
+
+    const messages = await this.database
+      .selectFrom('support.ticket_messages')
+      .selectAll()
+      .where('ticketId', '=', id)
+      .orderBy('createdAt', 'asc')
+      .execute();
+
+    const messageEntities = messages.map((message) =>
+      TicketMessageEntity.fromProps(message),
+    );
+
+    return TicketEntity.fromProps(
+      {
+        ...ticket,
+        messages: messageEntities,
+      },
+      ticket.id,
+    );
   }
 
   async updateTicketStatus(

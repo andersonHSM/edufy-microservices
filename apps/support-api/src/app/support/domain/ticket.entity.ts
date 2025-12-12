@@ -1,4 +1,5 @@
 import { BaseEntity } from 'libs/database/base.entity';
+import { TicketMessageEntity } from './ticket-message.entity';
 
 export enum TicketStatus {
   OPEN = 'open',
@@ -16,11 +17,12 @@ export interface TicketProps {
   resolvedBy: string | null;
   createdAt: Date;
   updatedAt: Date;
+  messages?: TicketMessageEntity[];
 }
 
 export type CreateTicketInput = Omit<
   TicketProps,
-  'status' | 'createdAt' | 'updatedAt' | 'resolvedBy'
+  'status' | 'createdAt' | 'updatedAt' | 'resolvedBy' | 'messages'
 >;
 
 export class TicketEntity extends BaseEntity<TicketProps> {
@@ -33,13 +35,14 @@ export class TicketEntity extends BaseEntity<TicketProps> {
         resolvedBy: null, // Explicitly set to null
         createdAt: now,
         updatedAt: now,
+        messages: [],
       },
       id,
     );
   }
 
   static fromProps(props: TicketProps, id?: string): TicketEntity {
-    return new TicketEntity(props, id);
+    return new TicketEntity({ ...props, messages: props.messages || [] }, id);
   }
 
   protected constructor(props: TicketProps, id?: string) {
@@ -80,6 +83,10 @@ export class TicketEntity extends BaseEntity<TicketProps> {
 
   get updatedAt(): Date {
     return this.props.updatedAt;
+  }
+
+  get messages(): TicketMessageEntity[] {
+    return this.props.messages || [];
   }
 
   updateStatus(status: TicketStatus): void {
