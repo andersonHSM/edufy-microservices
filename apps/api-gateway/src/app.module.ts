@@ -8,6 +8,8 @@ import { AUTH_SERVICE } from "src/app/auth/auth.constants";
 import { AuthModule } from "src/app/auth/auth.module";
 import { COURSES_TCP_SERVICE } from "src/app/courses/courses.constants";
 import { CoursesModule } from "src/app/courses/courses.module";
+import { ENROLLMENTS_SERVICE } from "src/app/enrollments/application/enrollments.service";
+import { EnrollmentsModule } from "src/app/enrollments/enrollments.module";
 import {
   USERS_RMQ_SERVICE,
   USERS_TCP_SERVICE,
@@ -16,6 +18,7 @@ import { UsersModule } from "src/app/users/users.module";
 import authServiceConfig from "src/libs/configuration/auth-service.config";
 import { ConfigurationModule } from "src/libs/configuration/configuration.module";
 import coursesServiceConfig from "src/libs/configuration/courses-service.config";
+import enrollmentsServiceConfig from "src/libs/configuration/enrollments-service.config";
 import rabbitmqConfig from "src/libs/configuration/rabbitmq.config";
 import usersServiceConfig from "src/libs/configuration/users-service.config";
 import { RpcToHttpExceptionFilter } from "src/libs/exception-filters/rpc-to-http.exception-filter";
@@ -79,12 +82,26 @@ import { JwtGuard } from "./app/users/presentation/jwt.guard";
           }),
           inject: [coursesServiceConfig.KEY],
         },
+        {
+          name: ENROLLMENTS_SERVICE,
+          useFactory: (
+            config: ConfigType<typeof enrollmentsServiceConfig>,
+          ) => ({
+            transport: Transport.TCP,
+            options: {
+              host: config.host,
+              port: config.port,
+            },
+          }),
+          inject: [enrollmentsServiceConfig.KEY],
+        },
       ],
     }),
     ConfiguredJwtModule,
     UsersModule,
     AuthModule,
     CoursesModule,
+    EnrollmentsModule,
   ],
   controllers: [AppController],
   providers: [
