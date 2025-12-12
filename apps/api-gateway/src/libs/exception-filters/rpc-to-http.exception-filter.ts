@@ -1,9 +1,4 @@
-import {
-  ArgumentsHost,
-  Catch,
-  HttpException,
-  RpcExceptionFilter,
-} from "@nestjs/common";
+import { Catch, HttpException, RpcExceptionFilter } from "@nestjs/common";
 import { RpcException } from "@nestjs/microservices";
 import { Observable } from "rxjs";
 
@@ -11,14 +6,13 @@ import { Observable } from "rxjs";
 export class RpcToHttpExceptionFilter
   implements RpcExceptionFilter<RpcException>
 {
-  catch(
-    exception: RpcException,
-    host: ArgumentsHost,
-  ): Observable<HttpException> {
-    const { message, code } = exception.getError() as {
-      message: string;
-      code: number;
-    };
+  catch(exception: RpcException): Observable<HttpException> {
+    const { message = "Internal server error", code = 500 } =
+      exception.getError() as {
+        message: string;
+        code: number;
+      };
+
     throw new HttpException(message, code);
   }
 }

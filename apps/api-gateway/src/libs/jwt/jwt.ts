@@ -11,6 +11,6 @@ export class Jwt<TPayload = Record<string, unknown>> {
       throw new Error("Invalid JWT token: No payload found");
     }
     const payload = Buffer.from(payloadPart, "base64").toString("utf-8");
-    return JSON.parse(payload);
+    return JSON.parse(payload) as TPayload;
   }
 }

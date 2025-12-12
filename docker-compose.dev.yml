@@ -21,6 +21,36 @@ services:
       POSTGRES_DB: users_db_dev
       POSTGRES_USER: users_user
       POSTGRES_PASSWORD: users_password
+  
+  # PostgreSQL para Courses API
+  courses-db:
+    extends:
+      file: docker-compose.yml
+      service: courses-db
+    environment:
+      POSTGRES_DB: courses_db_dev
+      POSTGRES_USER: courses_user
+      POSTGRES_PASSWORD: courses_password
+
+  # PostgreSQL para Enrollments API
+  enrollments-db:
+    extends:
+      file: docker-compose.yml
+      service: enrollments-db
+    environment:
+      POSTGRES_DB: enrollments_db_dev
+      POSTGRES_USER: enrollments_user
+      POSTGRES_PASSWORD: enrollments_password
+
+  # PostgreSQL para Support API
+  support-db:
+    extends:
+      file: docker-compose.yml
+      service: support-db
+    environment:
+      POSTGRES_DB: support_db_dev
+      POSTGRES_USER: support_user
+      POSTGRES_PASSWORD: support_password
 
   # Redis para desenvolvimento
   redis:
@@ -36,11 +66,20 @@ services:
     depends_on:
       - auth-db
       - users-db
+      - courses-db
+      - enrollments-db
+      - support-db
 
 volumes:
   auth_db_data:
     driver: local
   users_db_data:
+    driver: local
+  courses_db_data:
+    driver: local
+  enrollments_db_data:
+    driver: local
+  support_db_data:
     driver: local
   redis_data:
     driver: local

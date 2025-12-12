@@ -19,6 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "kysely": "kysely",
+    "kysely:create": "pnpm exec kysely migrate:make",
     "codegen": "kysely-codegen --camel-case --out-file ./src/libs/database/generated/db.ts",
     "migrate": "pnpm run kysely migrate:latest",
     "postmigrate": "pnpm run codegen"
@@ -30,6 +31,7 @@
     "@nestjs/jwt": "^11.0.1",
     "@nestjs/microservices": "^11.1.9",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/swagger": "^11.2.3",
     "amqp-connection-manager": "^5.0.0",
     "amqplib": "^0.10.9",
     "argon2": "^0.44.0",
