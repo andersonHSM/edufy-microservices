@@ -23,13 +23,17 @@ export class EnrollmentsController {
     @Payload() data: { enrollment_id: string },
     @Ctx() context: RmqContext,
   ) {
-    const channel = context.getChannelRef();
-    const originalMsg = context.getMessage();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const channel: any = context.getChannelRef();
+
+    const originalMsg: any = context.getMessage();
     try {
       await this.enrollmentsService.enrollStudent(data.enrollment_id);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       channel.ack(originalMsg);
     } catch (error) {
       console.error('Failed to process enroll_student_request:', error);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       channel.nack(originalMsg, false, false); // Requeue = false, All Up To = false (send to DLQ if configured)
     }
   }

@@ -10,6 +10,7 @@ import { COURSES_TCP_SERVICE } from "src/app/courses/courses.constants";
 import { CoursesModule } from "src/app/courses/courses.module";
 import { ENROLLMENTS_SERVICE } from "src/app/enrollments/application/enrollments.service";
 import { EnrollmentsModule } from "src/app/enrollments/enrollments.module";
+import { SUPPORT_SERVICE } from "src/app/support/support.constants";
 import {
   USERS_RMQ_SERVICE,
   USERS_TCP_SERVICE,
@@ -20,9 +21,11 @@ import { ConfigurationModule } from "src/libs/configuration/configuration.module
 import coursesServiceConfig from "src/libs/configuration/courses-service.config";
 import enrollmentsServiceConfig from "src/libs/configuration/enrollments-service.config";
 import rabbitmqConfig from "src/libs/configuration/rabbitmq.config";
+import supportServiceConfig from "src/libs/configuration/support-service.config";
 import usersServiceConfig from "src/libs/configuration/users-service.config";
 import { RpcToHttpExceptionFilter } from "src/libs/exception-filters/rpc-to-http.exception-filter";
 import { ConfiguredJwtModule } from "src/libs/jwt/jwt.module";
+import { SupportModule } from "./app/support/support.module";
 import { JwtGuard } from "./app/users/presentation/jwt.guard";
 
 @Module({
@@ -95,6 +98,17 @@ import { JwtGuard } from "./app/users/presentation/jwt.guard";
           }),
           inject: [enrollmentsServiceConfig.KEY],
         },
+        {
+          name: SUPPORT_SERVICE,
+          useFactory: (config: ConfigType<typeof supportServiceConfig>) => ({
+            transport: Transport.TCP,
+            options: {
+              host: config.host,
+              port: config.port,
+            },
+          }),
+          inject: [supportServiceConfig.KEY],
+        },
       ],
     }),
     ConfiguredJwtModule,
@@ -102,6 +116,7 @@ import { JwtGuard } from "./app/users/presentation/jwt.guard";
     AuthModule,
     CoursesModule,
     EnrollmentsModule,
+    SupportModule,
   ],
   controllers: [AppController],
   providers: [

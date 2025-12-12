@@ -20,11 +20,11 @@ Centralizar a lógica de autenticação e gerenciamento de tokens JWT, migrando 
 ## Rotas a Migrar
 
 | Origem (Monolito)      | Destino (Microserviço - TCP)     | Destino (Gateway - HTTP) | Status        |
-|:-----------------------|:---------------------------------|:-------------------------|:--------------|
+| :--------------------- | :------------------------------- | :----------------------- | :------------ |
 | `POST /users` (Signup) | `@MessagePattern('create_user')` | `POST /users`            | **[OK]**      |
 | `POST /users/login`    | `@MessagePattern('auth_login')`  | `POST /auth/login`       | **[Parcial]** |
 
-*(Nota: `POST /users` também emite o evento `@EventPattern('user_created')`)*
+_(Nota: `POST /users` também emite o evento `@EventPattern('user_created')`)_
 
 ## Estratégia de Dados (Duplicação)
 
@@ -33,18 +33,17 @@ Centralizar a lógica de autenticação e gerenciamento de tokens JWT, migrando 
 - **Dependências:** Nenhuma.
 
 - **Responsabilidade de Eventos:**
+  - Emitir `user_created` sempre que um usuário se cadastrar.
 
-    - Emitir `user_created` sempre que um usuário se cadastrar.
+  - Escutar `user_role_assigned` para atualizar roles no token.
 
-    - Escutar `user_role_assigned` para atualizar roles no token.
-
-    - **(Nota Importante para Consumidor):** O listener para `user_role_assigned` deve implementar
-      `manual acknowledgement` e DLQ para garantir resiliência.
+  - **(Nota Importante para Consumidor):** O listener para `user_role_assigned` deve implementar
+    `manual acknowledgement` e DLQ para garantir resiliência.
 
 ## Modelagem de Dados
 
 | Campo        | Tipo   | Origem                | Descrição                                              |
-|:-------------|:-------|:----------------------|:-------------------------------------------------------|
+| :----------- | :----- | :-------------------- | :----------------------------------------------------- |
 | `sub`        | UUID   | `UserEntity.id`       | Identificador único global (gerado aqui, JWT Subject). |
 | `email`      | String | `UserEntity.email`    | Identificador de login (Unique).                       |
 | `password`   | String | `UserEntity.password` | Hash da senha (Argon2).                                |

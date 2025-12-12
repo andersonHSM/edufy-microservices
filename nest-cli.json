@@ -1,0 +1,29 @@
+{
+  "monorepo": true,
+  "root": "apps/edufy-microservices",
+  "sourceRoot": "apps/edufy-microservices/src",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/edufy-microservices/tsconfig.app.json"
+  },
+  "projects": {
+    "edufy-microservices": {
+      "type": "application",
+      "root": "apps/edufy-microservices",
+      "entryFile": "main",
+      "sourceRoot": "apps/edufy-microservices/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/edufy-microservices/tsconfig.app.json"
+      }
+    },
+    "support-api": {
+      "type": "application",
+      "root": "apps/support-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/support-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/support-api/tsconfig.json"
+      }
+    }
+  }
+}

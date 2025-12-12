@@ -19,34 +19,33 @@ Gerenciar o ciclo de vida, perfil e dados cadastrais dos usuários, separando es
 ## Rotas a Migrar
 
 | Origem (Monolito)              | Destino (Microserviço - TCP)     | Destino (Gateway - HTTP) | Status   |
-|:-------------------------------|:---------------------------------|:-------------------------|:---------|
+| :----------------------------- | :------------------------------- | :----------------------- | :------- |
 | `GET /users/me`                | `@MessagePattern('getUserById')` | `GET /users/me`          | **[OK]** |
 | `PATCH /users/me`              | `@MessagePattern('update_user')` | `PATCH /users/me`        | **[OK]** |
 | `POST /users/self-assign-role` | `@MessagePattern('assign_role')` | `POST /users/me/role`    | **[OK]** |
 
-*(Nota: `PATCH /users/me` emite evento `user_updated`. `POST /users/self-assign-role` emite `user_role_assigned`)*
+_(Nota: `PATCH /users/me` emite evento `user_updated`. `POST /users/self-assign-role` emite `user_role_assigned`)_
 
 ## Estratégia de Dados (Duplicação)
 
 - **Papel:** Source of Truth para Dados Pessoais (Nome, Foto, Bio).
 
 - **Responsabilidade de Eventos:**
+  - **EMISSOR CRÍTICO:** Ao atualizar `name` ou `profilePictureUrl` na rota `PATCH /users/me`, DEVE emitir o evento
+    `user_updated` (payload `sub_id`).
 
-    - **EMISSOR CRÍTICO:** Ao atualizar `name` ou `profilePictureUrl` na rota `PATCH /users/me`, DEVE emitir o evento
-      `user_updated` (payload `sub_id`).
+  - Este evento é o gatilho para `courses`, `enrollments` e `support` atualizarem suas cópias locais.
 
-    - Este evento é o gatilho para `courses`, `enrollments` e `support` atualizarem suas cópias locais.
+  - **Escuta:** `user_created` (de `auth-api`, payload `sub`) para criar registro inicial de perfil (`sub` como
+    `sub_id`).
 
-    - **Escuta:** `user_created` (de `auth-api`, payload `sub`) para criar registro inicial de perfil (`sub` como
-      `sub_id`).
-
-    - **(Nota Importante para Consumidor):** O listener para `user_created` deve implementar `manual acknowledgement` e
-      DLQ para garantir resiliência.
+  - **(Nota Importante para Consumidor):** O listener para `user_created` deve implementar `manual acknowledgement` e
+    DLQ para garantir resiliência.
 
 ## Modelagem de Dados
 
 | Campo                 | Tipo       | Origem                         | Descrição                                                             |
-|:----------------------|:-----------|:-------------------------------|:----------------------------------------------------------------------|
+| :-------------------- | :--------- | :----------------------------- | :-------------------------------------------------------------------- |
 | `sub_id`              | UUID       | `UserEntity.id`                | PK. Recebido do `auth-api` via evento `user_created` (payload `sub`). |
 | `name`                | String     | `UserEntity.name`              | Nome completo.                                                        |
 | `biography`           | String     | `UserEntity.biography`         | Texto descritivo.                                                     |
