@@ -170,6 +170,137 @@ services:
       - enrollments-db
       - support-db
 
+  # Application Services
+  api-gateway:
+    build:
+      context: .
+      dockerfile: apps/api-gateway/Dockerfile
+    container_name: edufy-api-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+      - AUTH_SERVICE_HOST=auth-api
+      - AUTH_SERVICE_PORT=3001
+      - USERS_SERVICE_HOST=users-api
+      - USERS_SERVICE_PORT=3002
+      - COURSES_SERVICE_HOST=courses-api
+      - COURSES_SERVICE_PORT=3003
+      - ENROLLMENTS_SERVICE_HOST=enrollments-api
+      - ENROLLMENTS_SERVICE_PORT=3004
+      - SUPPORT_SERVICE_HOST=support-api
+      - SUPPORT_SERVICE_PORT=3005
+    networks:
+      - edufy-network
+    depends_on:
+      - rabbitmq
+      - auth-api
+      - users-api
+      - courses-api
+      - enrollments-api
+      - support-api
+
+  auth-api:
+    build:
+      context: .
+      dockerfile: apps/auth-api/Dockerfile
+    container_name: edufy-auth-api
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - DATABASE_URL=postgresql://auth_user:auth_password@auth-db:5432/auth_db
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+    command: sh -c "pnpm run migrate && node dist/main"
+    networks:
+      - edufy-network
+    depends_on:
+      auth-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  users-api:
+    build:
+      context: .
+      dockerfile: apps/users-api/Dockerfile
+    container_name: edufy-users-api
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      - DATABASE_URL=postgresql://users_user:users_password@users-db:5432/users_db
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+    command: sh -c "pnpm run migrate && node dist/main"
+    networks:
+      - edufy-network
+    depends_on:
+      users-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  courses-api:
+    build:
+      context: .
+      dockerfile: apps/courses-api/Dockerfile
+    container_name: edufy-courses-api
+    ports:
+      - "3003:3003"
+    environment:
+      - PORT=3003
+      - DATABASE_URL=postgresql://courses_user:courses_password@courses-db:5432/courses_db
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+    command: sh -c "pnpm run migrate && node dist/main"
+    networks:
+      - edufy-network
+    depends_on:
+      courses-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  enrollments-api:
+    build:
+      context: .
+      dockerfile: apps/enrollments-api/Dockerfile
+    container_name: edufy-enrollments-api
+    ports:
+      - "3004:3004"
+    environment:
+      - PORT=3004
+      - DATABASE_URL=postgresql://enrollments_user:enrollments_password@enrollments-db:5432/enrollments_db
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+    command: sh -c "pnpm run migrate && node dist/main"
+    networks:
+      - edufy-network
+    depends_on:
+      enrollments-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  support-api:
+    build:
+      context: .
+      dockerfile: apps/support-api/Dockerfile
+    container_name: edufy-support-api
+    ports:
+      - "3005:3005"
+    environment:
+      - PORT=3005
+      - DATABASE_URL=postgresql://support_user:support_password@support-db:5432/support_db
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+    command: sh -c "pnpm run migrate && node dist/main"
+    networks:
+      - edufy-network
+    depends_on:
+      support-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
 volumes:
   auth_db_data:
     driver: local
