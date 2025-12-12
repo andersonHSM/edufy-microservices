@@ -52,6 +52,10 @@ export class TicketMessageEntity extends BaseEntity<TicketMessageProps> {
     return this.props.authorName;
   }
 
+  get createdAt(): Date {
+    return this.props.createdAt;
+  }
+
   toPersistence() {
     return {
       id: this.id,
